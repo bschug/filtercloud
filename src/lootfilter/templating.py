@@ -11,13 +11,11 @@ def load_template(filename):
         autoescape=False,
     )
     env.filters['names'] = format_list_filter
-    print("Looking for {} in {}".format(os.path.basename(filename), os.path.dirname(filename)), file=sys.stderr)
     return env.get_template(os.path.basename(filename))
 
 
 def render(template, config):
-    from datetime import datetime
-    return template.render(date=datetime.now())
+    return template.render(config)
 
 
 def format_list_filter(values, force_quote=True):
