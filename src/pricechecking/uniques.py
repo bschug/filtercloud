@@ -59,7 +59,7 @@ def get_unique_prices_from_url(url, league, unique_prices):
 def sort_by_value(unique_prices, thresholds):
     return {
         'top_tier': [k for k, v in unique_prices.items() if v >= thresholds.top_tier],
-        'valuable': [k for k, v in unique_prices.items() if v >= thresholds.valuable],
-        'mediocre': [k for k, v in unique_prices.items() if v >= thresholds.worthless],
+        'valuable': [k for k, v in unique_prices.items() if v >= thresholds.valuable and v < thresholds.top_tier],
+        'mediocre': [k for k, v in unique_prices.items() if v >= thresholds.worthless and v < thresholds.valuable],
         'worthless': [k for k, v in unique_prices.items() if v < thresholds.worthless],
     }

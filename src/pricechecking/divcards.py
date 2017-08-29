@@ -18,7 +18,7 @@ def get_divcard_prices(league):
 def sort_into_categories(card_prices, thresholds):
     return {
         'top_tier': [k for k, v in card_prices.items() if v >= thresholds.top_tier],
-        'valuable': [k for k, v in card_prices.items() if v >= thresholds.valuable],
-        'mediocre': [k for k, v in card_prices.items() if v >= thresholds.worthless],
+        'valuable': [k for k, v in card_prices.items() if v >= thresholds.valuable and v < thresholds.top_tier],
+        'mediocre': [k for k, v in card_prices.items() if v >= thresholds.worthless and v < thresholds.valuable],
         'worthless': [k for k, v in card_prices.items() if v < thresholds.worthless],
     }
