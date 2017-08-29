@@ -12,10 +12,11 @@ def load_config(filename):
         'date': datetime.now(),
         'include_leveling_rules': bool(settings.include_leveling_rules),
         'include_endgame_rules': bool(settings.include_endgame_rules),
-        'currency': build_currency_config(settings),
+        'currency': settings.get('currency'),
+        'rares': settings.get('rares'),
         'uniques': build_unique_config(settings),
         'divcards': build_divcards_config(settings),
-        'gems': build_gems_config(settings),
+        'gems': settings.get('gems'),
     }
 
 
@@ -23,11 +24,6 @@ def load_settings(filename):
     with open(filename) as fp:
         return Box(json.load(fp))
 
-
-def build_currency_config(settings):
-    return {
-        'hide_low_value': bool(settings.currency.hide_low_value)
-    }
 
 def build_unique_config(settings):
     league = settings.league
@@ -47,10 +43,4 @@ def build_divcards_config(settings):
         config[category].append(card)
 
     return config
-
-
-def build_gems_config(settings):
-    return {
-        'show_all': bool(settings.gems.show_all)
-    }
 
