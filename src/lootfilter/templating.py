@@ -3,6 +3,8 @@ import sys
 
 from jinja2 import Template, Environment, FileSystemLoader
 
+from lootfilter.style import ItemStyle, parse_color, parse_sound
+
 
 def load_template(filename):
     """Load template from file"""
@@ -11,6 +13,7 @@ def load_template(filename):
         autoescape=False,
     )
     env.filters['names'] = format_list_filter
+    env.filters['setstyle'] = setstyle_filter
     return env.get_template(os.path.basename(filename))
 
 
@@ -30,3 +33,15 @@ def quote(value):
 
 def must_quote(value):
     return ' ' in value
+
+
+def setstyle_filter(style, fontsize=None, textcolor=None, background=None, border=None, sound=None):
+    textcolor = parse_color(textcolor)
+    background = parse_color(background)
+    border = parse_color(border)
+    sound = parse_sound(sound)
+    newstyle = ItemStyle(fontsize=fontsize, textcolor=textcolor, background=background, border=border, sound=sound)
+    newstyle.fill_with(style)
+    return newstyle
+
+
