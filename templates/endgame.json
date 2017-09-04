@@ -1,0 +1,119 @@
+{
+	"league": "Harbinger",
+	"include_leveling_rules": false,
+	"include_endgame_rules": true,
+	
+	"currency": {
+		"hide_low_value": false,
+		"use_shaper_voice": true,
+		"ultra_rare": ["Mirror of Kalandra"],
+		"strong_highlight": [
+			"Exalted Orb", "Divine Orb", "Eternal Orb", "Stacked Deck", 
+			"Master Cartographer", "Journeyman Cartographer"],
+		"highlight": [
+			"Gemcutter's Prism", "Regal Orb", "Blessed Orb", "Orb of Regret", "Chaos Orb", "Vaal Orb", 
+			"Orb of Scouring", "Remnant of Corruption", "Apprentice Cartographer"],
+		"normal": [
+			"Orb of Fusing", "Orb of Alchemy", "Chromatic Orb", "Jeweller's Orb", "Orb of Chance",
+			"Glassblower's Bauble", "Cartographer's Chisel"],
+		"smaller": [
+			"Scroll of Wisdom", "Portal Scroll", "Blacksmith's Whetstone", "Armourer's Scrap",
+			"Orb of Transmutation", "Orb of Augmentation", "Orb of Alteration"],
+		"hidden": []
+	},
+	
+	"gems": {
+		"show_all": false,
+		"high_quality": 17,
+		"medium_quality": 1,
+		"high_value_gems": ["Empower", "Enlighten", "Enhance", "Vaal Breach", "Vaal Haste"],
+		"medium_value_gems": ["Vaal Clarity", "Vaal Grace", "Added Chaos Damage", "Portal"]
+	},
+	
+	"crafting": {
+		"always": [
+			"Sacrificial Garb", "Archon Kite Shield", "Astral Plate"
+		],
+		"ilvl84": [
+			"Onyx Amulet", "Diamond Ring", "Titan Gauntlets", "Slink Gloves", "Royal Burgonet", "Lion Pelt", "Titan Greaves", "Slink Boots",
+			"Prismatic Ring", "Two-Stone Ring", "Astral Plate", "Assassin's Garb"
+		],
+		"chancing": [
+			"Glorious Plate", "Sorcerer Boots"
+		],
+		"atlas": {
+			"ilvl84": true,
+			"always": true
+		}
+	},
+	
+	"rares": {
+		"endgame": {
+			"only_in_maps": false,
+			"show_fully_linked": true,
+			
+			"highlight": [
+				"Ambusher", "Platinum Kris", "Imperial Skean", "Ezomyte Dagger", 
+				"Imbued Wand", 
+				"Titan Gauntlets", "Slink Gloves",
+				"Lion Pelt", "Royal Burgonet", "Hubris Circlet",
+				"Slink Boots", "Titan Greaves",
+				"Titanium Spirit Shield", "Imperial Buckler", "Colossal Tower Shield",
+				"Astral Plate",
+				
+				"Amber Amulet", "Jade Amulet", "Lapis Amulet", "Gold Amulet", "Agate Amulet", "Citrine Amulet", "Turquoise Amulet", 
+				"Sapphire Ring", "Topaz Ring", "Ruby Ring", "Diamond Ring", "Two-Stone Ring", "Prismatic Ring", 
+				"Heavy Belt"
+			],
+			"show": [
+				"Harbinger Bow",
+				"Kris", "Demon Dagger", "Sai",
+				"Coronal Maul", 
+				"Void Sceptre", "Sambar Sceptre", "Opal Sceptre",
+				"Vaal Rapier", "Harpy Rapier", "Jewelled Foil", "Spiraled Foil",
+				"Tornado Wand", "Opal Wand", "Prophecy Wand", "Profane Wand",
+				"Harmonic Spirit Shield", "Fossilised Spirit Shield", "Ivory Spirit Shield", "Supreme Spiked Shield", "Ezomyte Tower Shield", "Archon Kite Shield",
+				
+				"Vaal Greaves", "Stealth Boots", "Crusader Boots", "Murder Boots", "Dragonscale Boots", "Arcanist Slippers", "Sorcerer Boots", 
+				"Vaal Gauntlets", "Stealth Gloves", "Murder Mitts", "Dragonscale Gauntlets", "Crusader Gloves", "Arcanist Gloves", 
+				"Nightmare Bascinet", "Praetor Crown", "Deicide Mask", "Sinner Tricorne", "Solaris Circlet", "Mind Cage", "Bone Helmet",
+				
+				"Glorious Plate", "Assassin's Garb", "Vaal Regalia", "Saintly Chainmail", "Carnal Armour", 
+				
+				"Paua Amulet", "Onyx Amulet", 
+				"Coral Ring", "Paua Ring", "Unset Ring", "Gold Ring", "Moonstone Ring", "Amethyst Ring", 
+				"Rustic Sash", "Leather Belt", "Studded Belt"
+			]
+		}
+	},
+	
+	"maps": {
+		"hide_low_tier": false,
+		"good_yellow": [
+			"Racecourse", "Strand", "Castle Ruins", "Armoury", "Atoll", "Cemetery", "Pier", "Shore", 
+			"Tropical Island", "Coves", "Promenade", "Arachnid Tomb"]
+	},
+	
+	"uniques": {
+		"thresholds": {
+			"worthless": 0.5,
+			"valuable": 2,
+			"top_tier": 15
+		}
+	},
+	
+	"divcards": {
+		"thresholds": {
+			"worthless": 0,
+			"valuable": 1,
+			"top_tier": 15
+		},
+		"overrides": {
+			"The Carrion Crow": "worthless"
+		}
+	},
+	
+	"jewels": {
+		"show_magic": false
+	}
+}

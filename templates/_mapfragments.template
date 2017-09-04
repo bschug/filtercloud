@@ -1,0 +1,37 @@
+# ------------------------------ Map Fragments ------------------------------------
+
+# Uber Lab 
+Show 
+    BaseType "Offering to the Goddess"
+{{ style.strong_highlight.normal }}
+
+# Vaal Fragments
+Show 
+    BaseType "Sacrifice at Midnight" "Mortal Grief" "Mortal Rage"
+{{ style.highlight.normal }}
+Show 
+    BaseType "Mortal Hope" "Mortal Ignorance"
+{{ style.strong_highlight.normal }}
+Show 
+	Class "Map Fragments"
+	BaseType "Sacrifice"
+{{ style.normal }}
+
+# Atlas Fragments
+Show 
+    BaseType "Fragment of the "
+    BaseType Phoenix Minotaur Chimera Hydra
+{{ style.strong_highlight.normal }}
+	
+# Prophecy Fragments
+Show 
+    BaseType Key
+    BaseType Eber Yriel Inya Volkuur
+{{ style.strong_highlight.normal }}
+	
+# Pink border around any map fragments we forgot
+Show 
+    Class "Map Fragments"
+    SetFontSize 40
+    PlayAlertSound 1 300
+	SetBorderColor 255 100 255

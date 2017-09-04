@@ -1,0 +1,145 @@
+# ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
+
+# Harbinger Fragments
+Hide
+    BaseType Shard
+    BaseType Transmutation Alteration 
+{{ style.hidden.currency }}
+Show
+    BaseType Shard
+    BaseType Alchemy Regal 
+{{ style.smaller.currency }}
+Show
+    BaseType Shard
+    BaseType Annulment Horizon Binding Binding Engineer Chaos
+{{ style.normal.currency }}
+Show 
+    BaseType Shard
+    BaseType Exalted Eternal Divine Ancient Annulment Harbinger's
+{{ style.highlight.currency }}
+Show 
+    BaseType Shard
+    BaseType Mirror
+{{ style.strong_highlight.currency }}
+	
+Show 
+	Class Currency
+	BaseType Shard
+	SetFontSize 38
+	SetBorderColor 255 0 255
+
+Show 
+	Class Piece
+{{ style.ultra_rare.currency }}
+	
+# Leaguestones
+Show 
+    Rarity Normal 
+    Class Leaguestone
+{{ style.highlight.normal }}
+
+Show
+    Rarity Magic 
+    Class Leaguestone
+{{ style.highlight.magic }}
+    
+Show
+    Rarity Rare 
+    Class Leaguestone
+{{ style.highlight.rare }}
+	
+Show
+    Rarity Unique 
+    Class Leaguestone
+{{ style.highlight.unique }}
+	
+
+# Breachstones, Reliquary Keys    
+Show
+    Class "Misc Map Items"
+{{ style.ultra_rare.map }}
+    
+# Warbands 
+Show 
+    Rarity Magic 
+    Identified True 
+    Corrupted False
+    Class Gloves Boots Helmets Daggers Wands Sceptres
+{{ style.normal.magic }}	
+
+# Talismans
+Show 
+    Rarity Normal
+    BaseType Talisman
+{{ style.highlight.normal }}
+Show 
+    Rarity Magic
+    BaseType Talisman
+{{ style.highlight.magic }}
+Show
+    Rarity Rare
+    BaseType Talisman
+{{ style.highlight.rare }}
+Show 
+    Rarity Unique
+    BaseType Talisman
+{{ style.highlight.unique }}
+	
+# Fishing Rod
+Show 
+    Class "Fishing Rod" 
+{{ style.ultra_rare.fishing }}
+	
+# Labyrinth Items	
+Show 
+	BaseType "Treasure Key" "Golden Key" "Silver Key" "Bane of the Loyal" "Portal Shredder" "Rod of Detonation" "Sand of Eternity" "Heart of the Gargoyle" "Cube Of Absorption" "Cogs of Disruption"
+	SetTextColor 74 230 58
+    SetFontSize 45 
+
+# Breach Splinters
+Show
+    BaseType "Splinter of"
+    SetFontSize 40
+    SetBackgroundColor 30 0 50 200
+    SetTextColor 200 80 150
+
+Show 
+    BaseType "Blessing of"
+    SetFontSize 45
+    SetBackgroundColor 200 80 150
+    SetTextColor 30 0 50
+
+# Strongly Highlight T7 Essences
+Show
+	BaseType "Deafening Essence of"
+{{ style.ultra_rare.currency }}
+
+# Decently highlight T6 and corruption-only essences	
+Show 
+	BaseType "Shrieking Essence of" "Essence of Hysteria" "Essence of Insanity" "Essence of Horror" "Essence of Delirium" 
+{{ style.strong_highlight.currency }}
+	
+# Highlight remaining essences
+Show 
+    BaseType "Essence of"
+{{ style.highlight.currency }}
+	
+# Silver Coins
+Show
+	BaseType "Silver Coin"
+{{ style.highlight.currency }}
+
+# Perandus Coins
+Show 
+	BaseType "Perandus Coin"
+	Class Currency 
+{{ style.highlight.currency }}
+
+Show
+    BaseType "Divine Vessel"
+{{ style.ultra_rare.currency }}
+	
+# Quest Items
+Show 
+    Class Quest 
+    SetFontSize 45

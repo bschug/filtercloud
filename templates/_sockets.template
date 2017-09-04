@@ -1,0 +1,65 @@
+# ====================== [SOCKETS] ====================================
+
+# 6-linked
+Show 
+    LinkedSockets 6
+    Rarity Normal
+{{ style.strong_highlight.normal }}
+Show
+    LinkedSockets 6
+    Rarity Magic
+{{ style.strong_highlight.magic }}
+Show
+    LinkedSockets 6
+    Rarity Rare 
+{{ style.strong_highlight.rare }}
+Show
+    LinkedSockets 6
+    Rarity Unique 
+{{ style.strong_highlight.unique }}
+	
+# 5-linked
+Show
+    LinkedSockets 5
+    Rarity Normal 
+{{ style.highlight.normal }}
+Show
+    LinkedSockets 5
+    Rarity Magic
+{{ style.highlight.magic }}
+Show
+    LinkedSockets 5
+    Rarity Rare
+{{ style.highlight.rare }}
+
+# Don't highlight 5link uniques here because other rules might still make them strong highlighted
+
+# 6-socket Crafting Base Armor
+Show
+    Sockets 6
+    ItemLevel >= 84
+    Rarity <= Magic
+    BaseType "Assassin's Garb" "Glorious Plate" "Astral Plate" "Vaal Regalia" "Zodiac Leather"
+{{ style.normal }}
+
+# 6-socket crafting base Weapons
+Show
+    Sockets 6
+    ItemLevel >= 83
+    Rarity <= Magic
+    BaseType "Harbinger Bow" "Vaal Axe" "Coronal Maul" "Exquisite Blade"
+{{ style.normal }}
+	
+# other 6-socket items
+Show
+    Sockets 6
+	Rarity < Rare
+{{ style.normal }}
+	
+# Show corrupted items with white sockets - useful for offhand gem leveling
+Show 
+    Sockets >= 3
+    SocketGroup W
+    Class Wands Daggers One Hand Shields Thrusting Sceptre Claws
+    Rarity < Rare 
+

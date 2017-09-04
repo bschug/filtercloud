@@ -1,0 +1,130 @@
+# ===================================== [LEVELING] ================================================
+
+{% if leveling.highlight_boots %}
+# ------------------------------------ Rare / Magic Boots ---------------------------------------
+
+# Highlight all rare boots because they might have movespeed
+Show 
+	Class Boots 
+	Rarity Rare 
+    SetBackgroundColor 90 90 45 220 	
+
+# Show magic boots up to level {{ leveling.highlight_boots.show_magic_until }}, by then we should have some decent movespeed
+Show 
+	Class Boots 
+	ItemLevel < {{ leveling.highlight_boots.show_magic_until }}
+	Rarity Magic
+{% endif %}
+
+
+# ------------------------------- Sockets ---------------------------------------
+
+# Until level {{ leveling.sockets.all_3links_until }}, show all 3-links 
+Show 
+	ItemLevel <= {{ leveling.sockets.all_3links_until }}
+	LinkedSockets >= 3
+{{ style.normal }}
+	
+# Until level {{ leveling.sockets.all_4links_until }}, show all 4-links
+Show 
+	ItemLevel <= {{ leveling.sockets.all_4links_until }}
+    LinkedSockets >= 4 
+{{ style.normal }}
+
+# Show 3-linked one handed weapons that are good at current level 
+{% for ilvl in range(leveling.sockets.all_3links_until + leveling.sockets.onehand_3link_offset, 68) %}
+Show 
+	ItemLevel <= {{ ilvl }}
+	DropLevel >= {{ ilvl - leveling.sockets.onehand_3link_offset }}
+	LinkedSockets >= 3
+	Class "One Hand" Claws Sceptres
+{{ style.normal }}	
+{% endfor %}
+
+{% if leveling.sockets.all_3linked_wands %}
+# Always show 3-linked wands
+Show
+	Class Wands 
+	Rarity Normal
+	LinkedSockets 3
+{{ style.normal }}	
+{% endif %}
+
+{% if leveling.sockets.all_3linked_caster_daggers %}
+# Show fully linked caster daggers at all levels 
+Show 
+	Class Daggers 
+	BaseType "Imp Dagger" "Golden Kris" "Fiend Dagger" "Platinum Kris" "Demon Dagger"
+	LinkedSockets 3
+	Rarity Normal
+{{ style.normal }}	
+{% endif %}	
+
+# -------------------------- Weapons, Body Armour & Shields ---------------------------- 
+
+{% if leveling.tight and leveling.tight.classes %}
+# Weapons, Body Armour & Shields (implicit is important) 
+# Show normals & magics only if in {{ leveling.tight.offset }} level range. 
+{% for ilvl in range(leveling.tight.offset, 68) %}
+Show 
+    Class {{ leveling.tight.classes|names }}
+	ItemLevel <= {{ ilvl }}
+	DropLevel >= {{ ilvl - leveling.tight.offset }}
+{% if ilvl < leveling.tight.show_magic_until %}
+    Rarity <= Magic 
+{% else %}
+	Rarity Normal
+{% endif %}
+{{ style.normal }}	
+{% endfor %}
+
+Hide
+	Class {{ leveling.tight.classes|names }}
+	DropLevel < {{ 68 - leveling.tight.offset }}
+{{ style.hidden }}	
+{% endif %}
+
+# ------------------------ Other Armor Pieces -----------------------------
+
+{% if leveling.loose and leveling.loose.classes %}
+
+# Other armour pieces (boots, gloves, helmets, etc) are more dependent on good affixes
+# than on their implicit stats, so we show them in a larger ({{ leveling.loose.offset }} level) range.
+{% for ilvl in range(leveling.loose.offset, 68) %}
+Show 
+	Class {{ leveling.loose.classes|names }}
+	ItemLevel <= {{ ilvl }}
+	DropLevel >= {{ ilvl - leveling.loose.offset }}
+{% if ilvl < leveling.loose.show_magic_until %}	
+	Rarity <= Magic
+{% else %}
+	Rarity Normal 
+{% endif %}
+{{ style.normal }}
+{% endfor %}
+
+Hide 
+	Class {{ leveling.loose.classes|names }}
+	DropLevel < {{ 68 - leveling.loose.offset }}
+{{ style.hidden }}
+	
+{% endif %}
+
+# ------------------------------------ Jewelry ---------------------------------------
+
+# Jewelry is rather rare, always show normals and show magics a little longer 
+# Also always highlight rare jewelry
+Show 
+    Class Amulets Belts Rings
+    Rarity Rare
+{{ style.highlight.rare }}
+Show 
+    Class Amulets Belts Rings 
+    Rarity Normal
+{{ style.normal }}
+Show 
+    Class Amulets Belts Rings 
+    Rarity >= Magic 
+	ItemLevel < {{ leveling.jewelry.show_magic_until }}
+{{ style.normal }}
+

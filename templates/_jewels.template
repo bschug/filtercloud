@@ -1,0 +1,20 @@
+# ------------------------------------- [JEWELS] -----------------------------------------
+
+{% if jewels.show_magic %}
+Show 
+{% else %}
+Hide
+{% endif %}
+    Class Jewel
+    Rarity Magic
+{{ style.normal.magic }}
+
+Show 
+    Class Jewel
+    Rarity Rare
+{{ style.highlight.rare }}
+	
+Show 
+    Class Jewel
+    Rarity Unique
+{{ style.highlight.unique }}

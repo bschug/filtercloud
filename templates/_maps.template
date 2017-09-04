@@ -1,0 +1,133 @@
+# ================================== [MAPS] =======================================
+
+# Highlight Unique Maps
+Show 
+    Rarity Unique 
+    Class Maps
+{{ style.highlight.unique }}
+	
+{% if include_endgame_rules %}	
+	
+# Strongly Highlight T16
+Show 
+    Rarity Normal 
+    Class Maps
+    BaseType "Forge of the Phoenix Map" "Maze of the Minotaur Map" "Lair of the Hydra Map" "Pit of the Chimera Map" "Vaal Temple Map"
+{{ style.strong_highlight.normal|setstyle(style.map.red) }}
+
+Show 
+    Rarity Magic 
+    Class Maps
+    BaseType "Forge of the Phoenix Map" "Maze of the Minotaur Map" "Lair of the Hydra Map" "Pit of the Chimera Map" "Vaal Temple Map"
+{{ style.strong_highlight.magic|setstyle(style.map.red) }}
+
+Show 
+    Rarity Rare 
+    Class Maps
+    BaseType "Forge of the Phoenix Map" "Maze of the Minotaur Map" "Lair of the Hydra Map" "Pit of the Chimera Map" "Vaal Temple Map"
+{{ style.strong_highlight.rare|setstyle(style.map.red) }}
+
+# Regular highlight for T15
+Show
+    Class Maps 
+    Rarity Normal 
+    DropLevel 82
+{{ style.highlight.normal|setstyle(style.map.red) }}
+	
+Show 
+    Class Maps 
+    Rarity Magic 
+    DropLevel 82
+{{ style.highlight.magic|setstyle(style.map.red) }}
+
+Show 
+    Class Maps 
+    Rarity Rare
+    DropLevel 82
+{{ style.highlight.rare|setstyle(style.map.red) }}
+
+# Always show red maps
+Show
+	Class Maps 
+    DropLevel >= 78
+{{ style.map.red }}
+
+{% if maps.hide_low_tier %}
+# Show white maps until T7
+Show 
+    Class Maps
+	ItemLevel < 74
+    DropLevel <= 72
+{{ style.map.white }}
+	
+# Hide white maps dropping in Tier 7+
+Hide 
+	Class Maps 
+	ItemLevel >= 74
+	DropLevel <= 72
+{{ style.map.white }}
+	
+# Always show good yellow maps
+Show
+	Class Maps 
+	DropLevel > 72
+	BaseType "Shaped" {{ maps.good_yellow|names }}
+{{ style.map.yellow }}
+
+# Always show T10 yellow maps 
+Show 
+	Class Maps 	
+	DropLevel 77
+{{ style.map.yellow }}
+	
+# Only show other yellow maps outside of red maps 
+Show 
+	Class Maps 
+	DropLevel < 77
+	ItemLevel < 78
+{{ style.map.yellow }}
+	
+# Hide bad yellow maps in T10+ maps 
+Hide 
+	Class Maps 
+	DropLevel < 77
+	ItemLevel >= 77
+{{ style.map.yellow }}
+
+{% else %} {# hide_low_tier #}
+
+# Show map tier in border color 
+Show 
+	Class Maps 
+	DropLevel <= 72
+{{ style.map.white }}
+
+Show
+	Class Maps 
+	DropLevel <= 77
+{{ style.map.yellow }}
+
+Show 
+	Class Maps 
+	DropLevel >= 78
+{{ style.map.red }}
+
+{% endif %} {# hide_low_tier #}
+
+{% else %} {# include_endgame_rules #}
+
+# Only Tier 1 maps can drop during leveling, so show all of them
+Show 
+    Class Maps
+{{ style.map.white }}
+	
+{% endif %}	{# include_endgame_rules #}
+	
+# Safety check in case we forgot a possible combination
+# Make it ugly pink so we will definitely see it
+Show 
+    Class Maps
+    SetFontSize 45
+    SetBackgroundColor 255 100 255
+    SetTextColor 0 0 0
+    PlayAlertSound 7 300

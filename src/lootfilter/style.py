@@ -1,3 +1,15 @@
+class StyleCollection(object):
+    def __init__(self, default, styles):
+        self._default = default
+        self._styles = styles
+
+    def __getattr__(self, name):
+        return self._styles.get(name, self._default)
+
+    def __str__(self):
+        return str(self._default)
+
+
 class ItemStyle(object):
     def __init__(self, textcolor=None, background=None, border=None, fontsize=None, sound=None):
         self.textcolor = textcolor
@@ -80,6 +92,9 @@ class Sound(object):
 
 
 def parse_color(text):
+    if isinstance(text, Color):
+        return text
+
     if text is None:
         return None
 
@@ -93,6 +108,9 @@ def parse_color(text):
 
 
 def parse_sound(text):
+    if isinstance(text, Sound):
+        return text
+
     if text is None:
         return None
 

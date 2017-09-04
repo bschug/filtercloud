@@ -1,0 +1,70 @@
+# ----------------------------------- [CURRENCY] --------------------------------------------
+
+{% if currency.use_shaper_voice %}
+# Shaper Voice Acting 
+Show 
+	Class Currency
+	BaseType "Mirror of Kalandra"
+{{ style.ultra_rare.currency|setstyle(sound="ShMirror 300") }}
+
+Show 
+	Class Currency
+	BaseType "Exalted Orb"
+{{ style.strong_highlight.currency|setstyle(sound="ShExalted 300") }}
+
+Show 
+	Class Currency
+	BaseType "Divine Orb"
+{{ style.strong_highlight.currency|setstyle(sound="ShDivine 300") }}
+
+{% endif %}
+
+{% if currency.ultra_rare %}
+Show 
+	Class Currency
+	BaseType {{ currency.ultra_rare|names }}
+{{ style.ultra_rare.currency }}
+{% endif %}
+
+{% if currency.strong_highlight %}
+# Strongly Highlight super-rare currency 
+Show 
+    Class Currency
+    BaseType {{ currency.strong_highlight|names }}
+{{ style.strong_highlight.currency }}
+{% endif %}
+
+{% if currency.highlight %}
+# Highlight medium rare currency 
+Show 
+    Class Currency
+    BaseType {{ currency.highlight|names }}
+{{ style.highlight.currency }}
+{% endif %}
+
+{% if currency.normal %}
+Show 
+	Class Currency
+	BaseType {{ currency.normal|names }}
+{{ style.normal.currency }}
+{% endif %}
+	
+{% if currency.smaller %}	
+Show 
+	Class Currency
+	BaseType {{ currency.smaller|names }}
+{{ style.smaller.currency }}
+{% endif %}
+
+{% if currency.hidden %}	
+# Hide low-value currency 
+Hide 
+    Class Currency 
+    BaseType {{ currency.hidden|names }}
+{{ style.smaller.currency }}
+{% endif %}
+	
+# Mark all missing currency with pink border
+Show 
+    Class Currency 
+	SetBorderColor 255 100 255

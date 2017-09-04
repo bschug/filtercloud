@@ -51,7 +51,11 @@ def get_unique_prices(league):
 def get_unique_prices_from_url(url, league, unique_prices):
     response = requests.get(url, {'league': league}).json()
     for item in response['lines']:
+        # Fated uniques are created by prophecies, not dropped.
         if item['name'] in FATED_UNIQUES:
+            continue
+        # All six-linkable items have 3 entries: regular, 5link and 6link. We only want regular.
+        if item['links'] >= 5:
             continue
         unique_prices[item['baseType']] = max(unique_prices[item['baseType']], item['chaosValue'])
 

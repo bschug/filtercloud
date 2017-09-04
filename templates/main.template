@@ -1,0 +1,108 @@
+# bschug's Loot Filter for Leveling
+
+# Auto-Generated from templates on {{ date }}
+
+# The main principle behind this filter is to show only items that are worth picking up.
+# The general structure of the filter is similar to NeverSink's, but it is way more restrictive.
+# The color scheme is subtle, I try to stay close to the original PoE colors.
+# Very valuable items are highlighted by using the usual text color as background color, 
+# with either black or white text (whatever is more readable). 
+# Other items worth picking up are highlighted with a slightly lighter background than usual 
+# (similar to what it looks like when you hover the mouse over an item). 
+# Low-value currency has a grey text color instead of the usual gold to make mid-value 
+# currency more visible without adding too much visual noise. 
+
+{% if include_leveling_rules %}
+# While leveling, white and blue items are hidden based on the difference between 
+# item level and drop level. The hide thresholds are different for weapons and body armour, 
+# jewelry and other armour pieces because of the difference in their drop rate and how 
+# important the base stats are compared to magic mods on that item type. 
+# Only the two highest available flask types are shown for life, mana and hybrid respectively. 
+# Items with three linked sockets are always shown until level 40, 4-links are shown until maps.
+{% endif %}
+
+{% if not include_endgame_rules %}
+# In end-game, you should instead use the end-game version of the filter.
+{% endif %}
+
+# Hide identified rares because we probably dropped them
+# Don't hide corrupted items because they are always identified
+# Don't hide magic items because they may be warbands items 
+# (and it's not that common to identify & drop blues in endgame)
+# Press Alt to see items dropped from Always Identified strongboxes.
+# Not reducing font size so they show up normally on Alt.
+Hide 
+	Rarity Rare
+	Identified True
+	Corrupted False
+
+	
+###################################################
+
+{% include "_sockets.template" %}
+
+{% include "_league.template" %}
+
+{% include "_crafting.template" %}
+
+# Hide all endgame normal/magic items now, for performance
+Hide 
+    Rarity <= Magic 
+    ItemLevel > 68
+    Class Axes Bows Claws Daggers Maces Staves Swords Wands Armours Helmets Gloves Boots Shields Quivers Amulets Belts Rings
+    {{ style.hidden.default }}
+
+{% include "_jewels.template" %}
+
+{% include "_currency.template" %}
+
+# ===================================== [RARES] =========================================
+
+# Highlight Atlas bases
+Show 
+	Rarity Rare
+    BaseType "Steel Ring" "Opal Ring" "Blue Pearl Amulet" "Marble Amulet" "Vanguard Belt" "Crystal Belt" "Bone Helmet" "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves"
+    {{ style.highlight.rare }}
+
+# Highlight 5-linked rares
+Show 
+    Rarity Rare 
+    LinkedSockets 5
+    {{ style.highlight.rare }}
+
+{% if include_endgame_rules %}
+{% include "_endgame_rares.template" %}
+{% endif %}
+	
+{% include "_gems.template" %}	
+	
+{% include "_maps.template" %}
+
+{% include "_mapfragments.template" %}
+
+{% include "_uniques.template" %}
+
+{% include "_divcards.template" %}
+
+{% include "_flasks.template" %}
+
+{% if include_leveling_rules %}
+{% include "_leveling.template" %}
+{% endif %}
+	
+# -------------------------------- [GENERIC WHITELIST] -------------------------- 
+
+# Show all rares that weren't explicitly hidden 
+Show 
+	Rarity Rare
+	
+# Hide all the other trash 
+# Use explicit blacklist of item classes to avoid hiding stuff we forgot to whitelist 
+Hide 
+    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armours" Shields Boots Gloves Helmets Quivers Amulets Belts Rings 
+    SetFontSize 10
+    
+# Pink font and border for anything we somehow haven't covered (which would be a bug in the filter)
+Show
+    SetTextColor 255 0 255
+    SetBorderColor 255 0 255

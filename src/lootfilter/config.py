@@ -4,22 +4,31 @@ from datetime import datetime
 from box import Box
 
 import pricechecking
-from lootfilter.style import ItemStyle, parse_color, parse_sound
+from lootfilter.style import StyleCollection, ItemStyle, parse_color, parse_sound
 
 
-def load_config(filename):
+def load_config(filename, style):
     settings = load_settings(filename)
     return {
         'date': datetime.now(),
         'include_leveling_rules': bool(settings.include_leveling_rules),
         'include_endgame_rules': bool(settings.include_endgame_rules),
+        'crafting': settings.get('crafting'),
         'currency': settings.get('currency'),
         'rares': settings.get('rares'),
+        'maps': settings.get('maps'),
         'uniques': build_unique_config(settings),
         'divcards': build_divcards_config(settings),
         'gems': settings.get('gems'),
-        'style': build_styles_config(settings),
+        'jewels': settings.get('jewels'),
+        'leveling': settings.get('leveling'),
+        'style': style,
     }
+
+
+def load_style(filename):
+    settings = load_settings(filename)
+    return build_styles_config(settings)
 
 
 def load_settings(filename):
@@ -49,12 +58,14 @@ def build_divcards_config(settings):
 
 def build_styles_config(settings):
     return {
-        'ultra_rare': StyleCollection(settings.style.ultra_rare),
-        'strong_highlight': StyleCollection(settings.style.strong_highlight),
-        'highlight': StyleCollection(settings.style.highlight),
-        'normal': StyleCollection(settings.style.normal),
-        'smaller': StyleCollection(settings.style.smaller),
-        'hidden': StyleCollection(settings.style.hidden)
+        'ultra_rare': build_style_collection(settings.ultra_rare),
+        'strong_highlight': build_style_collection(settings.strong_highlight),
+        'highlight': build_style_collection(settings.highlight),
+        'normal': build_style_collection(settings.normal),
+        'smaller': build_style_collection(settings.smaller),
+        'hidden': build_style_collection(settings.hidden),
+        'leveling': build_style_collection(settings.leveling),
+        'map': build_style_collection(settings.map),
     }
 
 
@@ -70,13 +81,10 @@ def build_style(cfg, default):
     return style
 
 
-class StyleCollection(object):
-    def __init__(self, settings):
-        self._default = build_style(settings.default, ItemStyle())
-        self._styles = dict()
-        for name, config in settings.items():
-            self._styles[name] = build_style(config, self._default)
+def build_style_collection(settings):
+    default = build_style(settings.default, ItemStyle())
+    styles = dict()
+    for name, config in settings.items():
+        styles[name] = build_style(config, default)
+    return StyleCollection(default, styles)
 
-    def __getattr__(self, name):
-        #styles = super().__getattr__('_styles')
-        return self._styles.get(name, self._default)

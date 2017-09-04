@@ -1,0 +1,122 @@
+{
+	"ultra_rare": {
+		"default": {
+			"textcolor": "0 0 0",
+			"background": "240 180 40",
+			"fontsize": "48",
+			"border": "0 0 0",
+			"sound": "6 300"
+		}
+	},
+	"strong_highlight": {
+		"default": {
+			"textcolor": "0 0 0",
+			"border": "0 0 0",
+			"fontsize": "48",
+			"sound": "6 300"
+		},
+		
+		"normal": {
+			"background": "200 200 200"
+		},
+		"magic": {
+			"background": "136 136 136"
+		},
+		"rare": {
+			"background": "255 255 119"
+		},
+		"unique": {
+			"background": "175 78 17"
+		},
+		"currency": {
+			"background": "170 158 130"
+		},
+		"gem": {
+			"background": "27 162 155"
+		},
+		"breach": {
+			"background": "200 80 150"
+		},
+		"divcard": {
+			"background": "170 230 230"
+		}
+	},
+	"highlight": {
+		"default": {
+			"border": "0 0 0",
+			"fontsize": "40",
+			"sound": "1 300"
+		},
+		"normal": {
+			"background": "80 80 80 220"
+		},
+		"magic": {
+			"background": "50 50 90 220"
+		},
+		"rare": {
+			"background": "90 90 45 220"
+		},
+		"unique": {
+			"background": "70 35 14 220"
+		},
+		"currency": {
+			"background": "63 59 49 220"
+		},
+		"gem": {
+			"background": "35 80 80 220"
+		},
+		"breach": {
+			"background": "30 0 50 200",
+			"textcolor": "200 80 150"
+		},
+		"divcard": {
+			"textcolor": "170 230 230",
+			"background": "85 115 115 220"
+		}
+	},
+	"normal": {
+		"default": {
+			"fontsize": "36"
+		},
+		"divcard": {
+			"textcolor": "170 230 230"
+		}
+	},
+	"smaller": {
+		"default": {
+			"fontsize": "24"
+		},
+		"currency": {
+			"fontsize": "36",
+			"textcolor": "100 100 100"
+		},
+		"divcard": {
+			"textcolor": "170 230 230"
+		}
+	},
+	"map": {
+		"default": {
+			"fontsize": 40,
+			"sound": "4 300"
+		},
+		"white": {
+			"border": "200 200 200"
+		},
+		"yellow": {
+			"border": "255 255 119"
+		},
+		"red": {
+			"border": "255 0 0"
+		}
+	},
+	"hidden": {
+		"default": {
+			"fontsize": "18"
+		}
+	},
+	"leveling": {
+		"default": {
+			"border": "120 255 120"
+		}
+	}
+}	

@@ -1,0 +1,99 @@
+{
+	"league": "Harbinger",
+	"include_leveling_rules": true,
+	"include_endgame_rules": false,
+	
+	"currency": {
+		"hide_low_value": false,
+		"use_shaper_voice": true,
+		"ultra_rare": ["Mirror of Kalandra"],
+		"strong_highlight": [
+			"Exalted Orb", "Divine Orb", "Eternal Orb", "Stacked Deck", 
+			"Master Cartographer", "Journeyman Cartographer"],
+		"highlight": [
+			"Gemcutter's Prism", "Regal Orb", "Blessed Orb", "Orb of Regret", "Chaos Orb", "Vaal Orb", 
+			"Orb of Scouring", "Cartographer's Chisel", "Remnant of Corruption", "Apprentice Cartographer"],
+		"normal": [
+			"Orb of Fusing", "Orb of Alchemy", "Chromatic Orb", "Jeweller's Orb", "Orb of Chance",
+			"Glassblower's Bauble"],
+		"smaller": [
+			"Scroll of Wisdom", "Portal Scroll", "Blacksmith's Whetstone", "Armourer's Scrap",
+			"Orb of Transmutation", "Orb of Augmentation", "Orb of Alteration"],
+		"hidden": []
+	},
+	
+	"gems": {
+		"show_all": true,
+		"high_quality": 17,
+		"medium_quality": 1,
+		"high_value_gems": ["Empower", "Enlighten", "Enhance", "Vaal Breach", "Vaal Haste"],
+		"medium_value_gems": ["Vaal Clarity", "Vaal Grace", "Added Chaos Damage", "Portal"]
+	},
+
+	"crafting": {
+		"always": [
+			"Sacrificial Garb", "Archon Kite Shield", "Astral Plate"
+		],
+		"ilvl84": [],
+		"chancing": [],
+		"atlas": {
+			"ilvl84": false,
+			"always": true
+		}
+	},
+	
+	"uniques": {
+		"thresholds": {
+			"worthless": 0.5,
+			"valuable": 2,
+			"top_tier": 15
+		}
+	},
+	
+	"divcards": {
+		"thresholds": {
+			"worthless": 0,
+			"valuable": 1,
+			"top_tier": 15
+		},
+		"overrides": {
+			"The Carrion Crow": "worthless"
+		}
+	},
+	
+	"jewels": {
+		"show_magic": true
+	},
+	
+	"leveling": {
+		"flasks": {
+			"offset": 3
+		},
+		"highlight_boots": {
+			"show_magic_until": 40
+		},
+		"jewelry": {
+			"show_magic_until": 40
+		},
+		"sockets": {
+			"all_3linked_wands": true,
+			"all_3linked_caster_daggers": true,
+			"all_3links_until": 40,
+			"all_4links_until": 70,
+			"onehand_3link_offset": 10
+		},
+		"tight": {
+			"classes": [
+				"Axes", "Bows", "Claws", "Daggers", "Maces", "Sceptres", "Staves", "Swords", 
+				"Wands", "Body Armours", "Shields" ],
+			"offset": 3,
+			"show_magic_until": 30
+		},
+		"loose": {
+			"classes": [
+				"Boots", "Gloves", "Helmets", "Quivers"],
+			"offset": 10,
+			"show_magic_until": 30
+		}
+	}
+}

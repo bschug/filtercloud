@@ -1,0 +1,75 @@
+# ================================= [FLASKS] =======================================
+
+# Show perfect quality life/mana/hybrid flasks in endgame
+Show 
+    Class Flasks
+    BaseType Life Mana Hybrid
+    Rarity < Unique 
+    Quality 20
+
+# Highlight high quality utility flasks 
+Show 
+    Class "Utility Flasks"
+    Quality > 15
+    Rarity < Unique 
+    SetFontSize 40
+
+# Hide all other flasks in endgame
+Hide 
+    ItemLevel >= 70
+    Rarity < Unique 
+    Class Flasks
+
+
+{% if include_leveling_rules %}
+	
+# Highlight all quality flasks on low levels
+Show 
+    Class Flask 
+    Quality > 1
+	ItemLevel < 65
+    Rarity Normal 
+{{ style.highlight.normal }}
+Show 
+    Class Flask 
+    Quality > 1
+	ItemLevel < 65
+    Rarity Magic 
+{{ style.highlight.magic}}
+
+# Hide all out-leveled life/mana flasks
+{% for droplevel in [3, 6, 12, 18, 24, 30, 36, 42, 50, 60] %}
+Hide 
+	Class Flask 
+	BaseType Life Mana
+	DropLevel < {{ droplevel }}
+	ItemLevel > {{ droplevel + leveling.flasks.offset }}
+{% endfor %}
+	
+# Hide all out-leveled hybrid flasks
+{% for droplevel in [10, 20, 30, 40, 50, 60] %}
+Hide 
+	Class Flask 
+	BaseType Hybrid
+	DropLevel < {{ droplevel }}
+	ItemLevel > {{ droplevel + leveling.flasks.offset }}
+{% endfor %}
+
+# Highlight non-outleveled flasks
+Show
+	Class Flask 
+	BaseType Life Mana Hybrid
+{{ style.leveling }}
+
+# Show all utility flasks 
+Show 
+    Class "Utility Flasks"
+{{ style.leveling }}
+
+{% endif %}
+
+# Hide all flasks that weren't explicitly shown
+Hide 
+    Class Flask 
+    Rarity < Unique 
+

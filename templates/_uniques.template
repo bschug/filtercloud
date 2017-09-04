@@ -1,0 +1,35 @@
+# ----------------------------------- [UNIQUES] -----------------------------------	
+
+# Auto-generated with data from poe.ninja 
+
+# Top Tier Uniques (15c+)
+Show
+    Rarity Unique
+    BaseType {{ uniques.top_tier|names }}
+{{ style.strong_highlight.unique }}
+	
+# Decent Uniques (2c+)
+Show
+    Rarity Unique
+    BaseType {{ uniques.valuable|names }}
+{{ style.highlight.unique }}
+	
+# Mediocre Uniques (~1c)
+Show
+    Rarity Unique
+    BaseType {{ uniques.mediocre|names }}
+{{ style.normal.unique }}
+	
+# Worthless Uniques (< 2 alch)
+Show
+    Rarity Unique
+    BaseType {{ uniques.worthless|names }}
+{{ style.smaller.unique }}
+
+# Draw pink border around unknown Uniques
+Show
+    Rarity Unique
+    SetBorderColor 255 100 255
+    
+
+

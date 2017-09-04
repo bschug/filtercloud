@@ -35,12 +35,17 @@ def must_quote(value):
     return ' ' in value
 
 
-def setstyle_filter(style, fontsize=None, textcolor=None, background=None, border=None, sound=None):
+def setstyle_filter(style, *args, fontsize=None, textcolor=None, background=None, border=None, sound=None):
     textcolor = parse_color(textcolor)
     background = parse_color(background)
     border = parse_color(border)
     sound = parse_sound(sound)
+
     newstyle = ItemStyle(fontsize=fontsize, textcolor=textcolor, background=background, border=border, sound=sound)
+
+    for arg in args:
+        newstyle.fill_with(arg)
+
     newstyle.fill_with(style)
     return newstyle
 
