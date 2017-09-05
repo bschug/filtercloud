@@ -1,5 +1,4 @@
 import os
-import sys
 
 from jinja2 import Template, Environment, FileSystemLoader
 
