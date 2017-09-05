@@ -7,8 +7,7 @@ import pricechecking
 from lootfilter.style import StyleCollection, ItemStyle, parse_color, parse_sound
 
 
-def load_config(filename, style):
-    settings = load_settings(filename)
+def load_config(settings, style):
     return {
         'date': datetime.now(),
         'include_leveling_rules': bool(settings.include_leveling_rules),
@@ -26,14 +25,13 @@ def load_config(filename, style):
     }
 
 
-def load_style(filename):
-    settings = load_settings(filename)
+def load_style(settings):
     return build_styles_config(settings)
 
 
 def load_settings(filename):
     with open(filename) as fp:
-        return Box(json.load(fp))
+        return json.load(fp)
 
 
 def build_unique_config(settings):
