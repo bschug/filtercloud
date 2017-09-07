@@ -4,7 +4,7 @@ import requests
 from requests_cache import CachedSession
 
 
-cache = CachedSession(cache_name='uniques', backend='memory', expire_after=3600)
+cache = CachedSession(cache_name='uniques', backend='sqlite', expire_after=3600)
 
 
 # Fated Uniques can only be acquired from prophecies, not dropped by enemies.

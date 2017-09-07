@@ -2,7 +2,7 @@ import requests
 from requests_cache import CachedSession
 
 
-cache = CachedSession(cache_name='divcards', backend='memory', expire_after=3600)
+cache = CachedSession(cache_name='divcards', backend='sqlite', expire_after=3600)
 
 
 def get_divcard_categories(league, thresholds):
