@@ -1,0 +1,26 @@
+.sidebar {
+    float: left;
+    background-color: #26180f;
+    padding: 5px 10px 5px 10px;
+    border-top: 1px solid #755030;
+    border-left: 1px solid #755030;
+    border-right: 1px solid #130c07;
+    border-bottom: 1px solid #130c07;
+}
+
+.sidebar .link {
+    color: #666666;
+    font-family: Fontin;
+    font-size: 20px;
+    margin: 3px;
+    padding: 0;
+    cursor: default;
+}
+
+.sidebar .link:hover {
+    color: #cccccc;
+}
+
+.sidebar .selected {
+    color: #cccccc;
+}
