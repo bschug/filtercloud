@@ -1,32 +1,47 @@
 # ===================================== [GEMS] ==========================================
 
-# Quality
+# ---------- Strong Highlight -------------
+
+# Very High Quality
 Show 
     Class "Skill Gems"
     Quality >= {{ gems.high_quality }} 
 {{ style.strong_highlight.gem }}
-Show 
-    Class "Skill Gems"
-    Quality >= {{ gems.medium_quality }}
-{{ style.highlight.gem }}
 
 # Super Valuable Drop-Only
-Show 
+Show
     Class "Skill Gems"
     BaseType {{ gems.high_value_gems|names }}
 {{ style.strong_highlight.gem }}
 
-# Valuable 
-Show 
+# -------------- Highlight ----------------
+
+# Medium Quality
+Show
     Class "Skill Gems"
-    BaseType {{ gems.medium_value_gems|names }} 
+    Quality >= {{ gems.medium_quality }}
 {{ style.highlight.gem }}
+
+# Valuable
+Show
+    Class "Skill Gems"
+    BaseType {{ gems.medium_value_gems|names }}
+{{ style.highlight.gem }}
+
+# ---------------- Normal ------------------
+
+Show
+    Class "Skill Gems"
+    Quality >= {{ gems.min_quality }}
+{{ style.normal.gem }}
 
 # Show Vaal Gems
 Show 
     Class "Skill Gems"
     BaseType Vaal
 {{ style.normal.gem }}
+
+# ----------------- Rest -------------------
 
 {% if gems.show_all %}
 # Show all other Skill Gems in smaller font
