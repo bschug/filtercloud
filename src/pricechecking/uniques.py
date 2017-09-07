@@ -1,6 +1,10 @@
 from collections import defaultdict
 
 import requests
+from requests_cache import CachedSession
+
+
+cache = CachedSession(cache_name='uniques', backend='memory', expire_after=3600)
 
 
 # Fated Uniques can only be acquired from prophecies, not dropped by enemies.
@@ -50,7 +54,7 @@ def get_unique_prices(league):
 
 
 def get_unique_prices_from_url(url, league, unique_prices):
-    response = requests.get(url, {'league': league}).json()
+    response = cache.get(url, params={'league': league}).json()
     for item in response['lines']:
         # Fated uniques are created by prophecies, not dropped.
         if item['name'] in FATED_UNIQUES:

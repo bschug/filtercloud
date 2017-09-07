@@ -1,4 +1,8 @@
 import requests
+from requests_cache import CachedSession
+
+
+cache = CachedSession(cache_name='divcards', backend='memory', expire_after=3600)
 
 
 def get_divcard_categories(league, thresholds):
@@ -9,7 +13,7 @@ def get_divcard_categories(league, thresholds):
 def get_divcard_prices(league):
     prices = dict()
     url = "http://poeninja.azureedge.net/api/Data/GetDivinationCardsOverview"
-    response = requests.get(url, {'league': league}).json()
+    response = cache.get(url, params={'league': league}).json()
     for item in response['lines']:
         prices[item['name']] = item['chaosValue']
     return prices
