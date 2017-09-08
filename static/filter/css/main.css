@@ -1,18 +1,18 @@
 
 @font-face {
 	font-family: FontinSmallcaps;
-	src: url(/fonts/fontin-smallcaps-webfont.woff);
+	src: url(/filter/fonts/fontin-smallcaps-webfont.woff);
 }
 
 @font-face {
     font-family: Fontin;
-    src: url(/fonts/Fontin-Regular.woff);
+    src: url(/filter/fonts/Fontin-Regular.woff);
 }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: Fontin sans-serif;
+    font-family: Fontin;
 }
 
 .root {
@@ -49,4 +49,16 @@ body {
     background-color: black;
     /*border: 1px solid red;*/
     overflow: auto;
+    color: #ffddbb;
+    display: flex;
+}
+
+.content {
+    padding-left: 10px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }

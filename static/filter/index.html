@@ -4,12 +4,13 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/sidebar.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
     <script src="js/config.js"></script>
     <script src="js/style.js"></script>
     <script src="js/main.js"></script>
     <title>poe.gg FilterCloud</title>
 </head>
-<body>
+<body onload="FilterCloud.init();">
 <div class="root">
 <div class="page-root">
     <div class="header">
@@ -21,28 +22,62 @@
             <span>FilterCloud</span>
         </div>
     </div>
-    <div class="page">
+    <div class="page clearfix" id="page">
         <div class="sidebar">
-            <p class="link selected">Style</p>
-            <hr>
-            <p class="link">Engame Rares</p>
-            <p class="link">Leveling</p>
-            <hr>
-            <p class="link">Crafting</p>
-            <p class="link">Currency</p>
-            <p class="link">Uniques</p>
-            <p class="link">Divination Cards</p>
-            <p class="link">Skill Gems</p>
-            <p class="link">Sockets</p>
-            <p class="link">Flasks</p>
-            <p class="link">Jewels</p>
-            <p class="link">Maps</p>
-            <p class="link">Map Fragments</p>
-            <p class="link">Special Items</p>
+            <div class="sidebar-box">
+                <p class="link" v-bind:class="{ selected: currentPage === 'Style' }" v-on:click="currentPage = 'Style'">Style</p>
+                <hr>
+                <p class="link"
+                   v-for="page in ['Endgame Rares', 'Leveling']"
+                   v-bind:class="{ selected: currentPage === page }"
+                   v-on:click="currentPage = page">{{ page }}</p>
+                <hr>
+                <p class="link"
+                   v-for="page in ['Crafting', 'Currency', 'Uniques', 'Divination Cards', 'Skill Gems', 'Sockets', 'Flasks', 'Jewels', 'Maps', 'Map Fragments', 'Special Items']"
+                   v-bind:class="{ selected: currentPage === page }"
+                   v-on:click="currentPage = page">{{ page }}</p>
+            </div>
         </div>
-        <div class="content">
-            <div id="style-settings">
-                <h1></h1>
+        <div class="content" id="content">
+            <div id="faq-page" v-show="currentPage === null">
+                <h1>FAQ</h1>
+                <h2>What does FilterCloud offer?</h2>
+                <ul>
+                    <li>A clean, tasteful and powerful loot filter</li>
+                    <li>Customizable style and behaviour</li>
+                    <li>Access your loot filter from anywhere</li>
+                    <li>Rules based on market value from poe.ninja</li>
+                    <li>Detailed leveling rules</li>
+                </ul>
+                <h2>How is this different from Neversink's FilterBlade?</h2>
+                <p>Apart from technical features, FilterCloud follows a fundamentally different philosophy.
+                    Neversink's filter tries to encode as much information as possible into the color scheme,
+                    to ensure that you can make an educated decision to pick an item up or leave it.</p>
+                <p>FilterCloud only shows you items that are worth picking up. The basic idea is that you should not have
+                    to think about inventory management while you're killing stuff. If the filter shows it, you pick it
+                    up.</p>
+                <p>Its color scheme has three main levels of highlighting, plus one special style for super rare
+                    items like Mirrors, and optionally a grey style for low-value currency items (in case you don't
+                    want to hide them completely). This simplicity makes it super easy to learn what the colors and
+                    styles mean.</p>
+                <h2>Why are there separate files for Leveling and Endgame?</h2>
+                <p>The leveling filter has rather complex rules about what items to show at what level, while the
+                    endgame filter has complex rules for maps and rares. Combining both into one file would be
+                    problematic for several reasons:</p>
+                <ul>
+                    <li>The rules would become even more complex because they would need to check against the item
+                        level in every single rule.</li>
+                    <li>The large leveling ruleset might cause performance issues on slower machines when running it
+                        against the massive amounts of loot on endgame maps. Especially when it also includes the
+                        endgame rules.</li>
+                    <li>It would become a lot more error-prone.</li>
+                    <li>There is no strong need for combining them because you don't keep switching between
+                        leveling and endgame that often.</li>
+                </ul>
+            </div>
+
+            <div id="style-page" v-show="currentPage === 'Style'">
+                <h1>Ultra Rare</h1>
             </div>
         </div>
     </div>

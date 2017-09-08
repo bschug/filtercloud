@@ -6,7 +6,7 @@
     height: 42px;
     margin: 0;
     padding: 0;
-    background-image: url(/images/titlebar.png);
+    background-image: url(/filter/images/titlebar.png);
     background-repeat: repeat-x;
 }
 
@@ -15,7 +15,7 @@
     left: 0px;
     width: 52px;
     height: 42px;
-    background-image: url(/images/titlebar_left.png);
+    background-image: url(/filter/images/titlebar_left.png);
     background-repeat: no-repeat;
 }
 
@@ -24,7 +24,7 @@
     right: 0px;
     width: 32px;
     height: 42px;
-    background-image: url(/images/titlebar_right.png);
+    background-image: url(/filter/images/titlebar_right.png);
     background-repeat: no-repeat;
 }
 
@@ -35,7 +35,7 @@
     width: 183px;
     height: 95px;
     margin-left: -91px;
-    background-image: url(/images/title.png);
+    background-image: url(/filter/images/title.png);
     background-repeat: no-repeat;
 }
 
