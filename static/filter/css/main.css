@@ -62,3 +62,7 @@ body {
     clear: both;
     display: table;
 }
+
+[v-cloak] {
+    display: none;
+}
