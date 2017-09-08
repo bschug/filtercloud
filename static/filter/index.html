@@ -41,6 +41,7 @@
         <div class="content" id="content">
             <div id="faq-page" v-show="currentPage === null">
                 <h1>FAQ</h1>
+
                 <h2>What does FilterCloud offer?</h2>
                 <ul>
                     <li>A clean, tasteful and powerful loot filter</li>
@@ -49,17 +50,19 @@
                     <li>Rules based on market value from poe.ninja</li>
                     <li>Detailed leveling rules</li>
                 </ul>
+
                 <h2>How is this different from Neversink's FilterBlade?</h2>
                 <p>Apart from technical features, FilterCloud follows a fundamentally different philosophy.
                     Neversink's filter tries to encode as much information as possible into the color scheme,
                     to ensure that you can make an educated decision to pick an item up or leave it.</p>
-                <p>FilterCloud only shows you items that are worth picking up. The basic idea is that you should not have
+                <p>FilterCloud only shows you items that are worth picking up. The idea is that you should not have
                     to think about inventory management while you're killing stuff. If the filter shows it, you pick it
                     up.</p>
                 <p>Its color scheme has three main levels of highlighting, plus one special style for super rare
                     items like Mirrors, and optionally a grey style for low-value currency items (in case you don't
                     want to hide them completely). This simplicity makes it super easy to learn what the colors and
                     styles mean.</p>
+
                 <h2>Why are there separate files for Leveling and Endgame?</h2>
                 <p>The leveling filter has rather complex rules about what items to show at what level, while the
                     endgame filter has complex rules for maps and rares. Combining both into one file would be
@@ -70,7 +73,7 @@
                     <li>The large leveling ruleset might cause performance issues on slower machines when running it
                         against the massive amounts of loot on endgame maps. Especially when it also includes the
                         endgame rules.</li>
-                    <li>It would become a lot more error-prone.</li>
+                    <li>It would become a lot more error-prone and harder to maintain.</li>
                     <li>There is no strong need for combining them because you don't keep switching between
                         leveling and endgame that often.</li>
                 </ul>
