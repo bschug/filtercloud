@@ -61,7 +61,7 @@ class Cache(object):
         """
         # Build key from function name and arguments:
         all_args = [str(x) for x in args] + ["{}={}".format(k, v) for k, v in kwargs.items()]
-        key = function.__qualname__ + '(' + ','.join(all_args) + ')'
+        key = self._function_key(function) + '(' + ','.join(all_args) + ')'
         return self.get_with_key(key, function, *args, **kwargs)
 
     def get_with_key(self, key, function, *args, **kwargs):
