@@ -15,15 +15,20 @@ class Cache(object):
     Returns cached results if they are less than <timeout> old.
     Uses an sqlite database to store cached results.
 
-    Caveats:
+    Limitations:
      * This cache uses the function's __qualname__ to build a key.
        If this is not unique for your function (e.g. same function name  defined in multiple modules),
        functions with colliding names may return the other function's cached values.
        Override the _function_key method to provide a different way of identifying functions,
        or call get_with_key to directly specify a key (which must include the arguments).
+       
      * This cache is designed for functions with a finite set of possible arguments. It does not impose
        any limits on the size of the cache. Don't use this if arguments are provided by user input or
        some other source out of your control. A malicious user may make you run out of disk space.
+       
+     * If you just want to cache HTTP requests, use requests_cache instead. This class is meant for caching
+       expensive calculations or data that was generated based on HTTP requests (e.g. if the request returns
+       very large JSONS, but you only need a tiny part of it).
     """
     def __init__(self, name, *, dbname='cache.sqlite', timeout=None, use_outdated_cache_on_error=False, gc_on_init=True):
         """
@@ -71,9 +76,9 @@ class Cache(object):
         # Use cached data if available
         cached = self.lookup_cached(key)
         if cached is not None:
-            logger.debug("Returning cached version of %s", format(key))
+            logger.debug("Returning cached version of %s", key)
             return cached
-        logger.debug("No cached version found for %s", format(key))
+        logger.debug("No cached version found for %s", key)
 
         try:
             # Invoke function and store result in cache
@@ -101,14 +106,14 @@ class Cache(object):
                 if timestamp > threshold:
                     return content
                 logger.debug("Ignoring cached value of %s because it was created on %s, which is before %s",
-                             format(key), format(timestamp), format(threshold))
+                             key, timestamp, threshold)
         return None
 
     def store(self, key, value):
         """
         Store a value in the cache.
         """
-        logger.debug("Storing new value for %s: %s", format(key), format(value))
+        logger.debug("Storing new value for %s: %s", key, value)
         with self._db_cursor() as cursor:
             cursor.execute('INSERT OR REPLACE INTO ' + self.name + '(key, timestamp, content) ' +
                            'VALUES (?, CURRENT_TIMESTAMP, ?) ',
