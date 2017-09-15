@@ -30,6 +30,8 @@
         loads.push(leveling.load('leveling')
             .then(function(response) { Config.leveling = leveling; }));
 
-        return Promise.all(loads);
+        return Promise.all(loads)
+            .then(function(response) { Config.current = Config.endgame; })
+            .catch(function(error) { console.error("Failed to load config: " + error); });
     };
 }( window.Config = window.Config || {} ));

@@ -1,12 +1,16 @@
 import logging
 from datetime import datetime, timedelta
 from contextlib import closing, contextmanager
+import inspect
 
 import sqlite3
 
 
-logger = logging.getLogger('util.cache')
+logger = logging.getLogger('functioncache.cache')
 logger.setLevel(logging.WARNING)
+logger.setLevel(logging.DEBUG)
+if len(logger.handlers) == 0:
+    logger.addHandler(logging.StreamHandler())
 
 
 class Cache(object):
@@ -65,8 +69,7 @@ class Cache(object):
         :return:
         """
         # Build key from function name and arguments:
-        all_args = [str(x) for x in args] + ["{}={}".format(k, v) for k, v in kwargs.items()]
-        key = self._function_key(function) + '(' + ','.join(all_args) + ')'
+        key = self._make_key(function, args, kwargs)
         return self.get_with_key(key, function, *args, **kwargs)
 
     def get_with_key(self, key, function, *args, **kwargs):
@@ -90,13 +93,15 @@ class Cache(object):
             cached = self.lookup_cached(key, threshold=datetime(1970, 1, 1))
             if cached is not None and self.use_outdated_cache_on_error:
                 logger.debug("%s call failed, returning outdated value from cache", key)
-                return cached
+                return self._deserialize(cached)
             raise
 
     def lookup_cached(self, key, *, threshold=None):
         """
         Lookup a value in the cache by key.
         If the value has never been added, or is outdated, returns None.
+        If this cache overrides the _serialize method, this will return the *serialized* representation of the cached
+        value.
         """
         threshold = threshold or datetime.utcnow() - self.timeout
 
@@ -113,6 +118,9 @@ class Cache(object):
         """
         Store a value in the cache.
         """
+        assert type(key) is str
+        value = self._serialize(value)
+        assert type(value) is str
         logger.debug("Storing new value for %s: %s", key, value)
         with self._db_cursor() as cursor:
             cursor.execute('INSERT OR REPLACE INTO ' + self.name + '(key, timestamp, content) ' +
@@ -126,6 +134,14 @@ class Cache(object):
         with self._db_cursor() as cursor:
             threshold = datetime.utcnow() - self.timeout
             cursor.execute('DELETE FROM ' + self.name + ' WHERE timestamp < ?', (threshold,))
+
+    def clear(self):
+        """
+        Delete all entries from the cache.
+        """
+        logger.info("Clearing " + self.name + " cache")
+        with self._db_cursor() as cursor:
+            cursor.execute('DELETE FROM ' + self.name)
 
     @contextmanager
     def _db_cursor(self):
@@ -142,7 +158,46 @@ class Cache(object):
                            ' timestamp TIMESTAMP NOT NULL, ' +
                            ' content BLOB NOT NULL)')
 
-    def _function_key(self, function):
-        """Override this if __qualname__ isn't unique for the functions you're using."""
-        return function.__qualname__
+    def _make_key(self, function, args, kwargs):
+        """
+        Construct a key from function name and arguments.
+        Override this if __qualname__ isn't unique for the functions you're using.
+        """
+        # Class methods take the class instance as the first parameter, which would include the repr of the object
+        # in the key, which in turn might include a memory address or similar ephemeral component, so we need to
+        # exclude it.
+        print("__self__: %s", hasattr(function, '__self__'))
+        if hasattr(function, '__self__'):
+            print('len(args): %s', len(args))
+            if len(args) > 0:
+                print('args[0] == self: %s', args[0] == function.__self__)
 
+        if hasattr(function, '__self__') and len(args) > 0 and args[0] == function.__self__:
+            args = args[1:]
+
+        # We want None arguments to show up as None, but that would collide with the string "None".
+        # That's why we also need to add quotes to strings.
+        def serialize_arg(x):
+            if x is None:
+                return 'None'
+            if type(x) is str:
+                return '"' + x + '"'
+            return str(x)
+
+        # Build argument list like (a, b, c=d, e=f)
+        all_args = [serialize_arg(x) for x in args] + ["{}={}".format(k, serialize_arg(v)) for k, v in kwargs.items()]
+        return function.__qualname__ + '(' + ','.join(all_args) + ')'
+
+    def _serialize(self, x):
+        """
+        Transform value to string before writing to cache.
+        If you want to support anything other than string return values in cached functions, you need to override this.
+        """
+        return x
+
+    def _deserialize(self, x):
+        """
+        Transform serialized value from cache back to its original type.
+        If you want to support anything other than string return values in cached functions, you need to override this.
+        """
+        return x

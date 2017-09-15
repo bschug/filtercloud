@@ -35,6 +35,7 @@
     width: 183px;
     height: 95px;
     margin-left: -91px;
+    z-index: 100;
     background-image: url(/filter/images/title.png);
     background-repeat: no-repeat;
 }

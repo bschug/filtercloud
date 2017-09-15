@@ -2,10 +2,11 @@ import os
 import json
 
 from box import Box
-from flask import Flask, session, request, g, render_template, send_file
+from flask import Flask, session, request, g, render_template, send_file, jsonify
 import psycopg2
 
 import lootfilter
+from wiki import WikiScraper, constants
 
 
 app = Flask('api', template_folder='/templates')
@@ -20,6 +21,12 @@ def get_db():
     return g.postgres_db
 
 
+def get_wiki():
+    if not hasattr(g, 'wiki'):
+        g.wiki = WikiScraper()
+    return g.wiki
+
+
 @app.teardown_appcontext
 def close_db(error):
     """Close the database at the end of the request."""
@@ -27,9 +34,16 @@ def close_db(error):
         g.postgres_db.close()
 
 
-@app.route('/api/filter/ping', methods=['GET'])
-def ping():
-    return "pong"
+@app.route('/api/filter/game-constants', methods=['GET'])
+def get_game_constants():
+    return get_wiki().get_game_constants_json()
+
+
+@app.route('/api/filter/itembox/<item>', methods=['GET'])
+def get_itembox(item):
+    if item not in get_wiki().get_game_constants():
+        raise ApiException('Item not found', status_code=404, data=item)
+    return get_wiki().get_itembox_html(item)
 
 
 @app.route('/api/filter/build', methods=['POST'])
@@ -61,3 +75,26 @@ def settings_from_post(key):
     text = request.form[key]
     obj = json.loads(text)
     return Box(obj)
+
+
+class ApiException(Exception):
+    def __init__(self, message, status_code=400, data=None):
+        super().__init__()
+        self.message = message
+        self.status_code = status_code
+        self.data = data
+
+    def to_dict(self):
+        rv = dict()
+        rv['data'] = self.data
+        rv['message'] = self.message
+        return rv
+
+
+@app.errorhandler(ApiException)
+def handle_api_error(ex):
+    response = jsonify(ex.to_dict())
+    response.status_code = ex.status_code
+    return response
+
+

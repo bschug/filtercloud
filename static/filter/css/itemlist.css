@@ -1,0 +1,25 @@
+.item-list {
+    padding: 10px;
+    margin: 20px 0px 20px 0px;
+    border: 1px solid #a0a0a0;
+}
+
+.item-list h2 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.item-preview {
+    margin: 3px;
+    padding: 2px 4px 2px 4px;
+    white-space: nowrap;
+    display: inline-block;
+    font-family: FontinSmallcaps;
+}
+
+.item-preview .delete-button {
+    position: relative;
+    bottom: -10%;
+    max-height: 80%;
+    width: auto;
+}

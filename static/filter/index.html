@@ -3,11 +3,18 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/itemlist.css">
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue"></script>
+
+    <script src="js/components.js"></script>
     <script src="js/config.js"></script>
-    <script src="js/style.js"></script>
+    <script src="js/gamedata.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/style.js"></script>
+    <script src="js/utils.js"></script>
+
     <title>poe.gg FilterCloud</title>
 </head>
 <body onload="FilterCloud.init();">
@@ -25,20 +32,18 @@
     <div class="page clearfix" id="page" v-cloak>
         <div class="sidebar">
             <div class="sidebar-box">
-                <p class="link" v-bind:class="{ selected: currentPage === 'Style' }" v-on:click="currentPage = 'Style'">Style</p>
+                <sidebarLink :current-page.sync="currentPage" page="Style"></sidebarLink>
                 <hr>
-                <p class="link"
-                   v-for="page in ['Endgame Rares', 'Leveling']"
-                   v-bind:class="{ selected: currentPage === page }"
-                   v-on:click="currentPage = page">{{ page }}</p>
+                <sidebarLink
+                   v-for="page in ['Endgame Rares', 'Leveling']" :key="page"
+                   :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
-                <p class="link"
+                <sidebarLink
                    v-for="page in ['Crafting', 'Currency', 'Uniques', 'Divination Cards', 'Skill Gems', 'Sockets', 'Flasks', 'Jewels', 'Maps', 'Map Fragments', 'Special Items']"
-                   v-bind:class="{ selected: currentPage === page }"
-                   v-on:click="currentPage = page">{{ page }}</p>
+                   :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
             </div>
         </div>
-        <div class="content" id="content">
+        <div class="content">
             <div id="faq-page" v-show="currentPage === null">
                 <h1>FAQ</h1>
 
@@ -80,7 +85,22 @@
             </div>
 
             <div id="style-page" v-show="currentPage === 'Style'">
-                <h1>Ultra Rare</h1>
+                <h1>Coming Soon</h1>
+            </div>
+
+            <div v-show="currentPage === 'Endgame Rares'">
+                <checkboxWithTooltip id="show_fully_linked" v-model="config.rares.endgame.show_fully_linked" label="Show Fully Linked">
+                    Show all fully linked rare boots, gloves and helmets, even if their basetype would normally be hidden.
+                </checkboxWithTooltip>
+
+                <itemList title="Highlighted" :items.sync="config.rares.endgame.highlight" item-style="highlight.rare">
+                    Rare base types that are valuable in current meta.
+                    Also includes best ring/amulet bases.
+                </itemList>
+
+                <itemList title="Shown" :items.sync="config.rares.endgame.show" item-style="normal.rare">
+                    Off-meta base types that may still be valuable.
+                </itemList>
             </div>
         </div>
     </div>
