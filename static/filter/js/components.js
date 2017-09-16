@@ -36,13 +36,13 @@ Vue.component('itemlist', {
             <div class="item-list-inner">\
                 <itempreview \
                     v-for="item in items" :key="item" \
-                    :item="item" :item-style="itemStyle" \
+                    :item="item" :item-style="itemStyle" :item-rarity="itemRarity" :item-class="itemClass" \
                     :deletable="true" @deleted="deleteItem(item)"/>\
             </div>\
             <input type="text" v-model="itemInputName">\
             <button type="button" @click="addItem(itemInputName)">Add</button>\
         </div>',
-    props: ['title', 'items', 'itemStyle'],
+    props: ['title', 'items', 'itemStyle', 'itemRarity', 'itemClass'],
     data: function() { return { 'itemInputName': '' } },
     methods: {
         deleteItem: function(item) { this.$emit('update:items', this.items.filter(function(x) { return x !== item; })); },
@@ -58,11 +58,11 @@ Vue.component('itempreview', {
             <img src="images/close_button.png" alt="delete" v-if="deletable" class="delete-button" @click="deleteItem"></img>\
         </span>',
 
-    props: ['item', 'itemStyle', 'deletable'],
+    props: ['item', 'itemStyle', 'deletable', 'itemRarity', 'itemClass'],
 
     computed: {
         style: function() {
-            return Style.toCSS(Style.current, this.itemStyle);
+            return Style.toCSS(Style.getEffectiveStyle(Style.data, this.itemStyle, this.itemRarity, this.itemClass));
         }
     },
 

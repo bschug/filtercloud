@@ -93,12 +93,14 @@
                     Show all fully linked rare boots, gloves and helmets, even if their basetype would normally be hidden.
                 </checkboxWithTooltip>
 
-                <itemList title="Highlighted" :items.sync="config.rares.endgame.highlight" item-style="highlight.rare">
+                <itemList title="Highlighted" :items.sync="config.rares.endgame.highlight" item-style="highlight.rare"
+                          item-rarity="rare" item-class="?">
                     Rare base types that are valuable in current meta.
                     Also includes best ring/amulet bases.
                 </itemList>
 
-                <itemList title="Shown" :items.sync="config.rares.endgame.show" item-style="normal.rare">
+                <itemList title="Shown" :items.sync="config.rares.endgame.show" item-style="normal.rare"
+                          item-rarity="rare" item-class="?">
                     Off-meta base types that may still be valuable.
                 </itemList>
             </div>
