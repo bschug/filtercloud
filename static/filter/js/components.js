@@ -35,15 +35,35 @@ Vue.component('itemlist', {
             <h2>{{ title }}<span class="tooltip"><slot></slot></span></h2>\
             <div class="item-list-inner">\
                 <itempreview \
-                    v-for="item in items" :key="item" \
+                    v-for="item in filteredItems" :key="item" \
                     :item="item" :item-style="itemStyle" :item-rarity="itemRarity" :item-class="itemClass" \
                     :deletable="true" @deleted="deleteItem(item)"/>\
             </div>\
             <input type="text" v-model="itemInputName">\
             <button type="button" @click="addItem(itemInputName)">Add</button>\
+            <select class="item-class-filter" v-model="itemClassFilter">\
+                <option v-for="itemClass in allowedItemClasses">{{ itemClass }}</option>\
+            </select>\
         </div>',
     props: ['title', 'items', 'itemStyle', 'itemRarity', 'itemClass'],
-    data: function() { return { 'itemInputName': '' } },
+    data: function() { return {
+        itemInputName: '',
+        itemClassFilter: 'All',
+        allowedItemClasses: ['All'].concat(GameData.data.itemCategories['weapons'])
+                                   .concat(GameData.data.itemCategories['armour'])
+                                   .concat(GameData.data.itemCategories['jewelry'])
+    }},
+    computed: {
+        filteredItems: function() {
+            var self = this;
+            if (self.itemClassFilter === 'All') {
+                return self.items;
+            }
+            return self.items.filter(function(item) {
+                return self.itemClassFilter === GameData.getItemClass(item);
+            });
+        }
+    },
     methods: {
         deleteItem: function(item) { this.$emit('update:items', this.items.filter(function(x) { return x !== item; })); },
         addItem: function(item) { this.items.push(item); }
@@ -69,4 +89,4 @@ Vue.component('itempreview', {
     methods: {
         deleteItem: function() { this.$emit('deleted'); }
     }
-})
+});
