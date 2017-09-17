@@ -49,9 +49,9 @@ Vue.component('itemlist', {
     data: function() { return {
         itemInputName: '',
         itemClassFilter: 'All',
-        allowedItemClasses: ['All'].concat(GameData.data.itemCategories['weapons'])
-                                   .concat(GameData.data.itemCategories['armour'])
-                                   .concat(GameData.data.itemCategories['jewelry'])
+        allowedItemClasses: ['All'].concat(_.sortBy(GameData.data.itemCategories['weapons']))
+                                   .concat(_.sortBy(GameData.data.itemCategories['armour']))
+                                   .concat(_.sortBy(GameData.data.itemCategories['jewelry']))
     }},
     computed: {
         filteredItems: function() {
