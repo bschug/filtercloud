@@ -39,8 +39,8 @@ Vue.component('itemlist', {
                     :item="item" :item-style="itemStyle" :item-rarity="itemRarity" :item-class="itemClass" \
                     :deletable="true" @deleted="deleteItem(item)"/>\
             </div>\
-            <input type="text" v-model="itemInputName">\
-            <button type="button" @click="addItem(itemInputName)">Add</button>\
+            <input type="text" v-model="itemInputName" @keydown.enter="addItem(itemInputName); itemInputName=\'\'">\
+            <button type="button" @click="addItem(itemInputName); itemInputName=\'\'">Add</button>\
             <select class="item-class-filter" v-model="itemClassFilter">\
                 <option v-for="itemClass in allowedItemClasses">{{ itemClass }}</option>\
             </select>\
@@ -48,10 +48,7 @@ Vue.component('itemlist', {
     props: ['title', 'items', 'itemStyle', 'itemRarity', 'itemClass'],
     data: function() { return {
         itemInputName: '',
-        itemClassFilter: 'All',
-        allowedItemClasses: ['All'].concat(_.sortBy(GameData.data.itemCategories['weapons']))
-                                   .concat(_.sortBy(GameData.data.itemCategories['armour']))
-                                   .concat(_.sortBy(GameData.data.itemCategories['jewelry']))
+        itemClassFilter: 'All'
     }},
     computed: {
         filteredItems: function() {
@@ -62,11 +59,34 @@ Vue.component('itemlist', {
             return self.items.filter(function(item) {
                 return self.itemClassFilter === GameData.getItemClass(item);
             });
+        },
+        allowedItemClasses: function() {
+            return ['All']
+                .concat(_.sortBy(GameData.data.itemCategories['weapons']))
+                .concat(_.sortBy(GameData.data.itemCategories['armour']))
+                .concat(_.sortBy(GameData.data.itemCategories['jewelry']))
+                .filter(this.containsItemOfClass)
         }
     },
     methods: {
-        deleteItem: function(item) { this.$emit('update:items', this.items.filter(function(x) { return x !== item; })); },
-        addItem: function(item) { this.items.push(item); }
+        deleteItem: function(item) {
+            this.$emit('update:items', this.items.filter(function(x) { return x !== item; }));
+        },
+        addItem: function(item) {
+            this.items.push(item);
+        },
+        containsItemOfClass: function(itemClass) {
+            if (itemClass === 'All') {
+                return true;
+            }
+            var ic = GameData.data.itemClasses[itemClass];
+            for (var i=0; i < this.items.length; i++) {
+                if (ic.indexOf(this.items[i]) >= 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 });
 
