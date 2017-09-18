@@ -36,8 +36,10 @@
 			"Sacrificial Garb", "Archon Kite Shield", "Astral Plate"
 		],
 		"ilvl84": [
-			"Onyx Amulet", "Diamond Ring", "Titan Gauntlets", "Slink Gloves", "Royal Burgonet", "Lion Pelt", "Titan Greaves", "Slink Boots",
-			"Prismatic Ring", "Two-Stone Ring", "Astral Plate", "Assassin's Garb"
+			"Titan Gauntlets", "Slink Gloves", "Royal Burgonet", "Lion Pelt", "Titan Greaves", "Slink Boots", "Astral Plate", "Assassin's Garb",
+			"Coral Ring", "Paua Ring", "Sapphire Ring", "Topaz Ring", "Ruby Ring", "Diamond Ring", "Gold Ring", "Moonstone Ring", "Two-Stone Ring", "Prismatic Ring",
+			"Amber Amulet", "Jade Amulet", "Lapis Amulet", "Gold Amulet", "Agate Amulet", "Citrine Amulet", "Turquoise Amulet", "Onyx Amulet",
+			"Rustic Sash", "Heavy Belt", "Leather Belt"
 		],
 		"chancing": [
 			"Glorious Plate", "Sorcerer Boots"

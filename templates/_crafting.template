@@ -36,23 +36,9 @@ Show
 	BaseType {{ crafting.ilvl84|names }}
 {{ style.normal.normal }}
 {% endif %}
-	
-Show
-    ItemLevel >= 84
-    Rarity Normal
-	Class Rings Amulet Belts
-	BaseType "Ruby" "Sapphire" "Topaz" "Diamond" "Prismatic" "Unset" "Gold" "Citrine" "Turquoise" "Agate" "Coral Ring" "Moonstone" "Leather" "Heavy Belt" "Amber" "Jade" "Lapis" "Rustic Sash"
-{{ style.normal.normal }}
-
-Show
-    ItemLevel >= 84
-    Rarity Normal
-    LinkedSockets >= 4
-    BaseType "Opal Sceptre" "Profane Wand" "Prophecy Wand" "Opal Wand" "Sambar Sceptre" "Imbued Wand" "Saintly Chainmail" "Harmonic Spirit Shield" "Fossilised Spirit Shield" "Titan Gauntlets" "Slink Gloves" "Royal Burgonet" "Lion Pelt" "Titan Greaves" "Slink Boots" "Kris" "Vaal Axe" "Coronal Maul" "Exquisite Blade" "Fleshripper" "Harbinger Bow" "Gemini Claw" "Ambusher" "Siege Axe" "Harpy Rapier" "Demon Dagger" "Skean" "Spiraled Foil"
-{{ style.normal.normal }}
 
 {% if crafting.always %}
-# Always shown
+# Always shown, even is lower level areas
 Show 
 	Rarity Normal
 	BaseType {{ crafting.always|names }}
@@ -71,5 +57,5 @@ Show
 
 Show 
     Rarity Normal
-    BaseType "Sorcerer Boots" 
+    BaseType {{ crafting.chancing|names }}
 {{ style.normal.normal }}
