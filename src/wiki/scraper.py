@@ -27,6 +27,7 @@ class WikiScraper(object):
                 'jewelry': JEWELRY_ITEM_CLASSES,
                 'gems': GEM_ITEM_CLASSES,
                 'flasks': FLASK_ITEM_CLASSES,
+                'currency': CURRENCY_ITEM_CLASSES,
                 'other': OTHER_ITEM_CLASSES
             },
             'itemClasses': dict()

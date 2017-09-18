@@ -84,7 +84,6 @@
 
     /* Fill all empty stats with parent default or rarity default. */
     Style.getEffectiveStyle = function(stylesheet, identifier, rarity, itemClass) {
-        console.log("getEffectiveStyle", identifier, rarity, itemClass);
         if (rarity === 'random') {
             rarity = ['normal', 'magic', 'rare', 'unique'][Math.floor((Math.random() * 4))]
         }

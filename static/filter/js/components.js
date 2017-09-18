@@ -36,16 +36,16 @@ Vue.component('itemlist', {
             <div class="item-list-inner">\
                 <itempreview \
                     v-for="item in filteredItems" :key="item" \
-                    :item="item" :item-style="itemStyle" :item-rarity="itemRarity" :item-class="itemClass" \
+                    :item="item" :item-style="itemStyle" :item-rarity="itemRarity" :item-class="getItemClass(item)" \
                     :deletable="true" @deleted="deleteItem(item)"/>\
             </div>\
-            <input type="text" v-model="itemInputName" @keydown.enter="addItem(itemInputName); itemInputName=\'\'">\
-            <button type="button" @click="addItem(itemInputName); itemInputName=\'\'">Add</button>\
+            <input v-if="!readOnly" type="text" v-model="itemInputName" @keydown.enter="addItem(itemInputName); itemInputName=\'\'">\
+            <button v-if="!readOnly" type="button" @click="addItem(itemInputName); itemInputName=\'\'">Add</button>\
             <select class="item-class-filter" v-model="itemClassFilter">\
                 <option v-for="itemClass in allowedItemClasses">{{ itemClass }}</option>\
             </select>\
         </div>',
-    props: ['title', 'items', 'itemStyle', 'itemRarity', 'itemClass'],
+    props: ['title', 'items', 'itemStyle', 'itemRarity', 'itemClass', 'readOnly'],
     data: function() { return {
         itemInputName: '',
         itemClassFilter: 'All'
@@ -86,6 +86,9 @@ Vue.component('itemlist', {
                 }
             }
             return false;
+        },
+        getItemClass: function(item) {
+            return GameData.getItemClass(item);
         }
     }
 });

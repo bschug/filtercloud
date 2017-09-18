@@ -22,5 +22,5 @@ class JsonCache(Cache):
         cached = self.lookup_cached(key)
         if cached is not None:
             return cached
-        return self.get(function, *args, **kwargs)
+        return self._serialize(self.get(function, *args, **kwargs))
 

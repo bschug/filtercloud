@@ -113,14 +113,43 @@
                 <checkboxWithTooltip id="crafting_show_atlas" v-model="config.crafting.atlas.always" label="Always show Atlas bases">
                     Always show map-only base types, even at lower levels.
                 </checkboxWithTooltip>
-                <itemList title="Always Show" :items.sync="config.crafting.always" item-style="normal" item-rarity="normal" item-class="?">
+                <itemList title="Always Show" :items.sync="config.crafting.always" item-style="normal" item-rarity="normal">
                     These items are always shown, even in low level areas.
                 </itemList>
-                <itemList title="Item Level 84+" :items.sync="config.crafting.ilvl84" item-style="normal" item-rarity="normal" item-class="?">
+                <itemList title="Item Level 84+" :items.sync="config.crafting.ilvl84" item-style="normal" item-rarity="normal">
                     These items are only shown if their item level is at least 84. At this item level, all possible affixes can roll on that item.
                 </itemList>
-                <itemList title="Chancing" :items.sync="config.crafting.chancing" item-style="normal" item-rarity="normal" item-class="?">
+                <itemList title="Chancing" :items.sync="config.crafting.chancing" item-style="normal" item-rarity="normal">
                     These items can be rolled into very valuable uniques with an Orb of Chance (and a shit ton of luck)
+                </itemList>
+            </div>
+
+            <div v-show="currentPage === 'Currency'">
+                <checkboxWithTooltip id="currency_hide_low_value" v-model="config.currency.hide_low_value" label="Hide Low Value">
+                    Low value currency like scrolls, scraps and whetstones is not worth the time picking up.
+                    You're better off maintaining a high clearspeed and buying those from other players if needed.
+                    It can still make sense to pick them up if a lot of them are close together, like after a Breach,
+                    or an Artisan's Strongbox.
+                </checkboxWithTooltip>
+                <checkboxWithTooltip id="currency_use_shaper_voice" v-mode="config.currency.use_shaper_voice" label="Shaper Voice">
+                    Use Shaper voice pack to announce rare currency. Otherwise these will just use the sound
+                    for strongly highlighted currency configured in the stylesheet.
+                </checkboxWithTooltip>
+                <itemList title="Ultra Rare" :items.sync="config.currency.ultra_rare" item-style="ultra_rare.currency" item-rarity="normal">
+                    Once-in-a-lifetime kind of items. Find one of these, and you're settled for the league.
+                </itemList>
+                <itemList title="Strong Highlight" :items.sync="config.currency.strong_highlight" item-style="strong_highlight.currency" item-rarity="normal">
+                    These are very valuable. If you see this highlighting, it's time to get excited!
+                </itemList>
+                <itemList title="Highlighted" :items.sync="config.currency.highlight" item-style="highlight.currency" item-rarity="normal">
+                    These are valuable, and you should always pick them up.
+                </itemList>
+                <itemList title="Regular" :items="config.currency.normal" item-style="normal.currency" item-rarity="normal" read-only="true">
+                    These are not very valuable, and it's perfectly ok to skip some of those if they're out of your way.
+                </itemList>
+                <itemList title="Low Value" :items.sync="config.currency.smaller" item-style="smaller.currency" item-rarity="normal">
+                    These are usually not worth the time picking up. If you check the checkmark above, these will be
+                    hidden completely.
                 </itemList>
             </div>
 
