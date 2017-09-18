@@ -105,6 +105,25 @@
                     Off-meta base types that may still be valuable.
                 </itemList>
             </div>
+
+            <div v-show="currentPage === 'Crafting'">
+                <checkboxWithTooltip id="crafting_highlight_ilvl84_atlas" v-model="config.crafting.atlas.ilvl84" label="Highlight ilvl84 Atlas bases">
+                    Highlight map-only base types with item level 84+. Their high implicits make them especially valuable for crafting.
+                </checkboxWithTooltip>
+                <checkboxWithTooltip id="crafting_show_atlas" v-model="config.crafting.atlas.always" label="Always show Atlas bases">
+                    Always show map-only base types, even at lower levels.
+                </checkboxWithTooltip>
+                <itemList title="Always Show" :items.sync="config.crafting.always" item-style="normal" item-rarity="normal" item-class="?">
+                    These items are always shown, even in low level areas.
+                </itemList>
+                <itemList title="Item Level 84+" :items.sync="config.crafting.ilvl84" item-style="normal" item-rarity="normal" item-class="?">
+                    These items are only shown if their item level is at least 84. At this item level, all possible affixes can roll on that item.
+                </itemList>
+                <itemList title="Chancing" :items.sync="config.crafting.chancing" item-style="normal" item-rarity="normal" item-class="?">
+                    These items can be rolled into very valuable uniques with an Orb of Chance (and a shit ton of luck)
+                </itemList>
+            </div>
+
         </div>
     </div>
 </div>
