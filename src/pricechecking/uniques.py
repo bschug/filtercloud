@@ -7,9 +7,10 @@ from requests_cache import CachedSession
 cache = CachedSession(cache_name='uniques', backend='sqlite', expire_after=3600)
 
 
-# Fated Uniques can only be acquired from prophecies, not dropped by enemies.
+# Some Uniques can only be acquired from prophecies / breachstones, not dropped by enemies.
 # We should not take those into account for highlighting purposes.
-FATED_UNIQUES = {
+BLACKLIST = {
+    # Prophecy Uniques
     'Amplification Rod',
     'Cragfall',
     'Death\'s Opus',
@@ -34,7 +35,26 @@ FATED_UNIQUES = {
     'The Tempest',
     'Thirst for Horrors',
     'Wall of Brambles',
-    'Voidheart'
+    'Voidheart',
+
+    # Breach Uniques
+    "Xoph's Nurture",
+    "The Formless Inferno",
+    "Xoph's Blood",
+    "Tulfall",
+    "The Perfect Form",
+    "The Pandemonius",
+    "Hand of Wisdom and Action",
+    "Esh's Visage",
+    "Choir of the Storm",
+    "Uul-Netol's Embrace",
+    "The Red Trail",
+    "The Surrender",
+    "United in Dream",
+    "Skin of the Lords",
+    "The Red Nightmare",
+    "The Green Nightmare",
+    "The Blue Nightmare",
 }
 
 
@@ -57,7 +77,7 @@ def get_unique_prices_from_url(url, league, unique_prices):
     response = cache.get(url, params={'league': league}).json()
     for item in response['lines']:
         # Fated uniques are created by prophecies, not dropped.
-        if item['name'] in FATED_UNIQUES:
+        if item['name'] in BLACKLIST:
             continue
         # All six-linkable items have 3 entries: regular, 5link and 6link. We only want regular.
         if item['links'] >= 5:
