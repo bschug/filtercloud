@@ -35,6 +35,7 @@
 			"background": "27 162 155"
 		},
 		"breach": {
+			"textcolor": "30 0 50",
 			"background": "200 80 150"
 		},
 		"divcard": {

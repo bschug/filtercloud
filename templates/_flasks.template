@@ -4,15 +4,16 @@
 Show 
     Class Flasks
     BaseType Life Mana Hybrid
-    Rarity < Unique 
-    Quality 20
+    Rarity <= Magic
+    Quality >= {{ flasks.healing.min_quality }}
+{{ style.normal }}
 
 # Highlight high quality utility flasks 
 Show 
     Class "Utility Flasks"
-    Quality > 15
-    Rarity < Unique 
-    SetFontSize 40
+    Quality >= {{ flasks.utility.min_quality }}
+    Rarity <= Magic
+{{ style.normal }}
 
 # Hide all other flasks in endgame
 Hide 
@@ -27,13 +28,13 @@ Hide
 Show 
     Class Flask 
     Quality > 1
-	ItemLevel < 65
+	ItemLevel < 70
     Rarity Normal 
 {{ style.highlight.normal }}
 Show 
     Class Flask 
     Quality > 1
-	ItemLevel < 65
+	ItemLevel < 70
     Rarity Magic 
 {{ style.highlight.magic}}
 

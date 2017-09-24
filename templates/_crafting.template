@@ -55,7 +55,9 @@ Show
 	
 # ----------------------------------- [CHANCING] ----------------------------------------
 
+{% if crafting.chancing %}
 Show 
     Rarity Normal
     BaseType {{ crafting.chancing|names }}
 {{ style.normal.normal }}
+{% endif %}

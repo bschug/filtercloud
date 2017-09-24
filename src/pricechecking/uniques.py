@@ -58,10 +58,10 @@ BLACKLIST = {
 }
 
 
-def get_unique_classes(league, thresholds):
+def get_unique_tiers(league, thresholds):
     """Sort uniques into classes by value (top tier, decent, mediocre, worthless)"""
     unique_prices = get_unique_prices(league)
-    return sort_by_value(unique_prices, thresholds)
+    return sort_into_tiers(unique_prices, thresholds)
 
 
 def get_unique_prices(league):
@@ -85,7 +85,7 @@ def get_unique_prices_from_url(url, league, unique_prices):
         unique_prices[item['baseType']] = max(unique_prices[item['baseType']], item['chaosValue'])
 
 
-def sort_by_value(unique_prices, thresholds):
+def sort_into_tiers(unique_prices, thresholds):
     return {
         'top_tier': [k for k, v in unique_prices.items() if v >= thresholds.top_tier],
         'valuable': [k for k, v in unique_prices.items() if v >= thresholds.valuable and v < thresholds.top_tier],

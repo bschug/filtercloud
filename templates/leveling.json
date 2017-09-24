@@ -7,25 +7,21 @@
 		"hide_low_value": false,
 		"use_shaper_voice": true,
 		"ultra_rare": ["Mirror of Kalandra"],
-		"strong_highlight": [
-			"Exalted Orb", "Divine Orb", "Eternal Orb", "Stacked Deck", 
-			"Master Cartographer", "Journeyman Cartographer"],
-		"highlight": [
-			"Gemcutter's Prism", "Regal Orb", "Blessed Orb", "Orb of Regret", "Chaos Orb", "Vaal Orb", 
-			"Orb of Scouring", "Cartographer's Chisel", "Remnant of Corruption", "Apprentice Cartographer"],
-		"normal": [
-			"Orb of Fusing", "Orb of Alchemy", "Chromatic Orb", "Jeweller's Orb", "Orb of Chance",
-			"Glassblower's Bauble"],
-		"smaller": [
-			"Scroll of Wisdom", "Portal Scroll", "Blacksmith's Whetstone", "Armourer's Scrap",
-			"Orb of Transmutation", "Orb of Augmentation", "Orb of Alteration"],
-		"hidden": []
+		"thresholds": {
+			"worthless": 0.05,
+			"valuable": 0.5,
+			"top_tier": 10
+		},
+		"overrides": {
+			"Perandus Coin": "valuable"
+		}
 	},
 	
 	"gems": {
 		"show_all": true,
-		"high_quality": 17,
-		"medium_quality": 1,
+		"high_quality": 20,
+		"medium_quality": 16,
+		"min_quality": 1,
 		"high_value_gems": ["Empower", "Enlighten", "Enhance", "Vaal Breach", "Vaal Haste"],
 		"medium_value_gems": ["Vaal Clarity", "Vaal Grace", "Added Chaos Damage", "Portal"]
 	},
@@ -47,7 +43,8 @@
 			"worthless": 0.5,
 			"valuable": 2,
 			"top_tier": 15
-		}
+		},
+		"overrides": {}
 	},
 	
 	"divcards": {
@@ -63,6 +60,15 @@
 	
 	"jewels": {
 		"show_magic": true
+	},
+
+	"flasks": {
+		"healing": {
+			"min_quality": 20
+		},
+		"utility": {
+			"min_quality": 15
+		}
 	},
 	
 	"leveling": {

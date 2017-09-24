@@ -13,7 +13,7 @@ def load_config(settings, style):
         'include_leveling_rules': bool(settings.include_leveling_rules),
         'include_endgame_rules': bool(settings.include_endgame_rules),
         'crafting': settings.get('crafting'),
-        'currency': settings.get('currency'),
+        'currency': build_currency_config(settings),
         'rares': settings.get('rares'),
         'maps': settings.get('maps'),
         'uniques': build_unique_config(settings),
@@ -34,23 +34,35 @@ def load_settings(filename):
         return json.load(fp)
 
 
+def build_currency_config(settings):
+    league = settings.league
+    thresholds = settings.currency.thresholds
+    config = pricechecking.get_currency_tiers(league, thresholds)
+    apply_overrides(config, settings.currency.overrides)
+    return {**settings.currency, **config}
+
+
 def build_unique_config(settings):
     league = settings.league
     thresholds = settings.uniques.thresholds
-    return pricechecking.get_unique_classes(league=league, thresholds=thresholds)
+    config = pricechecking.get_unique_tiers(league=league, thresholds=thresholds)
+    apply_overrides(config, settings.uniques.overrides)
+    return config
 
 
 def build_divcards_config(settings):
     league = settings.league
     thresholds = settings.divcards.thresholds
-    config = pricechecking.get_divcard_categories(league=league, thresholds=thresholds)
+    config = pricechecking.get_divcard_tiers(league=league, thresholds=thresholds)
+    apply_overrides(config, settings.divcards.overrides)
+    return config
 
-    # Apply overrides
-    for card, category in settings.divcards.overrides.items():
+
+def apply_overrides(config, overrides):
+    for item, category in overrides.items():
         for k in config.keys():
-            config[k] = [x for x in config[k] if x != card]
-        config[category].append(card)
-
+            config[k] = [x for x in config[k] if x != item]
+        config[category].append(item)
     return config
 
 

@@ -80,7 +80,7 @@ class Cache(object):
         cached = self.lookup_cached(key)
         if cached is not None:
             logger.debug("Returning cached version of %s", key)
-            return cached
+            return self._deserialize(cached)
         logger.debug("No cached version found for %s", key)
 
         try:

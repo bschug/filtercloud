@@ -26,44 +26,40 @@ Show
 {{ style.ultra_rare.currency }}
 {% endif %}
 
-{% if currency.strong_highlight %}
+{% if currency.top_tier %}
 # Strongly Highlight super-rare currency 
 Show 
     Class Currency
-    BaseType {{ currency.strong_highlight|names }}
+    BaseType {{ currency.top_tier|names }}
 {{ style.strong_highlight.currency }}
 {% endif %}
 
-{% if currency.highlight %}
+{% if currency.valuable %}
 # Highlight medium rare currency 
 Show 
     Class Currency
-    BaseType {{ currency.highlight|names }}
+    BaseType {{ currency.valuable|names }}
 {{ style.highlight.currency }}
 {% endif %}
 
-{% if currency.normal %}
+{% if currency.mediocre %}
 Show 
 	Class Currency
-	BaseType {{ currency.normal|names }}
+	BaseType {{ currency.mediocre|names }}
 {{ style.normal.currency }}
 {% endif %}
-	
-{% if currency.smaller %}	
-Show 
+
+{% if currency.worthless %}
+{% if currency.hide_worthless %}
+Hide
+{% else %}
+Show
+{% endif %}
 	Class Currency
-	BaseType {{ currency.smaller|names }}
+	BaseType {{ currency.worthless|names }}
 {{ style.smaller.currency }}
 {% endif %}
 
-{% if currency.hidden %}	
-# Hide low-value currency 
-Hide 
-    Class Currency 
-    BaseType {{ currency.hidden|names }}
-{{ style.smaller.currency }}
-{% endif %}
-	
 # Mark all missing currency with pink border
 Show 
     Class Currency 

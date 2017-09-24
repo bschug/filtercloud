@@ -1,9 +1,12 @@
 <html>
 <head>
+    <meta charset="UTF-8">
+
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="css/itemlist.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/slider.css">
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
@@ -40,7 +43,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Crafting', 'Currency', 'Uniques', 'Divination Cards', 'Skill Gems', 'Sockets', 'Flasks', 'Jewels', 'Maps', 'Map Fragments', 'Special Items']"
+                   v-for="page in ['Crafting', 'Currency', 'Uniques', 'Divination Cards', 'Skill Gems', 'Sockets', 'Flasks', 'Jewels', 'Maps', 'Map Fragments']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
             </div>
         </div>
@@ -86,10 +89,27 @@
             </div>
 
             <div id="style-page" v-show="currentPage === 'Style'">
-                <h1>Coming Soon</h1>
+                <h1>Style Editor</h1>
+
             </div>
 
             <div v-show="currentPage === 'Endgame Rares'">
+                <h1>Endgame Rares</h1>
+                <p class="explanation">
+                    When mapping, you want to stay in the flow and maintain your clearspeed. You don't want to stop
+                    and identify items or even take a trip back to your hideout and sort your inventory. Sure, sometimes
+                    you have really lucky drops and it can't be avoided, but most of the time, you want to pick up only
+                    those items that have a high probability of being valuable.
+                </p>
+                <p class="explanation">
+                    This filter has two tiers of rares: Highlighted rares are the base types used by currently popular
+                    builds very likely to be valuable, or take up very little inventory space like jewelry. You should
+                    always pick those up. Non-highlighted rares are still the best of their class, and have a decent
+                    chance of being sellable, but you may skip those if you have a high quantity map.
+                </p>
+
+                <hr>
+
                 <checkboxWithTooltip id="show_fully_linked" v-model="config.rares.endgame.show_fully_linked" label="Show Fully Linked">
                     Show all fully linked rare boots, gloves and helmets, even if their basetype would normally be hidden.
                 </checkboxWithTooltip>
@@ -107,52 +127,264 @@
             </div>
 
             <div v-show="currentPage === 'Crafting'">
+                <h1>Crafting</h1>
+                <p>
+                    Crafting only really makes sense with items that have at least ItemLevel 84 or more, to ensure that
+                    the highest tier of affixes can roll on them. Some exceptions can be made for Atlas bases (bases
+                    with very strong implicits that only drop in certain maps) and for using level-capped Essences.
+                </p>
+
+                <hr>
+
                 <checkboxWithTooltip id="crafting_highlight_ilvl84_atlas" v-model="config.crafting.atlas.ilvl84" label="Highlight ilvl84 Atlas bases">
-                    Highlight map-only base types with item level 84+. Their high implicits make them especially valuable for crafting.
+                    Highlight atlas bases with item level 84+. Their high implicits make them especially valuable for crafting.
+                    Even if you don't want to craft, you can usually sell these as-is for a couple chaos, some even more than one exalt.
                 </checkboxWithTooltip>
                 <checkboxWithTooltip id="crafting_show_atlas" v-model="config.crafting.atlas.always" label="Always show Atlas bases">
                     Always show map-only base types, even at lower levels.
                 </checkboxWithTooltip>
                 <itemList title="Always Show" :items.sync="config.crafting.always" item-style="normal" item-rarity="normal">
                     These items are always shown, even in low level areas.
+                    If you have level-capped Essences and want to use them, add the base types you're looking for here.
                 </itemList>
                 <itemList title="Item Level 84+" :items.sync="config.crafting.ilvl84" item-style="normal" item-rarity="normal">
                     These items are only shown if their item level is at least 84. At this item level, all possible affixes can roll on that item.
                 </itemList>
                 <itemList title="Chancing" :items.sync="config.crafting.chancing" item-style="normal" item-rarity="normal">
-                    These items can be rolled into very valuable uniques with an Orb of Chance (and a shit ton of luck)
+                    These items can be rolled into very valuable uniques with an Orb of Chance (and a shit ton of luck).
+                    Per default, doesn't show league-specific ones like Leather Belt for Headhunter. If you have access
+                    to Nemesis through Zana, you may want to add that one (or replace the others).
                 </itemList>
             </div>
 
             <div v-show="currentPage === 'Currency'">
-                <checkboxWithTooltip id="currency_hide_low_value" v-model="config.currency.hide_low_value" label="Hide Low Value">
-                    Low value currency like scrolls, scraps and whetstones is not worth the time picking up.
+                <h1>Currency</h1>
+                <p>
+                    Generally, you want to pick up all currency items because they're small and most of them have a
+                    decent value.
+                </p>
+                <p>
+                    Low value currency like scrolls, scraps and whetstones are not worth the time picking up.
                     You're better off maintaining a high clearspeed and buying those from other players if needed.
-                    It can still make sense to pick them up if a lot of them are close together, like after a Breach,
+                    It can still make sense to pick them up if a lot of them are close together, like after a Breach
                     or an Artisan's Strongbox.
+                </p>
+
+                <hr>
+
+                <checkboxWithTooltip id="currency_hide_low_value" v-model="config.currency.hide_low_value" label="Hide Low Value">
+                    Hide worthless currency that's not worth picking up.
+                    Otherwise, will be shown with grey text.
                 </checkboxWithTooltip>
-                <checkboxWithTooltip id="currency_use_shaper_voice" v-mode="config.currency.use_shaper_voice" label="Shaper Voice">
+                <checkboxWithTooltip id="currency_use_shaper_voice" v-model="config.currency.use_shaper_voice" label="Shaper Voice">
                     Use Shaper voice pack to announce rare currency. Otherwise these will just use the sound
                     for strongly highlighted currency configured in the stylesheet.
                 </checkboxWithTooltip>
-                <itemList title="Ultra Rare" :items.sync="config.currency.ultra_rare" item-style="ultra_rare.currency" item-rarity="normal">
-                    Once-in-a-lifetime kind of items. Find one of these, and you're settled for the league.
+
+                <thresholdSlider v-model="config.currency.thresholds.top_tier" title="Top Tier">
+                    Items worth more than this are very valuable. If you see this highlighting, it's time to get excited!
+                </thresholdSlider>
+                <thresholdSlider v-model="config.currency.thresholds.valuable" title="Valuable">
+                    Anything above this is valuable, and you should always pick them up.
+                </thresholdSlider>
+                <thresholdSlider v-model="config.currency.thresholds.worthless" title="Worthless">
+                    Anything below this is usually not worth the time picking up. If you check the checkmark above,
+                    these will be hidden completely.
+                </thresholdSlider>
+
+                <thresholdItemList :prices="GameData.prices.currency" :thresholds="config.currency.thresholds"
+                                   :hide-worthless="config.currency.hide_low_value"
+                                   style-context="currency" item-rarity="normal"
+                                   :tier-overrides="config.currency.overrides"
+                                   :style-overrides="{'Mirror of Kalandra': 'ultra_rare.currency'}"
+                                   :hide-overrides="[]">
+                </thresholdItemList>
+            </div>
+
+            <div v-show="currentPage === 'Divination Cards'">
+                <h1>Divination Cards</h1>
+
+                <checkboxWithTooltip id="divcards_hide_low_value" v-model="config.divcards.hide_low_value" label="Hide Low Value">
+                    Completely hide worthless divination cards. Otherwise, will show them with a smaller font.
+                </checkboxWithTooltip>
+
+                <thresholdSlider v-model="config.divcards.thresholds.top_tier" title="Top Tier">
+                    Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
+                </thresholdSlider>
+                <thresholdSlider v-model="config.divcards.thresholds.valuable" title="Valuable">
+                    Anything above this is valuable, and you should always pick them up.
+                </thresholdSlider>
+                <thresholdSlider v-model="config.divcards.thresholds.worthless" title="Worthless">
+                    Anything below this is usually not worth the time picking up. If you check the checkmark above,
+                    these will be hidden completely.
+                </thresholdSlider>
+
+                <thresholdItemList :prices="GameData.prices.divcards" :thresholds="config.divcards.thresholds"
+                                   :hide-worthless="config.divcards.hide_low_value"
+                                   style-context="divcard" item-rarity="normal"
+                                   :tier-overrides="config.divcards.overrides"
+                                   :style-overrides="{}"
+                                   :hide-overrides="[]">
+                </thresholdItemList>
+            </div>
+
+            <div v-show="currentPage === 'Uniques'">
+                <h1>Uniques</h1>
+                <p>
+                    Some base types have multiple uniques that can spawn on them. For example, there are five different
+                    unique Two-Stone Rings. Since the filter only sees the base type, Berek's Respite will get the same
+                    highlighting as Call of the Brotherhood, even though the former is usually worth about 400 times
+                    more than the latter.
+                </p>
+                <p>
+                    In such cases, the filter chooses highlighting based on the most valuable unique with this base type.
+                    Some uniques are excluded, e.g. those that can only be obtained via Prophecies or Breachstones,
+                    because they can't drop anyway.
+                </p>
+
+                <hr>
+
+                <checkboxWithTooltip id="uniques_hide_low_value" v-model="config.uniques.hide_low_value" label="Hide Low Value">
+                    Completely hide worthless uniques. Otherwise, will show them with a smaller font.
+                </checkboxWithTooltip>
+
+                <thresholdSlider v-model="config.uniques.thresholds.top_tier" title="Top Tier">
+                    Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
+                </thresholdSlider>
+                <thresholdSlider v-model="config.uniques.thresholds.valuable" title="Valuable">
+                    Anything above this is valuable, and you should always pick them up.
+                </thresholdSlider>
+                <thresholdSlider v-model="config.uniques.thresholds.worthless" title="Worthless">
+                    Anything below this is usually not worth the time picking up. If you check the checkmark above,
+                    these will be hidden completely.
+                </thresholdSlider>
+
+                <thresholdItemList :prices="GameData.prices.uniques" :thresholds="config.uniques.thresholds"
+                                   :hide-worthless="config.uniques.hide_low_value"
+                                   style-context="unique" item-rarity="unique"
+                                   :tier-overrides="config.uniques.overrides"
+                                   :style-overrides="{}"
+                                   :hide-overrides="[]">
+                </thresholdItemList>
+            </div>
+
+            <div v-show="currentPage === 'Skill Gems'">
+                <h1>Skill Gems</h1>
+
+                <checkboxWithTooltip id="gems_show_all" v-model="config.gems.show_all" label="Show All">
+                    Show all skill gems. Otherwise will hide them. Highlighted gems covered by the rules below will be
+                    shown even if this is not checked.
+                </checkboxWithTooltip>
+
+                <linearSlider v-model="config.gems.high_quality" title="Top Tier" :min-value="0" :max-value="20">
+                    Strong highlighting for very high quality gems.
+                </linearSlider>
+                <linearSlider v-model="config.gems.medium_quality" title="Valuable" :min-value="0" :max-value="20">
+                    Highlighting for decently high quality gems.
+                </linearSlider>
+                <linearSlider v-model="config.gems.min_quality" title="Worthless" :min-value="0" :max-value="20">
+                    Gems with less than this will be hidden.
+                </linearSlider>
+
+                <itemList title="High Value" :items.sync="config.gems.high_value_gems" item-style="normal" item-rarity="normal">
+                    High value gems that you should pick up regardless of quality.
                 </itemList>
-                <itemList title="Strong Highlight" :items.sync="config.currency.strong_highlight" item-style="strong_highlight.currency" item-rarity="normal">
-                    These are very valuable. If you see this highlighting, it's time to get excited!
+                <itemList title="Medium Value" :items.sync="config.gems.medium_value_gems" item-style="normal" item-rarity="normal">
+                    Medium value gems that you may also want to pick up regardless of quality.
                 </itemList>
-                <itemList title="Highlighted" :items.sync="config.currency.highlight" item-style="highlight.currency" item-rarity="normal">
-                    These are valuable, and you should always pick them up.
-                </itemList>
-                <itemList title="Regular" :items="config.currency.normal" item-style="normal.currency" item-rarity="normal" read-only="true">
-                    These are not very valuable, and it's perfectly ok to skip some of those if they're out of your way.
-                </itemList>
-                <itemList title="Low Value" :items.sync="config.currency.smaller" item-style="smaller.currency" item-rarity="normal">
-                    These are usually not worth the time picking up. If you check the checkmark above, these will be
-                    hidden completely.
+
+            </div>
+
+            <div v-show="currentPage === 'Sockets'">
+                <h1>Sockets</h1>
+                <p>
+                    Six-links always receive strong highlighting, five-links always receive regular highlighting.
+                    These have a good potential of being valuable.
+                </p>
+                <p>
+                    Six-socket items are shown without highlighting, these are good to vendor for 7 Jeweller's Orbs.
+                </p>
+                <p>
+                    Corrupted items with white sockets are always shown. These are good for leveling gems in your
+                    off-hand.
+                </p>
+            </div>
+
+            <div v-show="currentPage === 'Flasks'">
+                <h1>Flasks</h1>
+                <p>
+                    In endgame, your flask setup should already be optimal. Some flasks may still fetch a good price though,
+                    especially with quality. You can configure the minimum quality at which to show certain flasks.
+                </p>
+
+                <linearSlider v-model="config.flasks.healing.min_quality" title="Life/Mana/Hybrid" :min-value="0" :max-value="20">
+                    Show Life/Mana/Hybrid flasks only if they have at least this much quality.
+                </linearSlider>
+                <linearSlider v-model="config.flasks.utility.min_quality" title="Utility" :min-value="0" :max-value="20">
+                    Show Utility Flasks only if they have at least this much quality.
+                </linearSlider>
+            </div>
+
+            <div v-show="currentPage === 'Jewels'">
+                <h1>Jewels</h1>
+                <p>
+                    Rare Jewels are very likely to be valuable. Magic jewels are usually worthless, unless both affixes
+                    are sought after in the current meta and are perfectly rolled. In that case, you may want to regal
+                    it and hope for the best.
+                </p>
+                <p>
+                    Another use for magic jewels is corrupting them and hoping for a good corrupt unique. Unless you
+                    specifically go for that though, they're not worth picking up.
+                </p>
+
+                <hr>
+
+                <checkboxWithTooltip id="jewels_show_magic" v-model="config.jewels.show_magic" label="Show Magic Jewels">
+                    Show magic jewels. Only enable this very early in the league, or when you want to try and craft a
+                    corrupted unique jewel.
+                </checkboxWithTooltip>
+            </div>
+
+            <div v-show="currentPage === 'Maps'">
+                <h1>Maps</h1>
+                <p>
+                    Once you've reached red maps, you no longer want to pick up white ones. That's why this filter has
+                    an option to hide maps that are far below the map tier they drop in. Some yellow maps are valuable
+                    and/or worth running even if you're already doing shaped Strands, so you can define exceptions from
+                    this rule.
+                </p>
+                <p>
+                    Tier 15/16 and unique maps are always highlighted.
+                </p>
+
+                <hr>
+
+                <checkboxWithTooltip id="maps_hide_low_tier" v-model="config.maps.hide_low_tier" label="Hide Low Tier">
+                    Hide white maps dropping from Tier 8 maps. Hide yellow maps dropping from red maps.
+                    Tier 10 maps are always shown, and you can add your favorite maps to the exception list below.
+                </checkboxWithTooltip>
+
+                <itemList title="Always Show" :items.sync="config.maps.good_yellow" item-style="normal" item-rarity="normal,magic,rare">
+                    These maps are always shown, even if they would normally be hidden based on their tier.
                 </itemList>
             </div>
 
+            <div v-show="currentPage === 'Map Fragments'">
+                <h1>Map Fragments</h1>
+                <p>This filter uses strong highlighting for:</p>
+                <ul>
+                    <li>Offering to the Godess</li>
+                    <li>Mortal Hope / Ignorance</li>
+                    <li>Atlas Guardian Fragments</li>
+                    <li>Pale Court Keys</li>
+                </ul>
+                <p>And regular highlighting for:</p>
+                <ul>
+                    <li>Sacrifice at Midnight</li>
+                    <li>Mortal Grief / Rage</li>
+                </ul>
+                <p>Other Sacrifice fragments are shown normally.</p>
+            </div>
         </div>
     </div>
 </div>

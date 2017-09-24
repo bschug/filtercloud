@@ -3,28 +3,41 @@
 # auto-generated from poe.ninja
 
 # Strongly highlight very valuable cards (15c+)
+{% if divcards.top_tier %}
 Show
     Class "Divination Card"
     BaseType {{ divcards.top_tier|names }}
 {{ style.strong_highlight.divcard }}
+{% endif %}
 
+{% if divcards.valuable %}
 # Highlight cards that are moderately valuable (1c+)
 Show
     Class "Divination Card"
     BaseType {{ divcards.valuable|names }}
 {{ style.highlight.divcard }}
-	
+{% endif %}
+
+{% if divcards.mediocre %}
 # Show cards normally that aren't very valuable (<1c)
 Show
     Class "Divination Card"
     BaseType {{ divcards.mediocre|names }}
 {{ style.normal.divcard }}
+{% endif %}
 
+{% if divcards.worthless %}
+{% if divcards.hide_worthless %}
 # Hide troll cards 
-Hide 
+Hide
+{% else %}
+# Worthless cards small / greyed out
+Show
+{% endif %}
 	Class "Divination Card"
 	BaseType {{ divcards.worthless|names }}
 {{ style.smaller.divcard }}
+{% endif %}
 
 # Draw pink border around all cards not recognized by the filter
 # (just in case something is not listed on poe.ninja)

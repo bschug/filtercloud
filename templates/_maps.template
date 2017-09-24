@@ -66,13 +66,15 @@ Hide
 	ItemLevel >= 74
 	DropLevel <= 72
 {{ style.map.white }}
-	
+
+{% if maps.good_yellow %}
 # Always show good yellow maps
 Show
 	Class Maps 
 	DropLevel > 72
 	BaseType "Shaped" {{ maps.good_yellow|names }}
 {{ style.map.yellow }}
+{% endif %}
 
 # Always show T10 yellow maps 
 Show 

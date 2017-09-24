@@ -10,7 +10,7 @@
             'sound': ''
         };
         if (rarity === 'magic')
-            result.textcolor = '136 136 136';
+            result.textcolor = '136 136 255';
         else if (rarity === 'rare')
             result.textcolor = '255 255 119';
         else if (rarity === 'unique')
@@ -44,7 +44,7 @@
             });
     };
 
-    Style.toCSS = function(style) {
+    Style.toCSS = function(style, isHidden) {
         var result = {
             borderStyle: 'none',
             borderWidth: '1px',
@@ -70,6 +70,11 @@
         result.color = Style.colorToCSS(style.textcolor);
         result.backgroundColor = Style.colorToCSS(style.background);
 
+        if (isHidden) {
+            result.textDecoration = 'line-through';
+            result.opacity = 0.5;
+        }
+
         return result;
     };
 
@@ -83,10 +88,9 @@
     }
 
     /* Fill all empty stats with parent default or rarity default. */
-    Style.getEffectiveStyle = function(stylesheet, identifier, rarity, itemClass) {
-        if (rarity === 'random') {
-            rarity = ['normal', 'magic', 'rare', 'unique'][Math.floor((Math.random() * 4))]
-        }
+    Style.getEffectiveStyle = function(stylesheet, identifier, rarity, itemClass, isHidden) {
+        rarities = rarity.split(',');
+        rarity = rarities[Math.floor((Math.random() * rarities.length))]
 
         var parts = identifier.split('.');
         if (parts.length == 0 || parts.length > 2) {
@@ -111,6 +115,7 @@
                 }
             }
         }
+
         return result;
     };
 

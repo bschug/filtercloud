@@ -1,34 +1,6 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
-# Harbinger Fragments
-Hide
-    BaseType Shard
-    BaseType Transmutation Alteration 
-{{ style.hidden.currency }}
 Show
-    BaseType Shard
-    BaseType Alchemy Regal 
-{{ style.smaller.currency }}
-Show
-    BaseType Shard
-    BaseType Annulment Horizon Binding Binding Engineer Chaos
-{{ style.normal.currency }}
-Show 
-    BaseType Shard
-    BaseType Exalted Eternal Divine Ancient Annulment Harbinger's
-{{ style.highlight.currency }}
-Show 
-    BaseType Shard
-    BaseType Mirror
-{{ style.strong_highlight.currency }}
-	
-Show 
-	Class Currency
-	BaseType Shard
-	SetFontSize 38
-	SetBorderColor 255 0 255
-
-Show 
 	Class Piece
 {{ style.ultra_rare.currency }}
 	
@@ -58,8 +30,8 @@ Show
 Show
     Class "Misc Map Items"
 {{ style.ultra_rare.map }}
-    
-# Warbands 
+
+# Warbands
 Show 
     Rarity Magic 
     Identified True 
@@ -99,15 +71,11 @@ Show
 # Breach Splinters
 Show
     BaseType "Splinter of"
-    SetFontSize 40
-    SetBackgroundColor 30 0 50 200
-    SetTextColor 200 80 150
+{{ style.highlight.breach }}
 
 Show 
     BaseType "Blessing of"
-    SetFontSize 45
-    SetBackgroundColor 200 80 150
-    SetTextColor 30 0 50
+{{ style.strong_highlight.breach }}
 
 # Strongly Highlight T7 Essences
 Show
