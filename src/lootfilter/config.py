@@ -20,6 +20,7 @@ def load_config(settings, style):
         'divcards': build_divcards_config(settings),
         'gems': settings.get('gems'),
         'jewels': settings.get('jewels'),
+        'flasks': settings.get('flasks'),
         'leveling': settings.get('leveling'),
         'style': style,
     }

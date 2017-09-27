@@ -27,15 +27,18 @@ Show
 {% endif %}
 
 {% if divcards.worthless %}
-{% if divcards.hide_worthless %}
-# Hide troll cards 
-Hide
-{% else %}
 # Worthless cards small / greyed out
 Show
-{% endif %}
 	Class "Divination Card"
 	BaseType {{ divcards.worthless|names }}
+{{ style.smaller.divcard }}
+{% endif %}
+
+{% if divcards.hidden %}
+# Hide troll cards
+Show
+    Class "Divination Card"
+    BaseType {{ divcards.hidden|names }}
 {{ style.smaller.divcard }}
 {% endif %}
 

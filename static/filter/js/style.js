@@ -99,6 +99,14 @@
         var styleName = parts[0];
         var context = parts.length == 1 ? 'default' : parts[1];
 
+        if (!(styleName in stylesheet)) {
+            console.error("Unknown Style: ", styleName, " -- from identifier: ", identifier);
+        }
+
+        if (!('default' in stylesheet[styleName])) {
+            console.error("Style " + styleName + " has no default!");
+        }
+
         var result = Style.defaultStyle(rarity, itemClass);
         var styleDefault = stylesheet[styleName].default;
 

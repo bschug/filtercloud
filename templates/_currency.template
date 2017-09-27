@@ -50,13 +50,16 @@ Show
 {% endif %}
 
 {% if currency.worthless %}
-{% if currency.hide_worthless %}
-Hide
-{% else %}
 Show
-{% endif %}
 	Class Currency
 	BaseType {{ currency.worthless|names }}
+{{ style.smaller.currency }}
+{% endif %}
+
+{% if currency.hidden %}
+Hide
+    Class Currency
+    BaseType {{ currency.hidden|names }}
 {{ style.smaller.currency }}
 {% endif %}
 

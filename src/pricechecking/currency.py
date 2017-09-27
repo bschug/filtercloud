@@ -102,6 +102,7 @@ def sort_into_tiers(currency_prices, thresholds):
     return {
         'top_tier': [k for k, v in currency_prices.items() if v >= thresholds.top_tier],
         'valuable': [k for k, v in currency_prices.items() if v >= thresholds.valuable and v < thresholds.top_tier],
-        'mediocre': [k for k, v in currency_prices.items() if v >= thresholds.worthless and v < thresholds.valuable],
-        'worthless': [k for k, v in currency_prices.items() if v < thresholds.worthless],
+        'mediocre': [k for k, v in currency_prices.items() if v > thresholds.worthless and v < thresholds.valuable],
+        'worthless': [k for k, v in currency_prices.items() if v > thresholds.hidden and v <= thresholds.worthless],
+        'hidden': [k for k, v in currency_prices.items() if v < thresholds.hidden],
     }

@@ -30,16 +30,17 @@
             <div class="right"></div>
         </div>
         <div class="title">
-            <span>FilterCloud</span>
+            <span @click="currentPage = null">FilterCloud</span>
         </div>
     </div>
     <div class="page clearfix" id="page" v-cloak>
         <div class="sidebar">
             <div class="sidebar-box">
-                <sidebarLink :current-page.sync="currentPage" page="Style"></sidebarLink>
+                <p class="download-button" @click="downloadFilter">Download</p>
+                <sidebarLink :current-page.sync="currentPage" page="Style Editor"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Endgame Rares', 'Leveling']" :key="page"
+                   v-for="page in ['Endgame Rares']" :key="page"
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
@@ -57,7 +58,7 @@
                     <li>Customizable style and behaviour</li>
                     <li>Access your loot filter from anywhere</li>
                     <li>Rules based on market value from poe.ninja</li>
-                    <li>Detailed leveling rules</li>
+                    <li>Configure leveling rules specifically for your build</li>
                 </ul>
 
                 <h2>How is this different from Neversink's FilterBlade?</h2>
@@ -172,10 +173,6 @@
 
                 <hr>
 
-                <checkboxWithTooltip id="currency_hide_low_value" v-model="config.currency.hide_low_value" label="Hide Low Value">
-                    Hide worthless currency that's not worth picking up.
-                    Otherwise, will be shown with grey text.
-                </checkboxWithTooltip>
                 <checkboxWithTooltip id="currency_use_shaper_voice" v-model="config.currency.use_shaper_voice" label="Shaper Voice">
                     Use Shaper voice pack to announce rare currency. Otherwise these will just use the sound
                     for strongly highlighted currency configured in the stylesheet.
@@ -188,8 +185,10 @@
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
                 <thresholdSlider v-model="config.currency.thresholds.worthless" title="Worthless">
-                    Anything below this is usually not worth the time picking up. If you check the checkmark above,
-                    these will be hidden completely.
+                    Anything below this is usually not worth the time picking up, unless there's a lot them in one place.
+                </thresholdSlider>
+                <thresholdSlider v-model="config.currency.thresholds.hidden" title="Hidden">
+                    Anything below this will be hidden completely.
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.currency" :thresholds="config.currency.thresholds"
@@ -204,10 +203,6 @@
             <div v-show="currentPage === 'Divination Cards'">
                 <h1>Divination Cards</h1>
 
-                <checkboxWithTooltip id="divcards_hide_low_value" v-model="config.divcards.hide_low_value" label="Hide Low Value">
-                    Completely hide worthless divination cards. Otherwise, will show them with a smaller font.
-                </checkboxWithTooltip>
-
                 <thresholdSlider v-model="config.divcards.thresholds.top_tier" title="Top Tier">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
@@ -215,8 +210,10 @@
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
                 <thresholdSlider v-model="config.divcards.thresholds.worthless" title="Worthless">
-                    Anything below this is usually not worth the time picking up. If you check the checkmark above,
-                    these will be hidden completely.
+                    Anything below this is usually not worth the time picking up, unless there's a lot of cards in one spot.
+                </thresholdSlider>
+                <thresholdSlider v-model="config.divcards.thresholds.hidden" title="Hidden">
+                    Anything below this is will be hidden completely.
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.divcards" :thresholds="config.divcards.thresholds"
@@ -244,10 +241,6 @@
 
                 <hr>
 
-                <checkboxWithTooltip id="uniques_hide_low_value" v-model="config.uniques.hide_low_value" label="Hide Low Value">
-                    Completely hide worthless uniques. Otherwise, will show them with a smaller font.
-                </checkboxWithTooltip>
-
                 <thresholdSlider v-model="config.uniques.thresholds.top_tier" title="Top Tier">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
@@ -255,8 +248,11 @@
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
                 <thresholdSlider v-model="config.uniques.thresholds.worthless" title="Worthless">
-                    Anything below this is usually not worth the time picking up. If you check the checkmark above,
-                    these will be hidden completely.
+                    Anything below this is usually not worth the time picking up, unless you're going for the 5 Uniques
+                    prophecy.
+                </thresholdSlider>
+                <thresholdSlider v-model="config.uniques.thresholds.hidden" title="Hidden">
+                    Anything below this will be hidden completely.
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.uniques" :thresholds="config.uniques.thresholds"
@@ -271,7 +267,7 @@
             <div v-show="currentPage === 'Skill Gems'">
                 <h1>Skill Gems</h1>
 
-                <checkboxWithTooltip id="gems_show_all" v-model="config.gems.show_all" label="Show All">
+                <checkboxWithTooltip id="gems_show_all" v-model="config.gems.show_all" label="Show 0 Quality Gems">
                     Show all skill gems. Otherwise will hide them. Highlighted gems covered by the rules below will be
                     shown even if this is not checked.
                 </checkboxWithTooltip>

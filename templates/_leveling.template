@@ -14,32 +14,33 @@ Show
 	Class Boots 
 	ItemLevel < {{ leveling.highlight_boots.show_magic_until }}
 	Rarity Magic
-{{ style.highlight.magic }}
 {% endif %}
 
 
 # ------------------------------- Sockets ---------------------------------------
 
-# Until level {{ leveling.sockets.all_3links_until }}, show all 3-links 
-Show 
+# Until level {{ leveling.sockets.all_3links_until }}, show all 3-links
+Show
+    Class Gloves Boots Helmet "Body Armour"
 	ItemLevel <= {{ leveling.sockets.all_3links_until }}
 	LinkedSockets >= 3
 {{ style.normal }}
-	
+
 # Until level {{ leveling.sockets.all_4links_until }}, show all 4-links
-Show 
+Show
+    Class Gloves Boots Helmet "Body Armour"
 	ItemLevel <= {{ leveling.sockets.all_4links_until }}
-    LinkedSockets >= 4 
+    LinkedSockets >= 4
 {{ style.normal }}
 
-# Show 3-linked one handed weapons that are good at current level 
+# Show 3-linked one handed weapons that are good at current level
 {% for ilvl in range(leveling.sockets.all_3links_until + leveling.sockets.onehand_3link_offset, 68) %}
-Show 
+Show
 	ItemLevel <= {{ ilvl }}
 	DropLevel >= {{ ilvl - leveling.sockets.onehand_3link_offset }}
 	LinkedSockets >= 3
 	Class "One Hand" Claws Sceptres
-{{ style.normal }}	
+{{ style.normal }}
 {% endfor %}
 
 {% if leveling.sockets.all_3linked_wands %}

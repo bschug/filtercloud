@@ -4,10 +4,10 @@
 	"include_endgame_rules": true,
 	
 	"currency": {
-		"hide_low_value": true,
 		"use_shaper_voice": true,
 		"ultra_rare": ["Mirror of Kalandra"],
 		"thresholds": {
+			"hidden": 0.005,
 			"worthless": 0.05,
 			"valuable": 0.5,
 			"top_tier": 10
@@ -93,8 +93,8 @@
 	},
 	
 	"uniques": {
-		"hide_low_value": false,
 		"thresholds": {
+			"hidden": 0,
 			"worthless": 0.5,
 			"valuable": 2,
 			"top_tier": 15
@@ -103,14 +103,14 @@
 	},
 	
 	"divcards": {
-		"hide_low_value": false,
 		"thresholds": {
-			"worthless": 0,
+			"hidden": 0,
+			"worthless": 0.2,
 			"valuable": 1,
 			"top_tier": 15
 		},
 		"overrides": {
-			"The Carrion Crow": "worthless"
+			"The Carrion Crow": "hidden"
 		}
 	},
 	
@@ -124,6 +124,36 @@
 		},
 		"utility": {
 			"min_quality": 15
+		}
+	},
+
+	"leveling": {
+		"flasks": {
+			"offset": 3
+		},
+		"highlight_boots": {
+			"show_magic_until": 40
+		},
+		"jewelry": {
+			"show_magic_until": 40
+		},
+		"sockets": {
+			"all_3linked_wands": false,
+			"all_3linked_caster_daggers": false,
+			"all_3links_until": 40,
+			"all_4links_until": 70,
+			"onehand_3link_offset": 0
+		},
+		"tight": {
+			"classes": [
+				"Two Hand Axes", "Two Hand Maces", "Staves" ],
+			"offset": 5,
+			"show_magic_until": 30
+		},
+		"loose": {
+			"classes": [],
+			"offset": 10,
+			"show_magic_until": 30
 		}
 	}
 }

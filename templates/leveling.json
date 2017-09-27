@@ -82,22 +82,20 @@
 			"show_magic_until": 40
 		},
 		"sockets": {
-			"all_3linked_wands": true,
-			"all_3linked_caster_daggers": true,
+			"all_3linked_wands": false,
+			"all_3linked_caster_daggers": false,
 			"all_3links_until": 40,
 			"all_4links_until": 70,
-			"onehand_3link_offset": 10
+			"onehand_3link_offset": 0
 		},
 		"tight": {
 			"classes": [
-				"Axes", "Bows", "Claws", "Daggers", "Maces", "Sceptres", "Staves", "Swords", 
-				"Wands", "Body Armours", "Shields" ],
-			"offset": 3,
+				"Two Hand Axes", "Two Hand Maces", "Staves" ],
+			"offset": 5,
 			"show_magic_until": 30
 		},
 		"loose": {
-			"classes": [
-				"Boots", "Gloves", "Helmets", "Quivers"],
+			"classes": [],
 			"offset": 10,
 			"show_magic_until": 30
 		}

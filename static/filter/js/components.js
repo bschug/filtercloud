@@ -125,12 +125,12 @@ Vue.component('thresholdslider', {
             <h3>{{ title }}</h3> \
             <span class="value">{{ formattedValue }}</span> \
             <img src="images/items/currency/chaos.png"></img> \
-            <input type="range" min="-3000" max="3000" v-model="sliderPosition" class="slider"> \
+            <input type="range" min="-3001" max="3000" v-model="sliderPosition" class="slider"> \
         </div> \
         ',
     props: ['value', 'title'],
     data: function() { return {
-        'sliderPosition': Math.log10(MathUtils.clamp(this.value, 0.001, 1000)) * 1000
+        'sliderPosition': this.value === 0 ? -3001 : Math.log10(MathUtils.clamp(this.value, 0.001, 1000)) * 1000
     };},
     computed: {
         formattedValue: function() {
@@ -147,7 +147,7 @@ Vue.component('thresholdslider', {
     },
     watch: {
         'sliderPosition': function(val) {
-            this.$emit('input', Math.pow(10, val / 1000));
+            this.$emit('input', val < -3000 ? 0 : Math.pow(10, val / 1000));
         },
     },
 });
@@ -201,11 +201,8 @@ Vue.component('thresholditemlist', {
                 if (ArrayUtils.contains(this.hideOverrides, item)) {
                     return true;
                 }
-                if (!this.hideWorthless) {
-                    return false;
-                }
                 var tier = this.getItemTier(item);
-                result[item] = (tier === 'worthless');
+                result[item] = (tier === 'hidden');
             }
             return result;
         }
@@ -232,8 +229,10 @@ Vue.component('thresholditemlist', {
                 return 'valuable';
             } else if (price >= this.thresholds.worthless) {
                 return 'mediocre';
-            } else {
+            } else if (price >= this.thresholds.hidden) {
                 return 'worthless';
+            } else {
+                return 'hidden';
             }
         },
 
@@ -246,7 +245,8 @@ Vue.component('thresholditemlist', {
                 top_tier: 'strong_highlight',
                 valuable: 'highlight',
                 mediocre: 'normal',
-                worthless: 'smaller'
+                worthless: 'smaller',
+                hidden: 'smaller'
             }[tier];
         }
     }

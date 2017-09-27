@@ -65,9 +65,14 @@ def build():
     try:
         style = lootfilter.load_style(settings_from_post('style'))
         config = lootfilter.load_config(settings_from_post('config'), style)
-        return render_template('main.template', **config)
+        filtercode = render_template('main.template', **config)
+        response = Response(filtercode)
+        response.headers['Content-Disposition'] = 'attachment;filename=gg.filter'
+        response.headers['Content-Type'] = 'text/plain'
+        return response
+
     except Exception as ex:
-        app.logger.exception("/filter/api/build failed")
+        app.logger.exception("/filter/api/build failed -- payload was: " + json.dumps(request.form))
         return str(ex)
 
 

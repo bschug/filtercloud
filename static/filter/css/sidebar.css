@@ -24,3 +24,25 @@
 .sidebar .selected {
     color: #cccccc;
 }
+
+.sidebar .download-button {
+    background-color: #559933;
+    border-top: 2px solid #77cc55;
+    border-left: 2px solid #77cc55;
+    border-bottom: 2px solid #337711;
+    border-right: 2px solid #337711;
+    border-radius: 2px;
+
+    font-size: 26px;
+    font-family: FontinSmallcaps;
+    text-align: center;
+
+    cursor: default;
+}
+
+.sidebar .download-button:hover {
+    border-bottom: 2px solid #77cc55;
+    border-right: 2px solid #77cc55;
+    border-top: 2px solid #337711;
+    border-left: 2px solid #337711;
+}

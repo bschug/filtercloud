@@ -34,13 +34,16 @@ Show
 
 # Worthless Uniques (< 2 alch)
 {% if uniques.worthless %}
-{% if uniques.hide_low_value %}
-Hide
-{% else %}
 Show
-{% endif %}
     Rarity Unique
     BaseType {{ uniques.worthless|names }}
+{{ style.smaller.unique }}
+{% endif %}
+
+{% if uniques.hidden %}
+Hide
+    Rarity Unique
+    BaseType {{ uniques.hidden|names }}
 {{ style.smaller.unique }}
 {% endif %}
 
