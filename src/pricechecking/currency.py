@@ -55,7 +55,13 @@ def get_currency_tiers(league, thresholds):
 def get_currency_prices(league):
     url = "http://poeninja.azureedge.net/api/Data/GetCurrencyOverview"
     response = cache.get(url, params={'league': league}).json()
-    prices = {x['currencyTypeName']: x['receive']['value'] for x in response['lines']}
+    prices = {}
+    for line in response['lines']:
+        name = line['currencyTypeName']
+        if line.get('receive') is not None:
+            prices[name] = line['receive']['value']
+        elif line.get('pay') is not None:
+            prices[name] = line['pay']['value']
 
     # Some currencies may be missing from poe.ninja. If possible, fill them with sensible defaults
     if 'Mirror of Kalandra' not in prices and 'Mirror Shard' in prices:
