@@ -122,13 +122,13 @@ Vue.component('itempreview', {
 Vue.component('thresholdslider', {
     template: '\
         <div class="threshold-slider"> \
-            <h3>{{ title }}</h3> \
-            <span class="value">{{ formattedValue }}</span> \
+            <h3>{{ title }}<span class="tooltip"><slot></slot></span></h3> \
+            <span class="value"><span class="math">{{ op }}</span> {{ formattedValue }}</span> \
             <img src="images/items/currency/chaos.png"></img> \
             <input type="range" min="-3001" max="3000" v-model="sliderPosition" class="slider"> \
         </div> \
         ',
-    props: ['value', 'title'],
+    props: ['value', 'title', 'op'],
     data: function() { return {
         'sliderPosition': this.value === 0 ? -3001 : Math.log10(MathUtils.clamp(this.value, 0.001, 1000)) * 1000
     };},
@@ -156,12 +156,12 @@ Vue.component('thresholdslider', {
 Vue.component('linearslider', {
     template: '\
         <div class="threshold-slider"> \
-            <h3>{{ title }}</h3> \
-            <span class="value">{{ value }}</span> \
+            <h3>{{ title }}<span class="tooltip"><slot></slot></span></h3> \
+            <span class="value"><span class="math">{{ op }}</span> {{ value }}</span> \
             <input type="range" :min="minValue" :max="maxValue" v-model="sliderPosition" class="slider"> \
         </div> \
         ',
-    props: ['value', 'title', 'minValue', 'maxValue'],
+    props: ['value', 'title', 'minValue', 'maxValue', 'op'],
     data: function() { return {
         'sliderPosition': this.value
     };},

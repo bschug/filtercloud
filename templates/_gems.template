@@ -43,12 +43,7 @@ Show
 
 # ----------------- Rest -------------------
 
-{% if gems.show_all %}
-# Show all other Skill Gems in smaller font
-Show 
-{% else %}
-# Hide worthless gems 
+# Hide worthless gems
 Hide 
-{% endif %}
 	Class "Skill Gem"
 {{ style.smaller.gem }}

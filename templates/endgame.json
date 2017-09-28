@@ -18,7 +18,6 @@
 	},
 	
 	"gems": {
-		"show_all": false,
 		"high_quality": 20,
 		"medium_quality": 16,
 		"min_quality": 1,
