@@ -178,16 +178,16 @@
                     for strongly highlighted currency configured in the stylesheet.
                 </checkboxWithTooltip>
 
-                <thresholdSlider v-model="config.currency.thresholds.top_tier" title="Top Tier">
+                <thresholdSlider v-model="config.currency.thresholds.top_tier" title="Top Tier" op="≥">
                     Items worth more than this are very valuable. If you see this highlighting, it's time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.valuable" title="Valuable">
+                <thresholdSlider v-model="config.currency.thresholds.valuable" title="Valuable" op="≥">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.worthless" title="Worthless">
+                <thresholdSlider v-model="config.currency.thresholds.worthless" title="Worthless" op="<">
                     Anything below this is usually not worth the time picking up, unless there's a lot them in one place.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.hidden" title="Hidden">
+                <thresholdSlider v-model="config.currency.thresholds.hidden" title="Hidden" op="<">
                     Anything below this will be hidden completely.
                 </thresholdSlider>
 
@@ -203,16 +203,16 @@
             <div v-show="currentPage === 'Divination Cards'">
                 <h1>Divination Cards</h1>
 
-                <thresholdSlider v-model="config.divcards.thresholds.top_tier" title="Top Tier">
+                <thresholdSlider v-model="config.divcards.thresholds.top_tier" title="Top Tier" op="≥">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.valuable" title="Valuable">
+                <thresholdSlider v-model="config.divcards.thresholds.valuable" title="Valuable" op="≥">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.worthless" title="Worthless">
+                <thresholdSlider v-model="config.divcards.thresholds.worthless" title="Worthless" op="<">
                     Anything below this is usually not worth the time picking up, unless there's a lot of cards in one spot.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.hidden" title="Hidden">
+                <thresholdSlider v-model="config.divcards.thresholds.hidden" title="Hidden" op="<">
                     Anything below this is will be hidden completely.
                 </thresholdSlider>
 
@@ -241,17 +241,17 @@
 
                 <hr>
 
-                <thresholdSlider v-model="config.uniques.thresholds.top_tier" title="Top Tier">
+                <thresholdSlider v-model="config.uniques.thresholds.top_tier" title="Top Tier" op="≥">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.valuable" title="Valuable">
+                <thresholdSlider v-model="config.uniques.thresholds.valuable" title="Valuable" op="≥">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.worthless" title="Worthless">
+                <thresholdSlider v-model="config.uniques.thresholds.worthless" title="Worthless" op="<">
                     Anything below this is usually not worth the time picking up, unless you're going for the 5 Uniques
                     prophecy.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.hidden" title="Hidden">
+                <thresholdSlider v-model="config.uniques.thresholds.hidden" title="Hidden" op="<">
                     Anything below this will be hidden completely.
                 </thresholdSlider>
 
@@ -267,18 +267,13 @@
             <div v-show="currentPage === 'Skill Gems'">
                 <h1>Skill Gems</h1>
 
-                <checkboxWithTooltip id="gems_show_all" v-model="config.gems.show_all" label="Show 0 Quality Gems">
-                    Show all skill gems. Otherwise will hide them. Highlighted gems covered by the rules below will be
-                    shown even if this is not checked.
-                </checkboxWithTooltip>
-
-                <linearSlider v-model="config.gems.high_quality" title="Top Tier" :min-value="0" :max-value="20">
+                <linearSlider v-model="config.gems.high_quality" title="Top Tier" :min-value="0" :max-value="21" op="≥">
                     Strong highlighting for very high quality gems.
                 </linearSlider>
-                <linearSlider v-model="config.gems.medium_quality" title="Valuable" :min-value="0" :max-value="20">
+                <linearSlider v-model="config.gems.medium_quality" title="Valuable" :min-value="0" :max-value="21" op="≥">
                     Highlighting for decently high quality gems.
                 </linearSlider>
-                <linearSlider v-model="config.gems.min_quality" title="Worthless" :min-value="0" :max-value="20">
+                <linearSlider v-model="config.gems.min_quality" title="Hidden" :min-value="0" :max-value="21" op="<">
                     Gems with less than this will be hidden.
                 </linearSlider>
 
@@ -313,10 +308,10 @@
                     especially with quality. You can configure the minimum quality at which to show certain flasks.
                 </p>
 
-                <linearSlider v-model="config.flasks.healing.min_quality" title="Life/Mana/Hybrid" :min-value="0" :max-value="20">
+                <linearSlider v-model="config.flasks.healing.min_quality" title="Life/Mana/Hybrid" :min-value="0" :max-value="20" op="≥">
                     Show Life/Mana/Hybrid flasks only if they have at least this much quality.
                 </linearSlider>
-                <linearSlider v-model="config.flasks.utility.min_quality" title="Utility" :min-value="0" :max-value="20">
+                <linearSlider v-model="config.flasks.utility.min_quality" title="Utility" :min-value="0" :max-value="20" op="≥">
                     Show Utility Flasks only if they have at least this much quality.
                 </linearSlider>
             </div>
