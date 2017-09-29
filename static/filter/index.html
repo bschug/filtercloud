@@ -50,48 +50,40 @@
         </div>
         <div class="content">
             <div id="faq-page" v-show="currentPage === null">
-                <h1>FAQ</h1>
+                <h1>What is FilterCloud?</h1>
 
-                <h2>What does FilterCloud offer?</h2>
-                <ul>
-                    <li>A clean, tasteful and powerful loot filter</li>
-                    <li>Customizable style and behaviour</li>
-                    <li>Access your loot filter from anywhere</li>
-                    <li>Rules based on market value from poe.ninja</li>
-                    <li>Configure leveling rules specifically for your build</li>
-                </ul>
+                <h2>A Clean, Tasteful and Powerful Loot Filter</h2>
+                <p>The default FilterCloud style is designed to be close to the vanilla color scheme, in line with the
+                dark and gritty theme of the game. No candy land rainbow puke.</p>
+                <p>It shows only items worth picking up, and uses a large font to reduce the time wasted by mis-clicks.
+                Keep up your clearspeed, stay ahead of the game.</p>
 
-                <h2>How is this different from Neversink's FilterBlade?</h2>
-                <p>Apart from technical features, FilterCloud follows a fundamentally different philosophy.
-                    Neversink's filter tries to encode as much information as possible into the color scheme,
-                    to ensure that you can make an educated decision to pick an item up or leave it.</p>
-                <p>FilterCloud only shows you items that are worth picking up. The idea is that you should not have
-                    to think about inventory management while you're killing stuff. If the filter shows it, you pick it
-                    up.</p>
-                <p>Its color scheme has three main levels of highlighting, plus one special style for super rare
-                    items like Mirrors, and optionally a grey style for low-value currency items (in case you don't
-                    want to hide them completely). This simplicity makes it super easy to learn what the colors and
-                    styles mean.</p>
+                <h2>Customizable Style and Behaviour</h2>
+                <p>A powerful style editor lets you customize the color scheme how you like it best. And you can also
+                customize the behaviour of the filter wherever it makes sense, defining your own thresholds and fitting
+                it perfectly to your playstyle.</p>
 
-                <h2>Why are there separate files for Leveling and Endgame?</h2>
-                <p>The leveling filter has rather complex rules about what items to show at what level, while the
-                    endgame filter has complex rules for maps and rares. Combining both into one file would be
-                    problematic for several reasons:</p>
-                <ul>
-                    <li>The rules would become even more complex because they would need to check against the item
-                        level in every single rule.</li>
-                    <li>The large leveling ruleset might cause performance issues on slower machines when running it
-                        against the massive amounts of loot on endgame maps. Especially when it also includes the
-                        endgame rules.</li>
-                    <li>It would become a lot more error-prone and harder to maintain.</li>
-                    <li>There is no strong need for combining them because you don't keep switching between
-                        leveling and endgame that often.</li>
-                </ul>
+                <h2>Access your loot filter from anywhere</h2>
+                <p>Login with your Facebook or Google account, and take your filter wherever you go. Playing at a
+                    friend's pc? Use your personal filter. Playing a quick after-work session at the office? Use your
+                    personal filter. No need to save it to Google docs or Pastebin whenever you change something.
+                    FilterCloud is always with you.
+                </p>
+
+                <h2>Highlighting Based on Market Value</h2>
+                <p>Never miss a change in the meta, because FilterCloud highlights currency, uniques and divination
+                    cards based on their actual current market value. So if Mathil starts playing that Pledge of Hands build,
+                    you will see them highlighted while the rest of the world is still waiting for Neversink to release a
+                    new filter version.</p>
+
+                <h2>Configure leveling rules specifically for your build</h2>
+                <p>Hand-craft a leveling filter that shows exactly the items and sockets you need for leveling.
+                    The race to endgame has never been easier!</p>
             </div>
 
             <div id="style-page" v-show="currentPage === 'Style'">
                 <h1>Style Editor</h1>
-
+                <h2>Coming Soon</h2>
             </div>
 
             <div v-show="currentPage === 'Endgame Rares'">
