@@ -7,7 +7,7 @@
         .then(function() {
             console.log("Initializing now...")
             FilterCloud.app = new Vue({
-                el: '#page',
+                el: '#page-root',
                 data: {
                     style: Style.data,
                     config: Config.current.data,
