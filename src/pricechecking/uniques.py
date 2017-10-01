@@ -66,10 +66,10 @@ def get_unique_tiers(league, thresholds):
 
 def get_unique_prices(league):
     unique_prices = defaultdict(lambda: 0)
-    get_unique_prices_from_url('http://cdn.poe.ninja/api/Data/GetUniqueWeaponOverview', league, unique_prices)
-    get_unique_prices_from_url('http://cdn.poe.ninja/api/Data/GetUniqueArmourOverview', league, unique_prices)
-    get_unique_prices_from_url('http://cdn.poe.ninja/api/Data/GetUniqueAccessoryOverview', league, unique_prices)
-    get_unique_prices_from_url('http://cdn.poe.ninja/api/Data/GetUniqueFlaskOverview', league, unique_prices)
+    get_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueWeaponOverview', league, unique_prices)
+    get_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueArmourOverview', league, unique_prices)
+    get_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueAccessoryOverview', league, unique_prices)
+    get_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueFlaskOverview', league, unique_prices)
     return unique_prices
 
 

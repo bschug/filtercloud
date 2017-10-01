@@ -53,7 +53,7 @@ def get_currency_tiers(league, thresholds):
 
 
 def get_currency_prices(league):
-    url = "http://poeninja.azureedge.net/api/Data/GetCurrencyOverview"
+    url = "http://poe.ninja/api/Data/GetCurrencyOverview"
     response = cache.get(url, params={'league': league}).json()
     prices = {}
     for line in response['lines']:

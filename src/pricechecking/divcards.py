@@ -12,7 +12,7 @@ def get_divcard_tiers(league, thresholds):
 
 def get_divcard_prices(league):
     prices = dict()
-    url = "http://poeninja.azureedge.net/api/Data/GetDivinationCardsOverview"
+    url = "http://poe.ninja/api/Data/GetDivinationCardsOverview"
     response = cache.get(url, params={'league': league}).json()
     for item in response['lines']:
         prices[item['name']] = item['chaosValue']
