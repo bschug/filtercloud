@@ -102,7 +102,7 @@ Vue.component('itempreview', {
     template: '\
         <span class="item-preview" :style="style">\
             {{ item }}\
-            <img src="images/close_button.png" alt="delete" v-if="deletable" class="delete-button" @click="deleteItem"></img>\
+            <img src="images/buttons/close.png" alt="delete" v-if="deletable" class="delete-button" @click="deleteItem"></img>\
         </span>',
 
     props: ['item', 'itemStyle', 'deletable', 'itemRarity', 'itemClass', 'hidden'],
@@ -126,11 +126,26 @@ Vue.component('thresholdslider', {
             <span class="value"><span class="math">{{ op }}</span> {{ formattedValue }}</span> \
             <img src="images/items/currency/chaos.png"></img> \
             <input type="range" min="-3001" max="3000" v-model="sliderPosition" class="slider"> \
+            <button class="openclose" :class="isExpanded ? \'less\' : \'more\'" @click="toggleExpand"/> \
+            <p v-show="isExpanded"> \
+                <itempreview v-for="item in overrides" :key="item" \
+                    :item="item" :item-style="itemStyle" :deletable="true" \
+                    :item-rarity="itemRarity" :item-class="itemClass" :hidden="hidden" \
+                    @deleted="deleteOverride(item)"> \
+                </itempreview> \
+                <select v-model="selectedOverride"> \
+                    <option disabled value="">Add Override</option> \
+                    <option v-for="item in allItems">{{ item }}</option> \
+                </select> \
+            </p> \
         </div> \
         ',
-    props: ['value', 'title', 'op'],
+    props: ['value', 'title', 'op', 'overrides', 'prices', 'itemStyle', 'itemRarity', 'itemClass', 'hidden'],
     data: function() { return {
-        'sliderPosition': this.value === 0 ? -3001 : Math.log10(MathUtils.clamp(this.value, 0.001, 1000)) * 1000
+        'sliderPosition': this.value === 0 ? -3001 : Math.log10(MathUtils.clamp(this.value, 0.001, 1000)) * 1000,
+        'isExpanded': this.overrides && (this.overrides.length > 0),
+        'selectedOverride': '',
+        'allItems': Object.keys(this.prices).sort()
     };},
     computed: {
         formattedValue: function() {
@@ -149,7 +164,24 @@ Vue.component('thresholdslider', {
         'sliderPosition': function(val) {
             this.$emit('input', val < -3000 ? 0 : Math.pow(10, val / 1000));
         },
+        'selectedOverride': function(val) {
+            if (val !== '') {
+                this.addOverride(val);
+                this.selectedOverride = '';
+            }
+        }
     },
+    methods: {
+        'toggleExpand': function() {
+            this.isExpanded = !this.isExpanded;
+        },
+        'deleteOverride': function(item) {
+            this.$emit('update:overrides', this.overrides.filter(function(x) { return x !== item; }));
+        },
+        'addOverride': function(item) {
+            this.$emit('update:overrides', this.overrides.concat([item]));
+        }
+    }
 });
 
 
@@ -187,8 +219,7 @@ Vue.component('thresholditemlist', {
 
     props: [
         'prices', 'thresholds', 'styleContext', 'hideWorthless',
-        'tierOverrides', 'styleOverrides', 'hideOverrides',
-        'itemRarity'],
+        'overrides', 'styleOverrides', 'itemRarity'],
 
     computed: {
         itemList: function() {
@@ -198,11 +229,21 @@ Vue.component('thresholditemlist', {
         isHidden: function() {
             result = {};
             for (var item in this.prices) {
-                if (ArrayUtils.contains(this.hideOverrides, item)) {
-                    return true;
-                }
                 var tier = this.getItemTier(item);
                 result[item] = (tier === 'hidden');
+            }
+            return result;
+        },
+
+        // Override list is stored as Tier -> [Item] to make UI easier to implement.
+        // We need Item -> Tier here.
+        tierOverrides: function() {
+            var result = {};
+            for (var tier in this.overrides) {
+                for (var i=0; i < this.overrides[tier].length; i++) {
+                    var item = this.overrides[tier][i];
+                    result[item] = tier;
+                }
             }
             return result;
         }

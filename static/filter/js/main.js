@@ -12,9 +12,9 @@
                     style: Style.data,
                     config: Config.current.data,
                     currentPage: null,
-                    GameData: GameData
+                    GameData: GameData,
+                    allUniqueItems: Object.keys(GameData.prices.uniques).sort()
                 },
-
                 methods: {
 
                     setCurrencyOverride: function(item, tier) {

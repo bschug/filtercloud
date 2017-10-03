@@ -13,7 +13,7 @@
 			"top_tier": 10
 		},
 		"overrides": {
-			"Perandus Coin": "valuable"
+			"valuable": ["Perandus Coin"]
 		}
 	},
 	
@@ -109,7 +109,7 @@
 			"top_tier": 15
 		},
 		"overrides": {
-			"The Carrion Crow": "hidden"
+			"hidden": ["The Carrion Crow"]
 		}
 	},
 	

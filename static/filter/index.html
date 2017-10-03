@@ -170,50 +170,64 @@
                     for strongly highlighted currency configured in the stylesheet.
                 </checkboxWithTooltip>
 
-                <thresholdSlider v-model="config.currency.thresholds.top_tier" title="Top Tier" op="≥">
+                <thresholdSlider v-model="config.currency.thresholds.top_tier" title="Top Tier" op="≥"
+                                 :overrides.sync="config.currency.overrides.top_tier" :prices="GameData.prices.currency"
+                                 item-style="strong_highlight.currency" item-class="Currency">
                     Items worth more than this are very valuable. If you see this highlighting, it's time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.valuable" title="Valuable" op="≥">
+                <thresholdSlider v-model="config.currency.thresholds.valuable" title="Valuable" op="≥"
+                                 :overrides.sync="config.currency.overrides.valuable" :prices="GameData.prices.currency"
+                                 item-style="highlight.currency" item-class="Currency">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.worthless" title="Worthless" op="<">
+                <thresholdSlider v-model="config.currency.thresholds.worthless" title="Worthless" op="<"
+                                 :overrides.sync="config.currency.overrides.worthless" :prices="GameData.prices.currency"
+                                 item-style="smaller.currency" item-class="Currency">
                     Anything below this is usually not worth the time picking up, unless there's a lot them in one place.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.hidden" title="Hidden" op="<">
+                <thresholdSlider v-model="config.currency.thresholds.hidden" title="Hidden" op="<"
+                                 :overrides.sync="config.currency.overrides.hidden" :prices="GameData.prices.currency"
+                                 item-style="hidden.currency" item-class="Currency" :hidden="true">
                     Anything below this will be hidden completely.
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.currency" :thresholds="config.currency.thresholds"
                                    :hide-worthless="config.currency.hide_low_value"
-                                   style-context="currency" item-rarity="normal"
-                                   :tier-overrides="config.currency.overrides"
-                                   :style-overrides="{'Mirror of Kalandra': 'ultra_rare.currency'}"
-                                   :hide-overrides="[]">
+                                   style-context="currency"
+                                   :overrides="config.currency.overrides"
+                                   :style-overrides="{'Mirror of Kalandra': 'ultra_rare.currency'}">
                 </thresholdItemList>
             </div>
 
             <div v-show="currentPage === 'Divination Cards'">
                 <h1>Divination Cards</h1>
 
-                <thresholdSlider v-model="config.divcards.thresholds.top_tier" title="Top Tier" op="≥">
+                <thresholdSlider v-model="config.divcards.thresholds.top_tier" title="Top Tier" op="≥"
+                                 :overrides.sync="config.divcards.overrides.top_tier" :prices="GameData.prices.divcards"
+                                 item-style="strong_highlight.divcards" item-class="Divination Card">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.valuable" title="Valuable" op="≥">
+                <thresholdSlider v-model="config.divcards.thresholds.valuable" title="Valuable" op="≥"
+                                 :overrides.sync="config.divcards.overrides.valuable" :prices="GameData.prices.divcards"
+                                 item-style="highlight.divcards" item-class="Divination Card">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.worthless" title="Worthless" op="<">
+                <thresholdSlider v-model="config.divcards.thresholds.worthless" title="Worthless" op="<"
+                                 :overrides.sync="config.divcards.overrides.worthless" :prices="GameData.prices.divcards"
+                                 item-style="smaller.divcards" item-class="Divination Card">
                     Anything below this is usually not worth the time picking up, unless there's a lot of cards in one spot.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.hidden" title="Hidden" op="<">
+                <thresholdSlider v-model="config.divcards.thresholds.hidden" title="Hidden" op="<"
+                                 :overrides.sync="config.divcards.overrides.hidden" :prices="GameData.prices.divcards"
+                                 item-style="hidden.divcards" item-class="Divination Card" :hidden="true">
                     Anything below this is will be hidden completely.
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.divcards" :thresholds="config.divcards.thresholds"
                                    :hide-worthless="config.divcards.hide_low_value"
-                                   style-context="divcard" item-rarity="normal"
-                                   :tier-overrides="config.divcards.overrides"
-                                   :style-overrides="{}"
-                                   :hide-overrides="[]">
+                                   style-context="divcard"
+                                   :overrides="config.divcards.overrides"
+                                   :style-overrides="{}">
                 </thresholdItemList>
             </div>
 
@@ -233,26 +247,33 @@
 
                 <hr>
 
-                <thresholdSlider v-model="config.uniques.thresholds.top_tier" title="Top Tier" op="≥">
+                <thresholdSlider v-model="config.uniques.thresholds.top_tier" title="Top Tier" op="≥"
+                                 :overrides="config.uniques.overrides.top_tier" :prices="GameData.prices.uniques"
+                                 item-style="strong_highlight.unique" item-rarity="unique">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.valuable" title="Valuable" op="≥">
+                <thresholdSlider v-model="config.uniques.thresholds.valuable" title="Valuable" op="≥"
+                                 :overrides="config.uniques.overrides.valuable" :prices="GameData.prices.uniques"
+                                 item-style="highlight.unique" item-rarity="unique">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.worthless" title="Worthless" op="<">
+                <thresholdSlider v-model="config.uniques.thresholds.worthless" title="Worthless" op="<"
+                                 :overrides="config.uniques.overrides.worthless" :prices="GameData.prices.uniques"
+                                 item-style="smaller.unique" item-rarity="unique">
                     Anything below this is usually not worth the time picking up, unless you're going for the 5 Uniques
                     prophecy.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.hidden" title="Hidden" op="<">
+                <thresholdSlider v-model="config.uniques.thresholds.hidden" title="Hidden" op="<"
+                                 :overrides="config.uniques.overrides.hidden" :prices="GameData.prices.uniques"
+                                 item-style="hidden.unique" item-rarity="unique" :hidden="true">
                     Anything below this will be hidden completely.
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.uniques" :thresholds="config.uniques.thresholds"
                                    :hide-worthless="config.uniques.hide_low_value"
                                    style-context="unique" item-rarity="unique"
-                                   :tier-overrides="config.uniques.overrides"
-                                   :style-overrides="{}"
-                                   :hide-overrides="[]">
+                                   :overrides="config.uniques.overrides"
+                                   :style-overrides="{}">
                 </thresholdItemList>
             </div>
 

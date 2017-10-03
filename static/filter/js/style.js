@@ -89,8 +89,12 @@
 
     /* Fill all empty stats with parent default or rarity default. */
     Style.getEffectiveStyle = function(stylesheet, identifier, rarity, itemClass, isHidden) {
-        rarities = rarity.split(',');
-        rarity = rarities[Math.floor((Math.random() * rarities.length))]
+        if (rarity) {
+            rarities = rarity.split(',');
+            rarity = rarities[Math.floor((Math.random() * rarities.length))]
+        } else {
+            rarity = "normal";
+        }
 
         var parts = identifier.split('.');
         if (parts.length == 0 || parts.length > 2) {

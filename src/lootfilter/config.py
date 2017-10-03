@@ -60,10 +60,11 @@ def build_divcards_config(settings):
 
 
 def apply_overrides(config, overrides):
-    for item, category in overrides.items():
+    for category, items in overrides.items():
+        # Remove override items from all other categories
         for k in config.keys():
-            config[k] = [x for x in config[k] if x != item]
-        config[category].append(item)
+            config[k] = [x for x in config[k] if x not in items]
+        config[category].extend(items)
     return config
 
 

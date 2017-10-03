@@ -28,6 +28,25 @@
     white-space: nowrap;
 }
 
+.threshold-slider > .openclose {
+    position: relative;
+    width: 31px;
+    height: 38px;
+    border: none;
+}
+.threshold-slider > .more {
+    background-image: url(/filter/images/buttons/more.jpg);
+}
+.threshold-slider > .more:hover {
+    background-image: url(/filter/images/buttons/more-highlight.jpg);
+}
+.threshold-slider > .less {
+    background-image: url(/filter/images/buttons/less.jpg);
+}
+threshold-slider > .less:hover {
+    background-image: url(/filter/images/buttons/less-highlight.jpg);
+}
+
 /* The slider itself */
 .slider {
     -webkit-appearance: none;
