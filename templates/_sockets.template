@@ -37,7 +37,6 @@ Show
 # 6-socket Crafting Base Armor
 Show
     Sockets 6
-    ItemLevel >= 84
     Rarity <= Magic
     BaseType "Assassin's Garb" "Glorious Plate" "Astral Plate" "Vaal Regalia" "Zodiac Leather"
 {{ style.normal }}
@@ -45,11 +44,11 @@ Show
 # 6-socket crafting base Weapons
 Show
     Sockets 6
-    ItemLevel >= 83
     Rarity <= Magic
     BaseType "Harbinger Bow" "Vaal Axe" "Coronal Maul" "Exquisite Blade"
 {{ style.normal }}
-	
+
+{% if
 # other 6-socket items
 Show
     Sockets 6

@@ -8,6 +8,7 @@
 		"use_shaper_voice": true,
 		"ultra_rare": ["Mirror of Kalandra"],
 		"thresholds": {
+			"hidden": 0,
 			"worthless": 0.05,
 			"valuable": 0.5,
 			"top_tier": 10
@@ -40,6 +41,7 @@
 	
 	"uniques": {
 		"thresholds": {
+			"hidden": 0,
 			"worthless": 0.5,
 			"valuable": 2,
 			"top_tier": 15
@@ -49,6 +51,7 @@
 	
 	"divcards": {
 		"thresholds": {
+			"hidden": 0,
 			"worthless": 0,
 			"valuable": 1,
 			"top_tier": 15
@@ -72,32 +75,33 @@
 	},
 	
 	"leveling": {
+		"show_all_rares": false,
+		"weapons": ["One Hand Axes"],
 		"flasks": {
 			"offset": 3
 		},
 		"highlight_boots": {
-			"show_magic_until": 40
+			"show_magic_until": 5
 		},
 		"jewelry": {
-			"show_magic_until": 40
+			"show_magic_until": 5
 		},
 		"sockets": {
 			"all_3linked_wands": false,
 			"all_3linked_caster_daggers": false,
-			"all_3links_until": 40,
-			"all_4links_until": 70,
+			"all_3links_until": 0,
+			"all_4links_until": 0,
 			"onehand_3link_offset": 0
 		},
 		"tight": {
-			"classes": [
-				"Two Hand Axes", "Two Hand Maces", "Staves" ],
+			"classes": ["One Hand Axes"],
 			"offset": 5,
-			"show_magic_until": 30
+			"show_magic_until": 5
 		},
 		"loose": {
 			"classes": [],
 			"offset": 10,
-			"show_magic_until": 30
+			"show_magic_until": 5
 		}
 	}
 }

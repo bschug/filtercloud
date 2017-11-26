@@ -94,6 +94,10 @@ def get_currency_prices(league):
         prices['Mirror Shard'] = prices['Mirror of Kalandra'] / 20
     if 'Regal Shard' not in prices:
         prices['Regal Shard'] = prices['Regal Orb'] / 20
+    if 'Scroll of Wisdom' not in prices:
+        prices['Scroll of Wisdom'] = 1 / 200
+    if 'Portal Scroll' not in prices:
+        prices['Portal Scroll'] = 1 / 80
     if 'Scroll Fragment' not in prices:
         prices['Scroll Fragment'] = prices.get('Scroll of Wisdom', 0) / 5
     if 'Transmutation Shard' not in prices:

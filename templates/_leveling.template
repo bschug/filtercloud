@@ -6,7 +6,8 @@
 # Highlight all rare boots because they might have movespeed
 Show 
 	Class Boots 
-	Rarity Rare 
+	Rarity Rare
+	ItemLevel < 30
 {{ style.highlight.rare }}	
 
 # Show magic boots up to level {{ leveling.highlight_boots.show_magic_until }}, by then we should have some decent movespeed
@@ -39,7 +40,7 @@ Show
 	ItemLevel <= {{ ilvl }}
 	DropLevel >= {{ ilvl - leveling.sockets.onehand_3link_offset }}
 	LinkedSockets >= 3
-	Class "One Hand" Claws Sceptres
+	Class {{ leveling.weapons|names }}
 {{ style.normal }}
 {% endfor %}
 
@@ -72,10 +73,8 @@ Show
     Class {{ leveling.tight.classes|names }}
 	ItemLevel <= {{ ilvl }}
 	DropLevel >= {{ ilvl - leveling.tight.offset }}
-{% if ilvl < leveling.tight.show_magic_until %}
-    Rarity <= Magic 
-{% else %}
-	Rarity Normal
+{% if ilvl > leveling.tight.show_magic_until %}
+    Rarity Normal Rare
 {% endif %}
 {{ style.normal }}	
 {% endfor %}
@@ -97,10 +96,8 @@ Show
 	Class {{ leveling.loose.classes|names }}
 	ItemLevel <= {{ ilvl }}
 	DropLevel >= {{ ilvl - leveling.loose.offset }}
-{% if ilvl < leveling.loose.show_magic_until %}	
-	Rarity <= Magic
-{% else %}
-	Rarity Normal 
+{% if ilvl > leveling.loose.show_magic_until %}
+	Rarity Normal Rare
 {% endif %}
 {{ style.normal }}
 {% endfor %}
@@ -112,7 +109,19 @@ Hide
 	
 {% endif %}
 
+{% if not leveling.show_all_rares %}
+Hide
+    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armour"
+    Rarity Rare
+    ItemLevel < 68
+{% endif %}
+
 # ------------------------------------ Jewelry ---------------------------------------
+
+# Don't highlight stupid Breach Rings
+Show
+    BaseType "Breach Ring"
+{{ style.smaller.rare }}
 
 # Jewelry is rather rare, always show normals and show magics a little longer 
 # Also always highlight rare jewelry

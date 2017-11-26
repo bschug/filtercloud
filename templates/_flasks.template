@@ -25,18 +25,12 @@ Hide
 {% if include_leveling_rules %}
 	
 # Highlight all quality flasks on low levels
-Show 
-    Class Flask 
+Show
+    Class Flask
     Quality > 1
 	ItemLevel < 70
-    Rarity Normal 
-{{ style.highlight.normal }}
-Show 
-    Class Flask 
-    Quality > 1
-	ItemLevel < 70
-    Rarity Magic 
-{{ style.highlight.magic}}
+    Rarity Normal Magic
+{{ style.normal }}
 
 # Hide all out-leveled life/mana flasks
 {% for droplevel in [3, 6, 12, 18, 24, 30, 36, 42, 50, 60] %}
