@@ -3,7 +3,7 @@ import json
 
 from box import Box
 from flask import Flask, session, request, g, render_template, send_file, jsonify, Response
-import psycopg2
+from pymongo import MongoClient
 
 import lootfilter
 from wiki import WikiScraper, constants
@@ -17,9 +17,9 @@ app.add_template_filter(lootfilter.templating.setstyle_filter, 'setstyle')
 
 def get_db():
     """Open database connection if it's not already open."""
-    if not hasattr(g, 'postgres_db'):
-        g.postgres_db = psycopg2.connect(os.environ['FILTERCLOUD_DB'])
-    return g.postgres_db
+    if not hasattr(g, 'mongo_db'):
+        g.mongo_db = MongoClient('db')
+    return g.mongo_db
 
 
 def get_wiki():
@@ -34,6 +34,22 @@ def close_db(error):
     if hasattr(g, 'postgres_db'):
         g.postgres_db.close()
 
+
+@app.route('/api/filter/helloworld', methods=['GET'])
+def get_helloworld():
+    return "Hello yourself!"
+
+
+@app.route('/api/filter/test-db', methods=['GET'])
+def get_test_db():
+    db = get_db().test_database
+    collection = db.test_collection
+    objid = collection.insert_one({"a": 23, "b": 42}).inserted_id
+    count = len(list(collection.find()))
+    return jsonify({
+        "objid": str(objid),
+        "count": count
+    })
 
 @app.route('/api/filter/game-constants', methods=['GET'])
 def get_game_constants():
@@ -115,5 +131,4 @@ def handle_api_error(ex):
     response = jsonify(ex.to_dict())
     response.status_code = ex.status_code
     return response
-
 
