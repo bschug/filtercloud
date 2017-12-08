@@ -1,12 +1,14 @@
 import os
 import json
 
+from concurrent.futures import ThreadPoolExecutor
+
 from box import Box
 from flask import Flask, session, request, g, render_template, send_file, jsonify, Response
 from pymongo import MongoClient
 
 import lootfilter
-from wiki import WikiScraper, constants
+from wiki import WikiCache, scrape_wiki
 import pricechecking
 
 
@@ -15,17 +17,14 @@ app.add_template_filter(lootfilter.templating.format_list_filter, 'names')
 app.add_template_filter(lootfilter.templating.setstyle_filter, 'setstyle')
 
 
+executor = ThreadPoolExecutor(2)
+
+
 def get_db():
     """Open database connection if it's not already open."""
     if not hasattr(g, 'mongo_db'):
         g.mongo_db = MongoClient('db')
-    return g.mongo_db
-
-
-def get_wiki():
-    if not hasattr(g, 'wiki'):
-        g.wiki = WikiScraper()
-    return g.wiki
+    return g.mongo_db.filterforge
 
 
 @app.teardown_appcontext
@@ -40,20 +39,15 @@ def get_helloworld():
     return "Hello yourself!"
 
 
-@app.route('/api/filter/test-db', methods=['GET'])
-def get_test_db():
-    db = get_db().test_database
-    collection = db.test_collection
-    objid = collection.insert_one({"a": 23, "b": 42}).inserted_id
-    count = len(list(collection.find()))
-    return jsonify({
-        "objid": str(objid),
-        "count": count
-    })
+@app.route('/api/scraper/scrape-wiki', methods=['POST'])
+def post_scrape_wiki():
+    executor.submit(scrape_wiki, get_db())
+    return "Wiki Scraper started"
+
 
 @app.route('/api/filter/game-constants', methods=['GET'])
 def get_game_constants():
-    response = Response(get_wiki().get_game_constants_json())
+    response = Response(WikiCache(get_db()).get_game_constants_json())
     response.headers['Content-Type'] = 'application/json'
     return response
 
@@ -65,15 +59,6 @@ def get_prices(league):
         'divcards': pricechecking.get_divcard_prices(league),
         'uniques': pricechecking.get_unique_prices(league)
     })
-
-
-@app.route('/api/filter/itembox/<item>', methods=['GET'])
-def get_itembox(item):
-    if item not in get_wiki().get_game_constants():
-        raise ApiException('Item not found', status_code=404, data=item)
-    response = Response(get_wiki().get_itembox_html(item))
-    response.headers['Content-Type'] = 'text/html'
-    return response
 
 
 @app.route('/api/filter/build', methods=['POST'])

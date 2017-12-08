@@ -7,20 +7,21 @@ from box import Box
 from functioncache import JsonCache, cached
 from .constants import *
 
-# Load cache for wiki requests
-WikiCache = JsonCache('wiki', timeout=timedelta(days=3))
+
+def scrape_wiki(db):
+    """Runs the wiki scraper. For use with concurrent.futures."""
+    scraper = WikiScraper(db)
+    scraper.scrape_items()
+    print("Wiki Scraper has finished")
 
 
 class WikiScraper(object):
-    def __init__(self):
+    def __init__(self, db):
         self.site = mwclient.Site('pathofexile.gamepedia.com', path='/', clients_useragent="poe.gg")
+        self.db = db
 
-    def get_game_constants_json(self):
-        return WikiCache.get_json_with_key('game_constants', self.get_game_constants)
-
-    def get_game_constants(self):
-        """Return game constants as json-compatible dict."""
-        result = Box({
+    def scrape_items(self):
+        result = {
             'itemCategories': {
                 'weapons': WEAPON_ITEM_CLASSES,
                 'armour': ARMOUR_ITEM_CLASSES,
@@ -31,17 +32,14 @@ class WikiScraper(object):
                 'other': OTHER_ITEM_CLASSES
             },
             'itemClasses': dict()
-        })
+        }
         for item_class in ALL_ITEM_CLASSES:
-            result['itemClasses'][item_class] = self.scrape_item_class(item_class)
-        return result
-
-    def get_item_class_json(self, item_class):
-        """Returns a json-serialized list of item names. Read from cache if available."""
-        return WikiCache.get_json_with_key("item_class " + item_class, self.scrape_item_class, item_class)
-
-    def get_item_class(self, item_class):
-        return WikiCache.get_with_key("item_class " + item_class, self.scrape_item_class, item_class)
+            print("Scraping", item_class)
+            result['itemClasses'][item_class] = dict()
+            for basetype in self.scrape_item_class(item_class):
+                print("    Scraping", basetype)
+                result['itemClasses'][item_class][basetype] = self.scrape_basetype(basetype, item_class)
+        self.db.game_constants.replace_one({}, {'data': result, 'json': json.dumps(result)}, upsert=True)
 
     def scrape_item_class(self, item_class):
         query = '|'.join([
@@ -58,9 +56,60 @@ class WikiScraper(object):
         results.sort(key=lambda x: x['level'])
         return [x['name'] for x in results]
 
-    def get_itembox_html(self, name):
-        return WikiCache.get_with_key("itembox " + name, self.scrape_itembox_html, name)
+    def scrape_basetype(self, basetype, itemclass):
+        response = self.site.api('browsebysubject', subject=basetype)
+        return WikiItem(response['query']['data'], itemclass, basetype).to_dict()
 
     def scrape_itembox_html(self, name):
         response = self.site.get('browsebysubject', subject=name)
         return [x['dataitem'] for x in response['query']['data'] if 'Has_infobox_HTML' in x['property']][0][0]['item']
+
+
+class WikiItem(object):
+    def __init__(self, data, itemclass, basetype):
+        self.rawdata = data
+        self.itemclass = itemclass
+        self.basetype = basetype
+
+    def to_dict(self):
+        keys = ['itemclass', 'basetype', 'droplevel', 'armour', 'evasion', 'energy_shield',
+                'req_str', 'req_dex', 'req_int']
+        return {k: getattr(self, k) for k in keys}
+
+    def get_property(self, name, default=0):
+        try:
+            dataitem = [x['dataitem'] for x in self.rawdata if x['property'] == name][0]
+            return [x['item'] for x in dataitem][0]
+        except KeyError:
+            return default
+        except IndexError:
+            return default
+
+    @property
+    def droplevel(self):
+        return self.get_property('Has_level_requirement_range_average')
+
+    @property
+    def req_str(self):
+        return self.get_property('Has_strength_requirement_range_average')
+
+    @property
+    def req_dex(self):
+        return self.get_property('Has_dexterity_requirement_range_average')
+
+    @property
+    def req_int(self):
+        return self.get_property('Has_intelligence_requirement_range_average')
+
+    @property
+    def armour(self):
+        return self.get_property('Has_armour_range_average')
+
+    @property
+    def evasion(self):
+        return self.get_property('Has_evasion_range_average')
+
+    @property
+    def energy_shield(self):
+        return self.get_property('Has_energy_shield_average')
+
