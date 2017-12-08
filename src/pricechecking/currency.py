@@ -1,7 +1,5 @@
-from requests_cache import CachedSession
-
-
-cache = CachedSession(cache_name='currency', backend='sqlite', expire_after=3600)
+import requests
+from collections import defaultdict
 
 # We use an explicit list of currencies because poe.ninja is missing some currencies (like Alchemy Shards) and contains
 # others we don't want (like Breach Splinters)
@@ -47,15 +45,26 @@ ALL_CURRENCY = [
 ]
 
 
-def get_currency_tiers(league, thresholds):
-    prices = get_currency_prices(league)
+def get_currency_tiers(league, thresholds, db):
+    prices = get_currency_prices(league, db)
     return sort_into_tiers(prices, thresholds)
 
 
-def get_currency_prices(league):
+def get_currency_prices(league, db):
+    return db.prices.find_one({'category': 'currency', 'league': league})['prices']
+
+
+def update_currency_prices(league, db):
+    print("Updating currency prices for", league)
+    prices = scrape_currency_prices(league)
+    dbentry = {'category': 'currency', 'league': league, 'prices': prices}
+    db.prices.replace_one({'category': 'currency', 'league': league}, dbentry, upsert=True)
+
+
+def scrape_currency_prices(league):
     url = "http://poe.ninja/api/Data/GetCurrencyOverview"
-    response = cache.get(url, params={'league': league}).json()
-    prices = {}
+    response = requests.get(url, params={'league': league}).json()
+    prices = defaultdict(lambda: 0)
     for line in response['lines']:
         name = line['currencyTypeName']
         if line.get('receive') is not None:

@@ -1,10 +1,5 @@
 from collections import defaultdict
-
 import requests
-from requests_cache import CachedSession
-
-
-cache = CachedSession(cache_name='uniques', backend='sqlite', expire_after=3600)
 
 
 # Some Uniques can only be acquired from prophecies / breachstones, not dropped by enemies.
@@ -58,23 +53,34 @@ BLACKLIST = {
 }
 
 
-def get_unique_tiers(league, thresholds):
+def get_unique_tiers(league, thresholds, db):
     """Sort uniques into classes by value (top tier, decent, mediocre, worthless)"""
-    unique_prices = get_unique_prices(league)
+    unique_prices = get_unique_prices(league, db)
     return sort_into_tiers(unique_prices, thresholds)
 
 
-def get_unique_prices(league):
+def get_unique_prices(league, db):
+    return db.prices.find_one({'category': 'uniques', 'league': league})['prices']
+
+
+def update_unique_prices(league, db):
+    print("Updating unique prices for", league)
+    prices = scrape_unique_prices(league)
+    dbentry = {'category': 'uniques', 'league': league, 'prices': prices}
+    db.prices.replace_one({'category': 'uniques', 'league': league}, dbentry, upsert=True)
+
+
+def scrape_unique_prices(league):
     unique_prices = defaultdict(lambda: 0)
-    get_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueWeaponOverview', league, unique_prices)
-    get_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueArmourOverview', league, unique_prices)
-    get_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueAccessoryOverview', league, unique_prices)
-    get_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueFlaskOverview', league, unique_prices)
+    scrape_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueWeaponOverview', league, unique_prices)
+    scrape_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueArmourOverview', league, unique_prices)
+    scrape_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueAccessoryOverview', league, unique_prices)
+    scrape_unique_prices_from_url('http://poe.ninja/api/Data/GetUniqueFlaskOverview', league, unique_prices)
     return unique_prices
 
 
-def get_unique_prices_from_url(url, league, unique_prices):
-    response = cache.get(url, params={'league': league}).json()
+def scrape_unique_prices_from_url(url, league, unique_prices):
+    response = requests.get(url, params={'league': league}).json()
     for item in response['lines']:
         # Fated uniques are created by prophecies, not dropped.
         if item['name'] in BLACKLIST:

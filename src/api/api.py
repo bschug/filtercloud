@@ -45,6 +45,15 @@ def post_scrape_wiki():
     return "Wiki Scraper started"
 
 
+@app.route('/api/scraper/update-prices', methods=['POST'])
+def post_update_prices():
+    for league in ['Abyss', 'Hardcore Abyss', 'Standard', 'Hardcore']:
+        pricechecking.update_currency_prices(league, get_db())
+        pricechecking.update_divcard_prices(league, get_db())
+        pricechecking.update_unique_prices(league, get_db())
+    return "Update Complete"
+
+
 @app.route('/api/filter/game-constants', methods=['GET'])
 def get_game_constants():
     response = Response(WikiCache(get_db()).get_game_constants_json())
@@ -55,9 +64,9 @@ def get_game_constants():
 @app.route('/api/filter/prices/<league>', methods=['GET'])
 def get_prices(league):
     return jsonify({
-        'currency': pricechecking.get_currency_prices(league),
-        'divcards': pricechecking.get_divcard_prices(league),
-        'uniques': pricechecking.get_unique_prices(league)
+        'currency': pricechecking.get_currency_prices(league, get_db()),
+        'divcards': pricechecking.get_divcard_prices(league, get_db()),
+        'uniques': pricechecking.get_unique_prices(league, get_db())
     })
 
 

@@ -1,19 +1,26 @@
 import requests
-from requests_cache import CachedSession
 
 
-cache = CachedSession(cache_name='divcards', backend='sqlite', expire_after=3600)
-
-
-def get_divcard_tiers(league, thresholds):
-    prices = get_divcard_prices(league)
+def get_divcard_tiers(league, thresholds, db):
+    prices = get_divcard_prices(league, db)
     return sort_into_tiers(prices, thresholds)
 
 
-def get_divcard_prices(league):
+def get_divcard_prices(league, db):
+    return db.prices.find_one({'category': 'divcards', 'league': league})['prices']
+
+
+def update_divcard_prices(league, db):
+    print("Updating divcard prices for", league)
+    prices = scrape_divcard_prices(league)
+    dbentry = {'category': 'divcards', 'league': league, 'prices': prices}
+    db.prices.replace_one({'category': 'divcards', 'league': league}, dbentry, upsert=True)
+
+
+def scrape_divcard_prices(league):
     prices = dict()
     url = "http://poe.ninja/api/Data/GetDivinationCardsOverview"
-    response = cache.get(url, params={'league': league}).json()
+    response = requests.get(url, params={'league': league}).json()
     for item in response['lines']:
         prices[item['name']] = item['chaosValue']
     return prices
