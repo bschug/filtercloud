@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 
 from concurrent.futures import ThreadPoolExecutor
 
@@ -24,6 +25,10 @@ def get_selector(name, mask):
     wiki = WikiCache(get_db())
     return wiki.get_selector(name, mask)
 
+
+logger = logging.getLogger()
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.INFO)
 
 app = Flask('api', template_folder='/templates')
 app.add_template_filter(lootfilter.templating.format_list_filter, 'names')

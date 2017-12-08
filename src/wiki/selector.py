@@ -15,14 +15,14 @@ def update_selectors(db):
     update_selectors_for('helmet', itemdata['Helmets'], db)
     update_selectors_for('boots', itemdata['Boots'], db)
     update_selectors_for('shields', itemdata['Shields'], db)
-    update_selectors_for('other_armour', itertools.chain(itemdata['Gloves'], itemdata['Helmets'], itemdata['Boots']), db)
+    update_selectors_for('other_armour', dict(**itemdata['Gloves'], **itemdata['Helmets'], **itemdata['Boots']), db)
     logger.info("Selectors updated")
 
 
 def update_selectors_for(name, items, db):
-    logger.info("Updating selectors for", name)
+    logger.info("Updating selectors for {}x {}".format(len(items), name))
     for s, d, i, sd, si, di in itertools.product((True, False), repeat=6):
-        logger.info("    ", name, s, d, i, sd, si, di)
+        logger.info("    {} {}".format(name, (s, d, i, sd, si, di)))
         selector = build_selector_for(items, (s, d, i, sd, si, di))
         db.selectors.replace_one(
             {'name': name, 'str': s, 'dex': d, 'int': i, 'strdex': sd, 'strint': si, 'dexint': di},
@@ -34,7 +34,9 @@ def update_selectors_for(name, items, db):
 def build_selector_for(items, mask):
     in_set = [x for x, y in items.items() if item_matches_attribute_mask(y, mask)]
     out_set = [x for x, y in items.items() if not item_matches_attribute_mask(y, mask)]
-    return build_selector(in_set, out_set)
+    selector = build_selector(in_set, out_set)
+    validate_selector(selector, in_set, out_set)
+    return selector
 
 
 def item_matches_attribute_mask(item, mask):
@@ -50,6 +52,18 @@ def item_matches_attribute_mask(item, mask):
         or (dexint and (d and i and not s))
 
 
+def validate_selector(selector, in_set, out_set):
+    for w in in_set:
+        for sel in selector:
+            assert any(x in w for x in sel), "VALIDATION FAILED"
+    for w in out_set:
+        excluded = False
+        for sel in selector:
+            excluded = excluded or not any(x in w for x in sel)
+        assert excluded, "VALIDATION FAILED"
+    logger.info("Validation OK")
+
+
 def build_selector(in_set, out_set):
     """
     Find a list of sets of substrings of the strings in in_set, such that each string from in_set matches at least one
@@ -63,6 +77,7 @@ def build_selector(in_set, out_set):
 
     while len(out_remaining) > 0:
         in_remaining = set(in_set)
+        out_remaining_local = set(out_remaining)
         selector = []
 
         while len(in_remaining) > 0:
@@ -76,7 +91,10 @@ def build_selector(in_set, out_set):
                 substrings = [ss for ss in substrings if not any(ss in orm for orm in out_removed)]
 
                 # Never pick one that would match each of the remaining from out_remaining
-                substrings = [ss for ss in substrings if not all(ss in x for x in out_remaining)]
+                substrings = [ss for ss in substrings if not all(ss in x for x in out_remaining_local)]
+
+                # Never pick one that would match nothing from the in-set
+                substrings = [ss for ss in substrings if any(ss in w for w in in_remaining)]
 
                 # If all of the most frequent substrings would bring something back, move to the next best one
                 ic = Counter({ss: in_counts[ss] for ss in substrings})
@@ -89,7 +107,9 @@ def build_selector(in_set, out_set):
                 # We have now picked a substring to include in our selector.
                 selector.append(ss)
 
-                logger.debug("{}({})   [{}]".format(ss, in_counts[ss], out_remaining))
+                out_remaining_local = {x for x in out_remaining_local if not any(ss in x for ss in selector)}
+
+                logger.debug("{}({})   [{}]".format(ss, in_counts[ss], out_remaining_local))
 
                 # Remove it from in_counts, so that it won't get picked again in the next iteration.
                 in_counts[ss] = 0
@@ -100,12 +120,15 @@ def build_selector(in_set, out_set):
 
                 # We stop looking for the substring now.
                 break
+            else:
+                raise Exception("Could not find a match for {}".format(in_remaining))
+
 
         # We can filter out now all entries from the out-set that don't match any of the substrings in this selector
         out_removed = {x for x in out_remaining if not any(ss in x for ss in selector)}
         out_remaining = {x for x in out_remaining if any(ss in x for ss in selector)}
 
-        logger.debug('---', len(out_remaining), "remaining")
+        logger.debug(' --- {} remaining'.format(len(out_remaining)))
 
         selectors.append(selector)
 
@@ -120,11 +143,11 @@ def list_substrings_matching_most(in_counts):
 
 
 def list_substrings_matching_least(in_counts, out_counts):
-    zero_counts = [ss for ss, c in in_counts.items() if out_counts[ss] == 0]
+    yield [ss for ss, c in in_counts.items() if out_counts[ss] == 0]
     for k, g in itertools.groupby(out_counts.most_common(), lambda x: x[1]):
         if k == 0:
             continue
-        yield itertools.chain(zero_counts, reversed([ss for ss, c in list(g)]))
+        yield reversed([ss for ss, c in list(g)])
 
 
 def list_substrings(strings):
