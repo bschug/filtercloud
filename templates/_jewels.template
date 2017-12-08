@@ -9,6 +9,11 @@ Hide
     Rarity Magic
 {{ style.normal.magic }}
 
+Show
+    Class "Abyss Jewel"
+    Rarity Rare
+{{ style.strong_highlight.rare }}
+
 Show 
     Class Jewel
     Rarity Rare

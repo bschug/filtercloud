@@ -1,0 +1,154 @@
+{
+	"league": "Standard",
+	
+	"currency": {
+		"hide_low_value": false,
+		"use_shaper_voice": true,
+		"ultra_rare": ["Mirror of Kalandra"],
+		"thresholds": {
+			"hidden": 0,
+			"worthless": 0.05,
+			"valuable": 0.5,
+			"top_tier": 10
+		},
+		"overrides": {
+			"valuable": ["Perandus Coin"]
+		}
+	},
+	
+	"gems": {
+		"show_all": true,
+		"high_quality": 20,
+		"medium_quality": 17,
+		"min_quality": 10,
+		"high_value_gems": ["Empower", "Enlighten", "Enhance", "Vaal Breach", "Vaal Haste"],
+		"medium_value_gems": ["Vaal Clarity", "Vaal Grace", "Added Chaos Damage", "Portal"]
+	},
+
+	"crafting": {
+		"ilvl84": [],
+		"chancing": [],
+		"atlas": {
+			"ilvl84": false,
+			"always": true
+		}
+	},
+	
+	"uniques": {
+		"thresholds": {
+			"hidden": 0,
+			"worthless": 1,
+			"valuable": 5,
+			"top_tier": 30
+		},
+		"overrides": {}
+	},
+	
+	"divcards": {
+		"thresholds": {
+			"hidden": 0,
+			"worthless": 0.5,
+			"valuable": 3,
+			"top_tier": 15
+		},
+		"overrides": {
+			"hidden": ["The Carrion Crow"]
+		}
+	},
+	
+	"jewels": {
+		"show_magic": false
+	},
+
+	"flasks": {
+		"healing": {
+			"min_quality": 15
+		},
+		"utility": {
+			"min_quality": 10
+		}
+	},
+
+	"rares": {
+		"show_atlas": true,
+		"show_fully_linked": true,
+		"shaped_elder": {
+			"highlight": "meta",
+			"show": true
+		},
+		"fivelink": {
+			"highlight": "meta",
+			"show": true
+		},
+		"smallitems": {
+			"highlight": false,
+			"itemclasses": ["Amulets", "Rings", "Belts"],
+			"basetypes": []
+		}
+	},
+
+	"meta": {
+		"tier1": [
+			"Ambusher", "Platinum Kris", "Imperial Skean", "Ezomyte Dagger",
+			"Imbued Wand",
+			"Titan Gauntlets", "Slink Gloves",
+			"Lion Pelt", "Royal Burgonet", "Hubris Circlet",
+			"Slink Boots", "Titan Greaves",
+			"Titanium Spirit Shield", "Imperial Buckler", "Colossal Tower Shield",
+			"Astral Plate",
+
+			"Amber Amulet", "Jade Amulet", "Lapis Amulet", "Gold Amulet", "Agate Amulet", "Citrine Amulet", "Turquoise Amulet",
+			"Sapphire Ring", "Topaz Ring", "Ruby Ring", "Diamond Ring", "Two-Stone Ring", "Prismatic Ring",
+			"Heavy Belt"
+		]
+	},
+
+	"build": {
+		"armour_types": {
+			"str": true,
+			"dex": true,
+			"int": true,
+			"strdex": true,
+			"strint": true,
+			"dexint": true
+		},
+		"weapon_classes": ["Two Hand Axes"],
+		"sockets": [
+			{"level": 15, "sockets": "RRG"},
+			{"level": 50, "sockets": "RRGB"},
+			{"level": 99, "sockets": "RRRGB"}
+		]
+	},
+
+	"leveling": {
+		"early_game_threshold": 60,
+		"early_maps_threshold": 72,
+		"show_all_rares": false,
+		"flasks": {
+			"offset": 3
+		},
+		"boots": {
+			"magic_until": 20,
+			"rare_until": 60
+		},
+		"jewelry": {
+			"show_normal_until": 60,
+			"show_magic_until": 5
+		},
+		"sockets": {
+			"all_3linked_wands": false,
+			"all_3linked_caster_daggers": false,
+			"all_3links_until": 0,
+			"all_4links_until": 0,
+			"onehand_3link_offset": 0
+		},
+		"weapons": {
+			"offset": 5,
+			"show_magic_until": 5
+		},
+		"armour": {
+			"offset": 10,
+			"show_magic_until": 5
+		}
+	}
+}

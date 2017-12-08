@@ -58,17 +58,7 @@ Hide
 
 # ===================================== [RARES] =========================================
 
-# Highlight Atlas bases
-Show 
-	Rarity Rare
-    BaseType "Steel Ring" "Opal Ring" "Blue Pearl Amulet" "Marble Amulet" "Vanguard Belt" "Crystal Belt" "Bone Helmet" "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves"
-    {{ style.highlight.rare }}
 
-# Highlight 5-linked rares
-Show 
-    Rarity Rare 
-    LinkedSockets 5
-    {{ style.highlight.rare }}
 
 {% if include_endgame_rules %}
 {% include "_endgame_rares.template" %}

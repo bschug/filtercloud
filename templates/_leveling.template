@@ -1,124 +1,108 @@
 # ===================================== [LEVELING] ================================================
 
-{% if leveling.highlight_boots %}
+{% if leveling.boots %}
 # ------------------------------------ Rare / Magic Boots ---------------------------------------
 
 # Highlight all rare boots because they might have movespeed
 Show 
 	Class Boots 
 	Rarity Rare
-	ItemLevel < 30
-{{ style.highlight.rare }}	
+	ItemLevel < {{ leveling.boots.rare_until }}
+{{ style.normal.rare }}
+{{ style.leveling }}
 
-# Show magic boots up to level {{ leveling.highlight_boots.show_magic_until }}, by then we should have some decent movespeed
+# Show magic boots up to level {{ leveling.boots.magic_until }}, by then we should have some decent movespeed
 Show 
 	Class Boots 
-	ItemLevel < {{ leveling.highlight_boots.show_magic_until }}
+	ItemLevel < {{ leveling.boots.magic_until }}
 	Rarity Magic
+{{ style.normal.magic }}
+{{ style.leveling }}
 {% endif %}
 
 
 # ------------------------------- Sockets ---------------------------------------
 
-# Until level {{ leveling.sockets.all_3links_until }}, show all 3-links
+{% for socketcfg in build.sockets %}
 Show
-    Class Gloves Boots Helmet "Body Armour"
-	ItemLevel <= {{ leveling.sockets.all_3links_until }}
-	LinkedSockets >= 3
+    ItemLevel <= {{ socketcfg.level }}
+    SocketGroup "{{ socketcfg.sockets }}"
 {{ style.normal }}
-
-# Until level {{ leveling.sockets.all_4links_until }}, show all 4-links
-Show
-    Class Gloves Boots Helmet "Body Armour"
-	ItemLevel <= {{ leveling.sockets.all_4links_until }}
-    LinkedSockets >= 4
-{{ style.normal }}
-
-# Show 3-linked one handed weapons that are good at current level
-{% for ilvl in range(leveling.sockets.all_3links_until + leveling.sockets.onehand_3link_offset, 68) %}
-Show
-	ItemLevel <= {{ ilvl }}
-	DropLevel >= {{ ilvl - leveling.sockets.onehand_3link_offset }}
-	LinkedSockets >= 3
-	Class {{ leveling.weapons|names }}
-{{ style.normal }}
+{{ style.leveling }}
 {% endfor %}
 
-{% if leveling.sockets.all_3linked_wands %}
-# Always show 3-linked wands
-Show
-	Class Wands 
-	Rarity Normal
-	LinkedSockets 3
-{{ style.normal }}	
-{% endif %}
-
-{% if leveling.sockets.all_3linked_caster_daggers %}
-# Show fully linked caster daggers at all levels 
-Show 
-	Class Daggers 
-	BaseType "Imp Dagger" "Golden Kris" "Fiend Dagger" "Platinum Kris" "Demon Dagger"
-	LinkedSockets 3
-	Rarity Normal
-{{ style.normal }}	
-{% endif %}	
 
 # -------------------------- Weapons, Body Armour & Shields ---------------------------- 
 
-{% if leveling.tight and leveling.tight.classes %}
-# Weapons, Body Armour & Shields (implicit is important) 
-# Show normals & magics only if in {{ leveling.tight.offset }} level range. 
-{% for ilvl in range(leveling.tight.offset, 68) %}
-Show 
-    Class {{ leveling.tight.classes|names }}
-	ItemLevel <= {{ ilvl }}
-	DropLevel >= {{ ilvl - leveling.tight.offset }}
-{% if ilvl > leveling.tight.show_magic_until %}
+# Weapons
+{% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}
+Show
+    Class {{ build.weapon_classes|names }}
+    ItemLevel <= {{ ilvl }}
+    DropLevel >= {{ ilvl - leveling.weapons.offset }}
+{% if ilvl > leveling.weapons.magic_until %}
     Rarity Normal Rare
-{% endif %}
-{{ style.normal }}	
-{% endfor %}
-
-Hide
-	Class {{ leveling.tight.classes|names }}
-	DropLevel < {{ 68 - leveling.tight.offset }}
-{{ style.hidden }}	
-{% endif %}
-
-# ------------------------ Other Armor Pieces -----------------------------
-
-{% if leveling.loose and leveling.loose.classes %}
-
-# Other armour pieces (boots, gloves, helmets, etc) are more dependent on good affixes
-# than on their implicit stats, so we show them in a larger ({{ leveling.loose.offset }} level) range.
-{% for ilvl in range(leveling.loose.offset, 68) %}
-Show 
-	Class {{ leveling.loose.classes|names }}
-	ItemLevel <= {{ ilvl }}
-	DropLevel >= {{ ilvl - leveling.loose.offset }}
-{% if ilvl > leveling.loose.show_magic_until %}
-	Rarity Normal Rare
 {% endif %}
 {{ style.normal }}
 {% endfor %}
 
-Hide 
-	Class {{ leveling.loose.classes|names }}
-	DropLevel < {{ 68 - leveling.loose.offset }}
-{{ style.hidden }}
-	
+# Shields
+{% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}
+Show
+    Class Shields
+    ItemLevel <= {{ ilvl }}
+    DropLevel >= {{ ilvl - leveling.weapons.offset }}
+    {% for sel in selector("shields", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
+{% if ilvl > leveling.weapons.magic_until %}
+    Rarity Normal Rare
 {% endif %}
+{{ style.normal }}
+{% endfor %}
 
-{% if not leveling.show_all_rares %}
+# Body Armour
+{% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}
+Show
+    Class "Body Armour"
+    {% for sel in selector("body", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
+    ItemLevel <= {{ ilvl }}
+    DropLevel >= {{ ilvl - leveling.body.offset }}
+{% if ilvl > leveling.weapons.magic_until %}
+    Rarity Normal Rare
+{% endif %}
+{{ style.normal }}
+{% endfor %}
+
+# Other Armour
+{% for ilvl in range(leveling.armour.offset, leveling.early_game_threshold) %}
+Show
+    Class "Body Armour"
+    {% for sel in selector("other_armour", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
+    ItemLevel <= {{ ilvl }}
+    DropLevel >= {{ ilvl - leveling.armour.offset }}
+{% if ilvl > leveling.armour.magic_until %}
+    Rarity Normal Rare
+{% endif %}
+{{ style.normal }}
+{% endfor %}
+
+
 Hide
-    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armour"
-    Rarity Rare
-    ItemLevel < 68
+    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armour" Gloves Boots Helmets Shields
+{% if leveling.show_all_rares %}
+    Rarity Normal Magic
+{% endif
+    ItemLevel < {{ leveling.early_game_threshold }}
 {% endif %}
 
 # ------------------------------------ Jewelry ---------------------------------------
 
-# Don't highlight stupid Breach Rings
+# Don't highlight stupid Breach Rings (still worth picking up and throwing in a 5c buyout tab though)
 Show
     BaseType "Breach Ring"
 {{ style.smaller.rare }}

@@ -1,6 +1,7 @@
 (function(GameData) {
     GameData.itemCategories = {};  // category (weapons, armour, jewelry, etc) -> [itemClass]
-    GameData.itemClasses = {};  // itemClass -> [baseType]
+    GameData.itemClasses = {};  // itemClass -> [baseType -> stats]
+    GameData.baseTypes = {};  // baseType -> stats
     GameData.baseTypeToItemClass = {};  // baseType -> itemClass
     GameData.prices = {};  // currency|divcards|uniques -> { baseType -> price }
 
@@ -11,6 +12,7 @@
             .then(function(response) {
                 GameData.itemClasses = response.data.itemClasses;
                 GameData.itemCategories = response.data.itemCategories;
+                buildBaseTypesIndex();
                 buildBaseTypeToItemClassIndex();
             });
 
@@ -28,6 +30,14 @@
                 console.log("Failed to load GameData:", error);
             });
     };
+
+    function buildBaseTypesIndex() {
+        for (var itemClass in GameData.itemClasses) {
+            for (var baseType in GameData.itemClasses[itemClass]) {
+                GameData.baseTypes[baseType] = GameData.itemClasses[itemClass][baseType];
+            }
+        }
+    }
 
     function buildBaseTypeToItemClassIndex() {
         for (var itemClass in GameData.itemClasses) {

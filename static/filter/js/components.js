@@ -85,7 +85,7 @@ Vue.component('itemlist', {
             }
             var ic = GameData.itemClasses[itemClass];
             for (var i=0; i < this.items.length; i++) {
-                if (ic.indexOf(this.items[i]) >= 0) {
+                if (this.items[i] in ic) {
                     return true;
                 }
             }

@@ -6,18 +6,11 @@ from concurrent.futures import ThreadPoolExecutor
 from box import Box
 from flask import Flask, session, request, g, render_template, send_file, jsonify, Response
 from pymongo import MongoClient
+import bson
 
 import lootfilter
-from wiki import WikiCache, scrape_wiki
+from wiki import WikiCache, scrape_wiki, update_selectors
 import pricechecking
-
-
-app = Flask('api', template_folder='/templates')
-app.add_template_filter(lootfilter.templating.format_list_filter, 'names')
-app.add_template_filter(lootfilter.templating.setstyle_filter, 'setstyle')
-
-
-executor = ThreadPoolExecutor(2)
 
 
 def get_db():
@@ -25,6 +18,19 @@ def get_db():
     if not hasattr(g, 'mongo_db'):
         g.mongo_db = MongoClient('db')
     return g.mongo_db.filterforge
+
+
+def get_selector(name, mask):
+    wiki = WikiCache(get_db())
+    return wiki.get_selector(name, mask)
+
+
+app = Flask('api', template_folder='/templates')
+app.add_template_filter(lootfilter.templating.format_list_filter, 'names')
+app.add_template_filter(lootfilter.templating.setstyle_filter, 'setstyle')
+app.add_template_global(get_selector, 'selector')
+
+executor = ThreadPoolExecutor(2)
 
 
 @app.teardown_appcontext
@@ -52,6 +58,12 @@ def post_update_prices():
         pricechecking.update_divcard_prices(league, get_db())
         pricechecking.update_unique_prices(league, get_db())
     return "Update Complete"
+
+
+@app.route('/api/scraper/update-selectors', methods=['POST'])
+def post_update_selectors():
+    executor.submit(update_selectors, get_db())
+    return "Selector update started"
 
 
 @app.route('/api/filter/game-constants', methods=['GET'])

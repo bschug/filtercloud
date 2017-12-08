@@ -1,5 +1,6 @@
 from datetime import timedelta
 import json
+import itertools
 
 import mwclient
 from box import Box

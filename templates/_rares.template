@@ -1,0 +1,93 @@
+# ================================= [RARE WEAPONS] ======================================
+
+{% if rares.highlight_atlas %}
+# Highlight Atlas bases
+Show
+	Rarity Rare
+    BaseType "Steel Ring" "Opal Ring" "Blue Pearl Amulet" "Marble Amulet" "Vanguard Belt" "Crystal Belt" "Bone Helmet" "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves" "Stygian Vise"
+    {{ style.highlight.rare }}
+{% endif %}
+
+{% if rares.shaper_elder.highlight %}
+# Highlight Shaped / Elder rares
+Show
+    Rarity Rare
+    ElderItem True
+    {% if rares.shaper_elder.highlight == 'meta' %}BaseType {{ meta.tier1|names }}{% endif %}
+{{ style.highlight.rare }}
+Show
+    Rarity Rare
+    ShaperItem True
+    {% if rares.shaper_elder.highlight == 'meta' %}BaseType {{ meta.tier1|names }}{% endif %}
+{{ style.highlight.rare }}
+{% endif %}
+
+{% if rares.shaper_elder.show %}
+# Show Shaped / Elder rares
+Show
+    Rarity Rare
+    ElderItem True
+    {% if rares.shaper_elder.show == 'meta' %}BaseType {{meta.tier1|names }}{% endif %}
+{{ style.normal.rare }}
+Show
+    Rarity Rare
+    ShaperItem True
+    {% if rares.shaper_elder.show == 'meta' %}BaseType {{meta.tier1|names }}{% endif %}
+{{ style.normal.rare }}
+{% endif %}
+
+{% if rares.fivelink.highlight %}
+# Highlight 5-linked rares
+Show
+    Rarity Rare
+    LinkedSockets 5
+    {% if rares.fivelink.highlight == 'meta' %}BaseType {{ meta.tier1|names }}{% endif %}
+{{ style.highlight.rare }}
+{% endif %}
+
+{% if rares.fivelink.show %}
+# Always show 5-linked rares
+Show
+    Rarity Rare
+    LinkedSockets 5
+    {% if rares.fivelink.show == 'meta' %}BaseType {{ meta.tier1|names }}{% endif %}
+{{ style.normal.rare }}
+{% endif %}
+
+{% if rares.smallitems.itemclasses %}
+# Always show small rares
+Show
+    Rarity Rare
+    BaseType {{ rares.smallitems.itemclasses|names }}
+    ItemLevel > {{ leveling.early_game_threshold }}
+    {% if rares.smallitems.highlight %}
+    {{ style.highlight.rare }}
+    {% else %}
+    {{ style.normal.rare }}
+    {% endif %}
+{% endif %}
+
+{% if rares.show_fully_linked %}
+# Show all fully linked Boots, Gloves and Helmets
+Show
+    Rarity Rare
+    LinkedSockets 4
+    ItemLevel > {{ leveling.early_game_threshold }}
+    Class Boots Gloves Helmets
+{{ style.normal.rare }}
+{% endif %}
+
+# Show any 6-sockets that would otherwise be hidden
+Show
+	Rarity Rare
+	Sockets 6
+{{ style.normal.rare }}
+
+# Hide all high-level rares that will not be affected by leveling rules (for performance in endgame maps)
+Hide
+    Rarity Rare
+    ItemLevel > {{ leveling.early_maps_threshold }}
+
+
+
+

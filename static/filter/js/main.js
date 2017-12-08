@@ -3,7 +3,7 @@
 
     FilterCloud.init = function() {
         console.log("Loading files before init...");
-        Promise.all([Style.load(), Config.load(), GameData.load('Harbinger')])
+        Promise.all([Style.load(), Config.load(), GameData.load('Standard')])
         .then(function() {
             console.log("Initializing now...")
             FilterCloud.app = new Vue({
