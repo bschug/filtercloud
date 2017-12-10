@@ -32,10 +32,19 @@
                         })
                         .then(function(response) {
                             var blob = new Blob([response.data], { type: 'text/plain' });
+                            console.log("Downloaded " + (blob.size / 1024).toFixed(2) + "kB filter file");
+
                             var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = Config.current.data.include_leveling_rules ? 'gg-leveling.filter' : 'gg-endgame.filter';
-                            link.click();
+                            // workaround for old browsers
+                            if (typeof link.download === 'undefined') {
+                                console.log("WORKAROUND")
+                                window.location = downloadUrl;
+                            } else {
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = Config.current.data.include_leveling_rules ? 'gg-leveling.filter' : 'gg-endgame.filter';
+                                document.body.appendChild(link);
+                                link.click();
+                            }
                         });
                     }
                 }

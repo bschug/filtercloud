@@ -77,6 +77,15 @@ Show
 {{ style.normal.rare }}
 {% endif %}
 
+{% if rares.hide_breach_rings %}
+Hide
+{% else %}
+# Don't highlight stupid Breach Rings (still worth picking up and throwing in a 5c buyout tab though)
+Show
+{% endif %}
+    BaseType "Breach Ring"
+{{ style.smaller.rare }}
+
 # Show any 6-sockets that would otherwise be hidden
 Show
 	Rarity Rare
@@ -86,7 +95,7 @@ Show
 # Hide all high-level rares that will not be affected by leveling rules (for performance in endgame maps)
 Hide
     Rarity Rare
-    ItemLevel > {{ leveling.early_maps_threshold }}
+    ItemLevel > {{ leveling.endgame_threshold }}
 
 
 

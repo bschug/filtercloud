@@ -17,6 +17,39 @@ Vue.component('checkboxwithtooltip', {
 });
 
 
+Vue.component('dropdownwithtooltip', {
+    template: '\
+        <p>\
+            <label :for="id">{{ label }}</label>\
+            <select v-model="selectedLabel"> \
+                <option v-for="label in optionLabels">{{ label }}</option> \
+            </select> \
+            <span class="tooltip"> \
+                <slot></slot> \
+            </span>\
+        </p>',
+    props: ['label', 'options', 'optionLabels', 'value', 'id'],
+    data: function() {
+        return {
+            selectedOption: this.value
+        }
+    },
+    computed: {
+        selectedLabel: {
+            get: function() {
+                var idx = this.options.indexOf(this.selecteOption);
+                return this.optionLabels[idx];
+            },
+            set: function(newValue) {
+                var idx = this.optionLabels.indexOf(newValue);
+                this.selectedOption = this.options[idx];
+                this.$emit('input', this.options[idx]);
+            }
+        }
+    }
+});
+
+
 Vue.component('sidebarlink', {
     template: '<p class="link" \
         :class="{ selected: currentPage === page }" \
@@ -93,6 +126,35 @@ Vue.component('itemlist', {
         },
         getItemClass: function(item) {
             return GameData.getItemClass(item);
+        }
+    }
+});
+
+
+Vue.component('itemclasslist', {
+    template: '\
+        <div class="item-list">\
+            <h2>{{ title }}<span class="tooltip"><slot></slot></span></h2>\
+            <div class="item-list-inner">\
+                <itempreview \
+                    v-for="item in items" :key="item" \
+                    :item="item" :item-style="itemStyle" :item-rarity="itemRarity" :item-class="item" \
+                    :deletable="true" @deleted="deleteItem(item)"/>\
+            </div>\
+            <input v-if="!readOnly" type="text" v-model="itemInputName" @keydown.enter="addItem(itemInputName); itemInputName=\'\'">\
+            <button v-if="!readOnly" type="button" @click="addItem(itemInputName); itemInputName=\'\'">Add</button>\
+        </div>',
+    props: ['title', 'items', 'itemStyle', 'itemRarity', 'readOnly'],
+    data: function() { return {
+        itemInputName: '',
+        itemClassFilter: 'All'
+    }},
+    methods: {
+        deleteItem: function(item) {
+            this.$emit('update:items', this.items.filter(function(x) { return x !== item; }));
+        },
+        addItem: function(item) {
+            this.items.push(item);
         }
     }
 });
@@ -289,6 +351,45 @@ Vue.component('thresholditemlist', {
                 worthless: 'smaller',
                 hidden: 'smaller'
             }[tier];
+        }
+    }
+});
+
+
+Vue.component('socketlist', {
+    template: '\
+        <div>\
+            <p class="socket-list" v-for="entry in socketConfigs">\
+                <socketconfig :config="entry" @deleted="deleteSocketConfig(entry)"></socketConfig>\
+            </p>\
+            <p><button class="addbutton" @click="addSocketConfig">Add</button></p>\
+        </div>',
+    props: ['socketConfigs'],
+    methods: {
+        addSocketConfig: function() {
+            this.socketConfigs.append({'sockets':'', 'level': 0});
+            this.$emit('input', this.socketConfigs);
+        },
+        deleteSocketConfig: function(cfg) {
+            var idx = this.value.indexOf(cfg);
+            this.socketConfigs.splice(idx, 1);
+            this.$emit('input', this.socketConfigs);
+        }
+    }
+});
+
+
+Vue.component('socketconfig', {
+    template: '\
+        <p class="socket-config">\
+            <label>Sockets:</label><input type="text" v-model="config.sockets"></input>\
+            <label>Level:</label><input type="number" v-model="config.level"></input>\
+            <img src="images/buttons/close.png" alt="delete" class="delete-button" @click="deleteItem"></img>\
+        </p>',
+    props: ['config'],
+    methods: {
+        deleteItem: function() {
+            this.$emit('deleted', null);
         }
     }
 });

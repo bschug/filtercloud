@@ -5,9 +5,7 @@ Show
     Rarity Unique 
     Class Maps
 {{ style.highlight.unique }}
-	
-{% if include_endgame_rules %}	
-	
+
 # Strongly Highlight T16
 Show 
     Rarity Normal 
@@ -52,7 +50,20 @@ Show
     DropLevel >= 78
 {{ style.map.red }}
 
+{% if maps.always_show_shaped %}
+Show
+    Class Maps
+    ShapedMap True
+    DropLevel >= 78
+{{ style.map.red}}
+Show
+    Class Maps
+    ShapedMap True
+{{ style.map.yellow }}
+{% endif %}
+
 {% if maps.hide_low_tier %}
+
 # Show white maps until T7
 Show 
     Class Maps
@@ -67,12 +78,12 @@ Hide
 	DropLevel <= 72
 {{ style.map.white }}
 
-{% if maps.good_yellow %}
+{% if maps.favorite_maps %}
 # Always show good yellow maps
 Show
 	Class Maps 
 	DropLevel > 72
-	BaseType "Shaped" {{ maps.good_yellow|names }}
+	BaseType "Shaped" {{ maps.favorite_maps|names }}
 {{ style.map.yellow }}
 {% endif %}
 
@@ -116,14 +127,6 @@ Show
 
 {% endif %} {# hide_low_tier #}
 
-{% else %} {# include_endgame_rules #}
-
-# Only Tier 1 maps can drop during leveling, so show all of them
-Show 
-    Class Maps
-{{ style.map.white }}
-	
-{% endif %}	{# include_endgame_rules #}
 	
 # Safety check in case we forgot a possible combination
 # Make it ugly pink so we will definitely see it

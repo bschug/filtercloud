@@ -90,9 +90,11 @@ def get_prices(league):
 @app.route('/api/filter/build', methods=['POST'])
 def build():
     try:
+        print("START BUILDING FILTER")
         style = lootfilter.load_style(settings_from_post('style'))
-        config = lootfilter.load_config(settings_from_post('config'), style)
+        config = lootfilter.load_config(settings_from_post('config'), style, get_db())
         filtercode = render_template('main.template', **config)
+        print("DONE BUILDING FILTER")
         response = Response(filtercode)
         response.headers['Content-Disposition'] = 'attachment;filename=gg.filter'
         response.headers['Content-Type'] = 'text/plain'
@@ -112,9 +114,10 @@ def style_instance(id):
 
 @app.route('/api/filter/config/<id>', methods=['GET'])
 def config_instance(id):
-    if id == 'endgame' or id == 'leveling':
-        filename = os.path.join(app.template_folder, id + '.json')
+    if id == 'default':
+        filename = os.path.join(app.template_folder, 'config.json')
         return send_file(filename)
+    return "unknown filter '{}'".format(id)
 
 
 def settings_from_post(key):

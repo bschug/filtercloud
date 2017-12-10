@@ -40,82 +40,147 @@
                 <sidebarLink :current-page.sync="currentPage" page="Style Editor"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Endgame Rares']" :key="page"
+                   v-for="page in ['Build', 'Meta']" :key="page"
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Crafting', 'Currency', 'Uniques', 'Divination Cards', 'Skill Gems', 'Sockets', 'Flasks', 'Jewels', 'Maps', 'Map Fragments']"
+                   v-for="page in ['Crafting', 'Currency', 'Uniques', 'Divination Cards', 'Skill Gems', 'Flasks', 'Jewels', 'Maps']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
             </div>
         </div>
         <div class="content">
             <div id="faq-page" v-show="currentPage === null">
-                <h1>What is FilterCloud?</h1>
+                <h1>FilterCloud: Custom-Tailored Loot Filter For Efficient Playstyles</h1>
 
-                <h2>A Clean, Tasteful and Powerful Loot Filter</h2>
+                <h2>Custom-Tailored</h2>
+                <p>FilterCloud has leveling rules that are custom-made for your build. Select your weapon and armour
+                preferences and required socket colors and receive the best loot filter for your race to the endgame.</p>
+
+                <h2>Efficient Playstyle</h2>
+                <p>FilterCloud shows only what's worth picking up. With this filter, you should never fill more than
+                one or two inventories per map. Usually much less. Picking up and sorting through items takes a lot of
+                time, which is better spent killing monsters and picking up more valuable drops.</p>
+
+                <h2>Clean and Tasteful</h2>
                 <p>The default FilterCloud style is designed to be close to the vanilla color scheme, in line with the
                 dark and gritty theme of the game. No candy land rainbow puke.</p>
-                <p>It shows only items worth picking up, and uses a large font to reduce the time wasted by mis-clicks.
-                Keep up your clearspeed, stay ahead of the game.</p>
-
-                <h2>Customizable Style and Behaviour</h2>
-                <p>A powerful style editor lets you customize the color scheme how you like it best. And you can also
-                customize the behaviour of the filter wherever it makes sense, defining your own thresholds and fitting
-                it perfectly to your playstyle.</p>
-
-                <h2>Access Your Loot Filter From Anywhere</h2>
-                <p>Login with your Facebook or Google account, and take your filter wherever you go. Playing at a
-                    friend's pc? Use your personal filter. Playing a quick after-work session at the office? Use your
-                    personal filter. No need to save it to Google docs or Pastebin whenever you change something.
-                    FilterCloud is always with you.
-                </p>
+                <p>Style customization will be added in the future.</p>
 
                 <h2>Highlighting Based on Market Value</h2>
                 <p>Never miss a change in the meta, because FilterCloud highlights currency, uniques and divination
-                    cards based on their actual current market value. So if Mathil starts playing that Pledge of Hands build,
-                    you will see them highlighted while the rest of the world is still waiting for Neversink to release a
-                    new filter version.</p>
+                cards based on their actual current market value (taken from poe.ninja, updated every hour).</p>
 
-                <h2>Configure Leveling Rules Specifically For Your Build</h2>
-                <p>Hand-craft a leveling filter that shows exactly the items and sockets you need for leveling.
-                    The race to endgame has never been easier!</p>
+                <h2>Customizable Behaviour</h2>
+                <p>You can customize the behaviour of the filter wherever it makes sense, defining your own thresholds
+                and fitting it perfectly to your playstyle.</p>
             </div>
 
-            <div id="style-page" v-show="currentPage === 'Style'">
-                <h1>Style Editor</h1>
-                <h2>Coming Soon</h2>
+            <div v-show="currentPage === 'Build'">
+                <h1>Your Build</h1>
+                <p class="explanation">
+                    This is where you tell FilterCloud what build you're using. These settings are most important for
+                    the leveling and early map rules. While leveling, you'll see only the weapons and armour types you
+                    select here, plus any items that have the sockets you need.
+                </p>
+
+                <h2>Armour Types</h2>
+                <checkboxWithTooltip v-model="config.build.armour_types.str" label="Str">
+                    Show pure strength armour
+                </checkboxWithTooltip>
+                <checkboxWithTooltip v-model="config.build.armour_types.dex" label="Dex">
+                    Show pure dexterity armour
+                </checkboxWithTooltip>
+                <checkboxWithTooltip v-model="config.build.armour_types.int" label="Int">
+                    Show pure intelligence armour
+                </checkboxWithTooltip>
+                <checkboxWithTooltip v-model="config.build.armour_types.strdex" label="Str/Dex">
+                    Show hybrid strength/dexterity armour
+                </checkboxWithTooltip>
+                <checkboxWithTooltip v-model="config.build.armour_types.strint" label="Str/Int">
+                    Show hybrid strength/intelligence armour
+                </checkboxWithTooltip>
+                <checkboxWithTooltip v-model="config.build.armour_types.dexint" label="Dex/Int">
+                    Show hybrid dexterity/intelligence armour
+                </checkboxWithTooltip>
+
+                <h2>Weapon Classes</h2>
+                <itemClassList title="Weapon Classes" :items.sync="config.build.weapon_classes" item-style="normal" item-rarity="normal">
+                    List of weapon classes to show.
+                </itemClassList>
+
+                <h2>Sockets</h2>
+                <socketList :socket-configs="config.build.sockets"></socketList>
+
+            </div>
+
+            <div v-show="currentPage === 'Meta'">
+                <h1>Meta Base Types</h1>
+                <p class="explanation">
+                    This is a list of items that are used by many players in the current meta. This list is referenced
+                    from a number of places in the filter to determine which items to show or highlight (see the
+                    respective tabs, it's always mentioned there). Feel free to add or remove items as you see fit.
+                </p>
+                <itemList title="Base Types" :items.sync="config.meta.tier1" item-style="normal.normal"
+                          item-rarity="normal" item-class="?">
+                    List of base types that are popular in the current meta.
+                </itemList>
             </div>
 
             <div v-show="currentPage === 'Endgame Rares'">
                 <h1>Endgame Rares</h1>
                 <p class="explanation">
                     When mapping, you want to stay in the flow and maintain your clearspeed. You don't want to stop
-                    and identify items or even take a trip back to your hideout and sort your inventory. Sure, sometimes
-                    you have really lucky drops and it can't be avoided, but most of the time, you want to pick up only
-                    those items that have a high probability of being valuable.
-                </p>
-                <p class="explanation">
-                    This filter has two tiers of rares: Highlighted rares are the base types used by currently popular
-                    builds very likely to be valuable, or take up very little inventory space like jewelry. You should
-                    always pick those up. Non-highlighted rares are still the best of their class, and have a decent
-                    chance of being sellable, but you may skip those if you have a high quantity map.
+                    and identify items or even take a trip back to your hideout and sort your inventory. Most rare items
+                    are very unlikely to be valuable, so you shouldn't even pick them up.
                 </p>
 
                 <hr>
 
-                <checkboxWithTooltip id="show_fully_linked" v-model="config.rares.endgame.show_fully_linked" label="Show Fully Linked">
+                <checkboxWithTooltip id="show_atlas_rares" v-model="config.rares.show_atlas" label="Show Atlas Base Types">
+                    Some base types (e.g. Steel Rings) can only drop in certain maps and are very rare and valuable.
+                </checkboxWithTooltip>
+
+                <checkboxWithTooltip id="show_fully_linked" v-model="config.rares.show_fully_linked" label="Show Fully Linked">
                     Show all fully linked rare boots, gloves and helmets, even if their basetype would normally be hidden.
                 </checkboxWithTooltip>
 
-                <itemList title="Highlighted" :items.sync="config.rares.endgame.highlight" item-style="highlight.rare"
-                          item-rarity="rare" item-class="?">
-                    Rare base types that are valuable in current meta.
-                    Also includes best ring/amulet bases.
-                </itemList>
+                <p>Shaper / Elder Items</p>
+                <dropdownWithTooltip id="shaper_elder_highlight" v-model="config.rares.shaper_elder.highlight" label="Highlight"
+                                     options="[true, 'meta', false]" option-labels="['All', 'Meta', 'None']">
+                    Highlight items with Shaper/Elder mods on them. Select Meta to affect only the meta basetypes from
+                    the Basetypes tab.
+                </dropdownWithTooltip>
+                <dropdownWithTooltip id="shaper_elder_show" v-model="config.rares.shaper_elder.show" label="Show"
+                                     options="[true, 'meta', false]" option-labels="['All', 'Meta', 'None']">
+                    Show items with Shaper/Elder mods normally. Select Meta to affect only the meta basetypes from
+                    the Basetypes tab.
+                </dropdownWithTooltip>
 
-                <itemList title="Shown" :items.sync="config.rares.endgame.show" item-style="normal.rare"
+                <p>Five-Links</p>
+                <dropdownWithTooltip id="fivelink_rare_highlight" v-model="config.rares.fivelink.highlight" label="Highlight"
+                                     options="[true, 'meta', false]" option-labels="['All', 'Meta', 'None']">
+                    Highlight rares with five linked sockets. Select Meta to affect only the meta basetypes from
+                    the Basetypes tab.
+                </dropdownWithTooltip>
+                <dropdownWithTooltip id="fivelink_rare_show" v-model="config.rares.fivelink.show" label="Show"
+                                     options="[true, 'meta', false]" option-labels="['All', 'Meta', 'None']">
+                    Show five-linked rares normally. Select Meta to affect only the meta basetypes from
+                    the Basetypes tab.
+                </dropdownWithTooltip>
+
+                <p>Small Items</p>
+                <checkboxWithTooltip id="highlight_small_rares" v-model="config.rares.smallitems.highlight" label="Highlight">
+                    Highlight small items (otherwise shown normally)
+                </checkboxWithTooltip>
+                <itemClassList title="Item Classes" :items.sync="config.rares.smallitems.classes"
+                               :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
+                               item-rarity="rare">
+                    List of item classes to show.
+                </itemClassList>
+                <itemList title="Base Types" :items.sync="config.rares.smallitems.basetypes"
+                          :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
                           item-rarity="rare" item-class="?">
-                    Off-meta base types that may still be valuable.
+                    List of base types to show in addition to item classes above.
                 </itemList>
             </div>
 
@@ -134,7 +199,7 @@
                     Even if you don't want to craft, you can usually sell these as-is for a couple chaos, some even more than one exalt.
                 </checkboxWithTooltip>
                 <checkboxWithTooltip id="crafting_show_atlas" v-model="config.crafting.atlas.always" label="Always show Atlas bases">
-                    Always show map-only base types, even at lower levels.
+                    Always show atlas base types, even at lower levels.
                 </checkboxWithTooltip>
                 <itemList title="Always Show" :items.sync="config.crafting.always" item-style="normal" item-rarity="normal">
                     These items are always shown, even in low level areas.
@@ -144,23 +209,20 @@
                     These items are only shown if their item level is at least 84. At this item level, all possible affixes can roll on that item.
                 </itemList>
                 <itemList title="Chancing" :items.sync="config.crafting.chancing" item-style="normal" item-rarity="normal">
-                    These items can be rolled into very valuable uniques with an Orb of Chance (and a shit ton of luck).
-                    Per default, doesn't show league-specific ones like Leather Belt for Headhunter. If you have access
-                    to Nemesis through Zana, you may want to add that one (or replace the others).
+                    If you want to use Orbs of Chance, add your desired base types here. Normal-rarity drops of those will be shown.
                 </itemList>
             </div>
 
             <div v-show="currentPage === 'Currency'">
                 <h1>Currency</h1>
                 <p>
-                    Generally, you want to pick up all currency items because they're small and most of them have a
+                    Generally, you want to pick up most currency items because they're small and most of them have a
                     decent value.
                 </p>
                 <p>
                     Low value currency like scrolls, scraps and whetstones are not worth the time picking up.
                     You're better off maintaining a high clearspeed and buying those from other players if needed.
-                    It can still make sense to pick them up if a lot of them are close together, like after a Breach
-                    or an Artisan's Strongbox.
+                    Don't forget that you can get 4 scrolls of Wisdom by vendoring one Orb of Alteration.
                 </p>
 
                 <hr>
@@ -299,21 +361,6 @@
 
             </div>
 
-            <div v-show="currentPage === 'Sockets'">
-                <h1>Sockets</h1>
-                <p>
-                    Six-links always receive strong highlighting, five-links always receive regular highlighting.
-                    These have a good potential of being valuable.
-                </p>
-                <p>
-                    Six-socket items are shown without highlighting, these are good to vendor for 7 Jeweller's Orbs.
-                </p>
-                <p>
-                    Corrupted items with white sockets are always shown. These are good for leveling gems in your
-                    off-hand.
-                </p>
-            </div>
-
             <div v-show="currentPage === 'Flasks'">
                 <h1>Flasks</h1>
                 <p>
@@ -373,7 +420,11 @@
                     Tier 10 maps are always shown, and you can add your favorite maps to the exception list below.
                 </checkboxWithTooltip>
 
-                <itemList title="Always Show" :items.sync="config.maps.good_yellow" item-style="normal" item-rarity="normal,magic,rare">
+                <checkboxWithTooltip id="maps_always_show_shaped" v-model="config.maps.always_show_shaped" label="Always Show Shaped">
+                    Always show Shaped maps, even if they would normally be hidden by the rule above.
+                </checkboxWithTooltip>
+
+                <itemList title="Always Show" :items.sync="config.maps.favorite_maps" item-style="normal" item-rarity="normal,magic,rare">
                     These maps are always shown, even if they would normally be hidden based on their tier.
                 </itemList>
             </div>

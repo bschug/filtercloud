@@ -2,7 +2,6 @@
 	"league": "Standard",
 	
 	"currency": {
-		"hide_low_value": false,
 		"use_shaper_voice": true,
 		"ultra_rare": ["Mirror of Kalandra"],
 		"thresholds": {
@@ -12,7 +11,8 @@
 			"top_tier": 10
 		},
 		"overrides": {
-			"valuable": ["Perandus Coin"]
+			"valuable": ["Perandus Coin"],
+			"hidden": ["Blacksmith", "Armourer", "Scroll"]
 		}
 	},
 	
@@ -72,7 +72,7 @@
 	"rares": {
 		"show_atlas": true,
 		"show_fully_linked": true,
-		"shaped_elder": {
+		"shaper_elder": {
 			"highlight": "meta",
 			"show": true
 		},
@@ -122,7 +122,7 @@
 
 	"leveling": {
 		"early_game_threshold": 60,
-		"early_maps_threshold": 72,
+		"endgame_threshold": 72,
 		"show_all_rares": false,
 		"flasks": {
 			"offset": 3
@@ -132,23 +132,22 @@
 			"rare_until": 60
 		},
 		"jewelry": {
-			"show_normal_until": 60,
-			"show_magic_until": 5
-		},
-		"sockets": {
-			"all_3linked_wands": false,
-			"all_3linked_caster_daggers": false,
-			"all_3links_until": 0,
-			"all_4links_until": 0,
-			"onehand_3link_offset": 0
+			"normal_until": 68,
+			"magic_until": 5
 		},
 		"weapons": {
 			"offset": 5,
-			"show_magic_until": 5
+			"magic_until": 5
 		},
 		"armour": {
 			"offset": 10,
-			"show_magic_until": 5
+			"magic_until": 5
 		}
+	},
+
+	"maps": {
+		"hide_low_tier": true,
+		"favorite_maps": [],
+		"always_show_shaped": true
 	}
 }

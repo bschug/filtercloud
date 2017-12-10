@@ -2,7 +2,7 @@
 
 # Auto-generated with data from poe.ninja 
 
-# Top Tier Uniques (15c+)
+# Top Tier Uniques
 {% if uniques.top_tier %}
 Show
     Rarity Unique
@@ -16,7 +16,7 @@ Show
     LinkedSockets 5
 {{ style.highlight.unique }}
 
-# Decent Uniques (2c+)
+# Valuable Uniques
 {% if uniques.valuable %}
 Show
     Rarity Unique
@@ -24,7 +24,7 @@ Show
 {{ style.highlight.unique }}
 {% endif %}
 
-# Mediocre Uniques (~1c)
+# Mediocre Uniques
 {% if uniques.mediocre %}
 Show
     Rarity Unique
@@ -32,7 +32,7 @@ Show
 {{ style.normal.unique }}
 {% endif %}
 
-# Worthless Uniques (< 2 alch)
+# Worthless Uniques
 {% if uniques.worthless %}
 Show
     Rarity Unique

@@ -69,7 +69,7 @@ Show
     BaseType {{ sel|names }}
     {% endfor %}
     ItemLevel <= {{ ilvl }}
-    DropLevel >= {{ ilvl - leveling.body.offset }}
+    DropLevel >= {{ ilvl - leveling.weapons.offset }}
 {% if ilvl > leveling.weapons.magic_until %}
     Rarity Normal Rare
 {% endif %}
@@ -96,18 +96,12 @@ Hide
     Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armour" Gloves Boots Helmets Shields
 {% if leveling.show_all_rares %}
     Rarity Normal Magic
-{% endif
-    ItemLevel < {{ leveling.early_game_threshold }}
 {% endif %}
+    ItemLevel < {{ leveling.early_game_threshold }}
 
 # ------------------------------------ Jewelry ---------------------------------------
 
-# Don't highlight stupid Breach Rings (still worth picking up and throwing in a 5c buyout tab though)
-Show
-    BaseType "Breach Ring"
-{{ style.smaller.rare }}
-
-# Jewelry is rather rare, always show normals and show magics a little longer 
+# Jewelry is rather rare, always show normals and show magics a little longer
 # Also always highlight rare jewelry
 Show 
     Class Amulets Belts Rings
@@ -116,10 +110,11 @@ Show
 Show 
     Class Amulets Belts Rings 
     Rarity Normal
+    ItemLevel < {{ leveling.jewelry.normal_until }}
 {{ style.normal }}
 Show 
     Class Amulets Belts Rings 
     Rarity >= Magic 
-	ItemLevel < {{ leveling.jewelry.show_magic_until }}
+	ItemLevel < {{ leveling.jewelry.magic_until }}
 {{ style.normal }}
 

@@ -12,18 +12,12 @@
 # Low-value currency has a grey text color instead of the usual gold to make mid-value 
 # currency more visible without adding too much visual noise. 
 
-{% if include_leveling_rules %}
-# While leveling, white and blue items are hidden based on the difference between 
+# While leveling, white and blue items are hidden based on the difference between
 # item level and drop level. The hide thresholds are different for weapons and body armour, 
 # jewelry and other armour pieces because of the difference in their drop rate and how 
 # important the base stats are compared to magic mods on that item type. 
 # Only the two highest available flask types are shown for life, mana and hybrid respectively. 
 # Items with three linked sockets are always shown until level 40, 4-links are shown until maps.
-{% endif %}
-
-{% if not include_endgame_rules %}
-# In end-game, you should instead use the end-game version of the filter.
-{% endif %}
 
 # Hide identified rares because we probably dropped them
 # Don't hide corrupted items because they are always identified
@@ -60,10 +54,8 @@ Hide
 
 
 
-{% if include_endgame_rules %}
-{% include "_endgame_rares.template" %}
-{% endif %}
-	
+{% include "_rares.template" %}
+
 {% include "_gems.template" %}	
 	
 {% include "_maps.template" %}
@@ -76,10 +68,8 @@ Hide
 
 {% include "_flasks.template" %}
 
-{% if include_leveling_rules %}
 {% include "_leveling.template" %}
-{% endif %}
-	
+
 # -------------------------------- [GENERIC WHITELIST] -------------------------- 
 
 # Show all rares that weren't explicitly hidden 

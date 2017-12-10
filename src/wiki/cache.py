@@ -22,4 +22,4 @@ class WikiCache(object):
 
     def get_selector(self, name, mask):
         """Return selector for given item category and attributes"""
-        return self.db.selectors.find({'name':name, **mask})
+        return self.db.selectors.find_one({'name':name, **mask})['selector']

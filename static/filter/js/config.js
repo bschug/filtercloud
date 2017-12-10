@@ -1,7 +1,5 @@
 (function(Config) {
     Config.current = null;
-    Config.endgame = null;
-    Config.leveling = null;
 
     function ConfigSettings() {
         this.data = null;
@@ -21,17 +19,9 @@
 
 
     Config.load = function() {
-        var loads = [];
-        var endgame = new ConfigSettings();
-        loads.push(endgame.load('endgame')
-            .then(function(response) { Config.endgame = endgame; }));
-
-        var leveling = new ConfigSettings();
-        loads.push(leveling.load('leveling')
-            .then(function(response) { Config.leveling = leveling; }));
-
-        return Promise.all(loads)
-            .then(function(response) { Config.current = Config.endgame; })
-            .catch(function(error) { console.error("Failed to load config: " + error); });
+        var config = new ConfigSettings();
+        return config.load('default')
+                     .then(function(response) { Config.current = config; })
+                     .catch(function(error) { console.error("Failed to load config: " + error); });
     };
 }( window.Config = window.Config || {} ));

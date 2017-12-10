@@ -17,7 +17,7 @@ Show
     LinkedSockets 6
     Rarity Unique 
 {{ style.strong_highlight.unique }}
-	
+
 # 5-linked
 Show
     LinkedSockets 5
@@ -34,31 +34,8 @@ Show
 
 # Don't highlight 5link uniques here because other rules might still make them strong highlighted
 
-# 6-socket Crafting Base Armor
-Show
-    Sockets 6
-    Rarity <= Magic
-    BaseType "Assassin's Garb" "Glorious Plate" "Astral Plate" "Vaal Regalia" "Zodiac Leather"
-{{ style.normal }}
-
-# 6-socket crafting base Weapons
-Show
-    Sockets 6
-    Rarity <= Magic
-    BaseType "Harbinger Bow" "Vaal Axe" "Coronal Maul" "Exquisite Blade"
-{{ style.normal }}
-
-{% if
-# other 6-socket items
+# 6-socket items (vendor these for ~1c worth of jews)
 Show
     Sockets 6
 	Rarity < Rare
 {{ style.normal }}
-	
-# Show corrupted items with white sockets - useful for offhand gem leveling
-Show 
-    Sockets >= 3
-    SocketGroup W
-    Class Wands Daggers One Hand Shields Thrusting Sceptre Claws
-    Rarity < Rare 
-

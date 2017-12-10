@@ -22,8 +22,6 @@ Hide
     Class Flasks
 
 
-{% if include_leveling_rules %}
-	
 # Highlight all quality flasks on low levels
 Show
     Class Flask
@@ -60,8 +58,6 @@ Show
 Show 
     Class "Utility Flasks"
 {{ style.leveling }}
-
-{% endif %}
 
 # Hide all flasks that weren't explicitly shown
 Hide 
