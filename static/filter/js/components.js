@@ -134,26 +134,30 @@ Vue.component('itemlist', {
 Vue.component('itemclasslist', {
     template: '\
         <div class="item-list">\
-            <h2>{{ title }}<span class="tooltip"><slot></slot></span></h2>\
+            <h2>{{ title }}</h2>\
+            <p class="explanation"><slot></slot></p>\
             <div class="item-list-inner">\
                 <itempreview \
                     v-for="item in items" :key="item" \
                     :item="item" :item-style="itemStyle" :item-rarity="itemRarity" :item-class="item" \
                     :deletable="true" @deleted="deleteItem(item)"/>\
             </div>\
-            <input v-if="!readOnly" type="text" v-model="itemInputName" @keydown.enter="addItem(itemInputName); itemInputName=\'\'">\
-            <button v-if="!readOnly" type="button" @click="addItem(itemInputName); itemInputName=\'\'">Add</button>\
+            <dropdownwithtooltip label="Add" :options="itemClasses" :optionLabels="itemClasses" value="" :id="id" @input="addItem">\
+                Add an item class to the list.\
+            </dropdownwithtooltip>\
         </div>',
-    props: ['title', 'items', 'itemStyle', 'itemRarity', 'readOnly'],
-    data: function() { return {
-        itemInputName: '',
-        itemClassFilter: 'All'
-    }},
+    props: ['id', 'title', 'category', 'items', 'itemStyle', 'itemRarity'],
+    computed: {
+        itemClasses: function() { return GameData.itemCategories[this.category]; }
+    },
     methods: {
         deleteItem: function(item) {
             this.$emit('update:items', this.items.filter(function(x) { return x !== item; }));
         },
         addItem: function(item) {
+            if (item === "") {
+                return;
+            }
             this.items.push(item);
         }
     }

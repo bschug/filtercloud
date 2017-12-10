@@ -1,5 +1,5 @@
 (function(GameData) {
-    GameData.itemCategories = {};  // category (weapons, armour, jewelry, etc) -> [itemClass]
+    GameData.itemCategories = {};  // category (all, weapons, armour, jewelry, etc) -> [itemClass]
     GameData.itemClasses = {};  // itemClass -> [baseType -> stats]
     GameData.baseTypes = {};  // baseType -> stats
     GameData.baseTypeToItemClass = {};  // baseType -> itemClass
@@ -12,6 +12,7 @@
             .then(function(response) {
                 GameData.itemClasses = response.data.itemClasses;
                 GameData.itemCategories = response.data.itemCategories;
+                buildAllItemsCategory();
                 buildBaseTypesIndex();
                 buildBaseTypeToItemClassIndex();
             });
@@ -30,6 +31,14 @@
                 console.log("Failed to load GameData:", error);
             });
     };
+
+    function buildAllItemsCategory() {
+        var result = [];
+        for (var k in GameData.itemCategories) {
+            result = result.concat(GameData.itemCategories[k]);
+        }
+        GameData.itemCategories.all = result;
+    }
 
     function buildBaseTypesIndex() {
         for (var itemClass in GameData.itemClasses) {

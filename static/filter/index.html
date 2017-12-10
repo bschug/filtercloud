@@ -37,8 +37,6 @@
         <div class="sidebar">
             <div class="sidebar-box">
                 <p class="download-button" @click="downloadFilter">Download</p>
-                <sidebarLink :current-page.sync="currentPage" page="Style Editor"></sidebarLink>
-                <hr>
                 <sidebarLink
                    v-for="page in ['Build', 'Meta']" :key="page"
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
@@ -83,29 +81,32 @@
                     select here, plus any items that have the sockets you need.
                 </p>
 
-                <h2>Armour Types</h2>
-                <checkboxWithTooltip v-model="config.build.armour_types.str" label="Str">
-                    Show pure strength armour
-                </checkboxWithTooltip>
-                <checkboxWithTooltip v-model="config.build.armour_types.dex" label="Dex">
-                    Show pure dexterity armour
-                </checkboxWithTooltip>
-                <checkboxWithTooltip v-model="config.build.armour_types.int" label="Int">
-                    Show pure intelligence armour
-                </checkboxWithTooltip>
-                <checkboxWithTooltip v-model="config.build.armour_types.strdex" label="Str/Dex">
-                    Show hybrid strength/dexterity armour
-                </checkboxWithTooltip>
-                <checkboxWithTooltip v-model="config.build.armour_types.strint" label="Str/Int">
-                    Show hybrid strength/intelligence armour
-                </checkboxWithTooltip>
-                <checkboxWithTooltip v-model="config.build.armour_types.dexint" label="Dex/Int">
-                    Show hybrid dexterity/intelligence armour
-                </checkboxWithTooltip>
+                <div class="armour-types">
+                    <h2>Armour Types</h2>
+                    <p class="explanation">Show only armour pieces of these types while leveling.</p>
+                    <checkboxWithTooltip v-model="config.build.armour_types.str" label="Str">
+                        Show pure strength armour
+                    </checkboxWithTooltip>
+                    <checkboxWithTooltip v-model="config.build.armour_types.dex" label="Dex">
+                        Show pure dexterity armour
+                    </checkboxWithTooltip>
+                    <checkboxWithTooltip v-model="config.build.armour_types.int" label="Int">
+                        Show pure intelligence armour
+                    </checkboxWithTooltip>
+                    <checkboxWithTooltip v-model="config.build.armour_types.strdex" label="Str/Dex">
+                        Show hybrid strength/dexterity armour
+                    </checkboxWithTooltip>
+                    <checkboxWithTooltip v-model="config.build.armour_types.strint" label="Str/Int">
+                        Show hybrid strength/intelligence armour
+                    </checkboxWithTooltip>
+                    <checkboxWithTooltip v-model="config.build.armour_types.dexint" label="Dex/Int">
+                        Show hybrid dexterity/intelligence armour
+                    </checkboxWithTooltip>
+                </div>
 
-                <h2>Weapon Classes</h2>
-                <itemClassList title="Weapon Classes" :items.sync="config.build.weapon_classes" item-style="normal" item-rarity="normal">
-                    List of weapon classes to show.
+                <itemClassList id="weapon-classes" title="Weapon Classes" category="weapons"
+                               :items.sync="config.build.weapon_classes" item-style="normal" item-rarity="normal">
+                    Show only weapons of these types while leveling.
                 </itemClassList>
 
                 <h2>Sockets</h2>
@@ -172,7 +173,7 @@
                 <checkboxWithTooltip id="highlight_small_rares" v-model="config.rares.smallitems.highlight" label="Highlight">
                     Highlight small items (otherwise shown normally)
                 </checkboxWithTooltip>
-                <itemClassList title="Item Classes" :items.sync="config.rares.smallitems.classes"
+                <itemClassList id="small-rare-classes" title="Item Classes" category="" :items.sync="config.rares.smallitems.classes"
                                :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
                                item-rarity="rare">
                     List of item classes to show.
