@@ -27,12 +27,16 @@
                         formData.append('style', JSON.stringify(Style.data));
                         formData.append('config', JSON.stringify(Config.current.data));
 
+                        ga('send', 'event', 'download', 'start');
+
                         axios.post('/api/filter/build', formData, {
                             responseType: 'arraybuffer'
                         })
                         .then(function(response) {
                             var blob = new Blob([response.data], { type: 'text/plain' });
                             console.log("Downloaded " + (blob.size / 1024).toFixed(2) + "kB filter file");
+
+                            ga('send', 'event', 'download', 'success');
 
                             var link = document.createElement('a');
                             // workaround for old browsers
@@ -45,6 +49,10 @@
                                 document.body.appendChild(link);
                                 link.click();
                             }
+                        })
+                        .catch(function(error) {
+                            console.log("Download failed with error: ", error);
+                            ga('send', 'event', 'download', 'error');
                         });
                     }
                 }

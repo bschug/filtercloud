@@ -12,7 +12,10 @@ Vue.component('checkboxwithtooltip', {
         </p>',
     props: ['value', 'id', 'label'],
     methods: {
-        updateValue: function(value) { this.$emit('input', value); }
+        updateValue: function(value) {
+            ga('send', 'event', 'configure', this.id);
+            this.$emit('input', value);
+        }
     }
 });
 
@@ -41,6 +44,7 @@ Vue.component('dropdownwithtooltip', {
                 return this.optionLabels[idx];
             },
             set: function(newValue) {
+                ga('send', 'event', 'configure', this.id);
                 var idx = this.optionLabels.indexOf(newValue);
                 this.selectedOption = this.options[idx];
                 this.$emit('input', this.options[idx]);
@@ -56,7 +60,11 @@ Vue.component('sidebarlink', {
         @click="setPage(page)">{{ page }}</p>',
     props:['page', 'currentPage'],
     methods: {
-        setPage: function(page) { this.$emit('update:currentPage', page); }
+        setPage: function(page) {
+            ga('set', 'page', '/#/' + page);
+            ga('send', 'pageview');
+            this.$emit('update:currentPage', page);
+        }
     }
 });
 
@@ -77,7 +85,7 @@ Vue.component('itemlist', {
             <input v-if="!readOnly" type="text" v-model="itemInputName" @keydown.enter="addItem(itemInputName); itemInputName=\'\'">\
             <button v-if="!readOnly" type="button" @click="addItem(itemInputName); itemInputName=\'\'">Add</button>\
         </div>',
-    props: ['title', 'items', 'itemStyle', 'itemRarity', 'itemClass', 'readOnly'],
+    props: ['id', 'title', 'items', 'itemStyle', 'itemRarity', 'itemClass', 'readOnly'],
     data: function() { return {
         itemInputName: '',
         itemClassFilter: 'All'
@@ -103,9 +111,11 @@ Vue.component('itemlist', {
     methods: {
         deleteItem: function(item) {
             this.$emit('update:items', this.items.filter(function(x) { return x !== item; }));
+            ga('send', 'event', 'configure', this.id + '-remove');
         },
         addItem: function(item) {
             this.items.push(item);
+            ga('send', 'event', 'configure', this.id + '-add');
         },
         containsItemOfClass: function(itemClass) {
             if (itemClass === 'All') {
@@ -160,12 +170,14 @@ Vue.component('itemclasslist', {
     methods: {
         deleteItem: function(item) {
             this.$emit('update:items', this.items.filter(function(x) { return x !== item; }));
+            ga('send', 'event', 'configure', this.id + '-remove');
         },
         addItem: function(item) {
             if (item === "") {
                 return;
             }
             this.items.push(item);
+            ga('send', 'event', 'configure', this.id + '-add');
         }
     },
     watch: {
@@ -221,7 +233,7 @@ Vue.component('thresholdslider', {
             </p> \
         </div> \
         ',
-    props: ['value', 'title', 'op', 'overrides', 'prices', 'itemStyle', 'itemRarity', 'itemClass', 'hidden'],
+    props: ['id', 'value', 'title', 'op', 'overrides', 'prices', 'itemStyle', 'itemRarity', 'itemClass', 'hidden'],
     data: function() { return {
         'sliderPosition': this.value === 0 ? -3001 : Math.log10(MathUtils.clamp(this.value, 0.001, 1000)) * 1000,
         'isExpanded': this.overrides && (this.overrides.length > 0),
@@ -243,6 +255,7 @@ Vue.component('thresholdslider', {
     },
     watch: {
         'sliderPosition': function(val) {
+            ga('send', 'event', 'configure', this.id + '-threshold')
             this.$emit('input', val < -3000 ? 0 : Math.pow(10, val / 1000));
         },
         'selectedOverride': function(val) {
@@ -254,12 +267,15 @@ Vue.component('thresholdslider', {
     },
     methods: {
         'toggleExpand': function() {
+            ga('send', 'event', 'configure', this.id + '-override-toggle');
             this.isExpanded = !this.isExpanded;
         },
         'deleteOverride': function(item) {
+            ga('send', 'event', 'configure', this.id + '-override-remove');
             this.$emit('update:overrides', this.overrides.filter(function(x) { return x !== item; }));
         },
         'addOverride': function(item) {
+            ga('send', 'event', 'configure', this.id + '-override-add');
             this.$emit('update:overrides', this.overrides.concat([item]));
         }
     }
@@ -274,12 +290,13 @@ Vue.component('linearslider', {
             <input type="range" :min="minValue" :max="maxValue" v-model="sliderPosition" class="slider"> \
         </div> \
         ',
-    props: ['value', 'title', 'minValue', 'maxValue', 'op'],
+    props: ['id', 'value', 'title', 'minValue', 'maxValue', 'op'],
     data: function() { return {
         'sliderPosition': this.value
     };},
     watch: {
         'sliderPosition': function(val) {
+            ga('send', 'event', 'configure', this.id);
             this.$emit('input', val);
         },
     },
@@ -388,11 +405,13 @@ Vue.component('socketlist', {
         addSocketConfig: function() {
             this.socketConfigs.push({'sockets':'', 'level': 0});
             this.$emit('input', this.socketConfigs);
+            ga('send', 'event', 'configure', 'sockets-add');
         },
         deleteSocketConfig: function(cfg) {
             var idx = this.socketConfigs.indexOf(cfg);
             this.socketConfigs.splice(idx, 1);
             this.$emit('input', this.socketConfigs);
+            ga('send', 'event', 'configure', 'sockets-remove');
         }
     }
 });

@@ -20,6 +20,17 @@
     <script src="js/utils.js"></script>
 
     <title>poe.gg FilterCloud</title>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-67186151-5', 'auto');
+        ga('send', 'pageview');
+    </script>
 </head>
 <body onload="FilterCloud.init();">
 <div class="root">
@@ -84,27 +95,27 @@
                 <div class="armour-types">
                     <h2>Armour Types</h2>
                     <p class="explanation">Show only armour pieces of these types while leveling.</p>
-                    <checkboxWithTooltip v-model="config.build.armour_types.str" label="Str">
+                    <checkboxWithTooltip v-model="config.build.armour_types.str" label="Str" id="armour_str">
                         Show pure strength armour
                     </checkboxWithTooltip>
-                    <checkboxWithTooltip v-model="config.build.armour_types.dex" label="Dex">
+                    <checkboxWithTooltip v-model="config.build.armour_types.dex" label="Dex" id="armour_dex">
                         Show pure dexterity armour
                     </checkboxWithTooltip>
-                    <checkboxWithTooltip v-model="config.build.armour_types.int" label="Int">
+                    <checkboxWithTooltip v-model="config.build.armour_types.int" label="Int" id="armour_int">
                         Show pure intelligence armour
                     </checkboxWithTooltip>
-                    <checkboxWithTooltip v-model="config.build.armour_types.strdex" label="Str/Dex">
+                    <checkboxWithTooltip v-model="config.build.armour_types.strdex" label="Str/Dex" id="armour_strdex">
                         Show hybrid strength/dexterity armour
                     </checkboxWithTooltip>
-                    <checkboxWithTooltip v-model="config.build.armour_types.strint" label="Str/Int">
+                    <checkboxWithTooltip v-model="config.build.armour_types.strint" label="Str/Int" id="armour_strint">
                         Show hybrid strength/intelligence armour
                     </checkboxWithTooltip>
-                    <checkboxWithTooltip v-model="config.build.armour_types.dexint" label="Dex/Int">
+                    <checkboxWithTooltip v-model="config.build.armour_types.dexint" label="Dex/Int" id="armour_dexint">
                         Show hybrid dexterity/intelligence armour
                     </checkboxWithTooltip>
                 </div>
 
-                <itemClassList id="weapon-classes" title="Weapon Classes" category="weapons"
+                <itemClassList id="weapon_classes" title="Weapon Classes" category="weapons"
                                :items.sync="config.build.weapon_classes" item-style="normal" item-rarity="normal">
                     Show only weapons of these types while leveling.
                 </itemClassList>
@@ -121,7 +132,7 @@
                     from a number of places in the filter to determine which items to show or highlight (see the
                     respective tabs, it's always mentioned there). Feel free to add or remove items as you see fit.
                 </p>
-                <itemList title="Base Types" :items.sync="config.meta.tier1" item-style="normal.normal"
+                <itemList id="meta_base_types" title="Base Types" :items.sync="config.meta.tier1" item-style="normal.normal"
                           item-rarity="normal" item-class="?">
                     List of base types that are popular in the current meta.
                 </itemList>
@@ -178,7 +189,7 @@
                                item-rarity="rare">
                     List of item classes to show.
                 </itemClassList>
-                <itemList title="Base Types" :items.sync="config.rares.smallitems.basetypes"
+                <itemList id="small_rare_basetypes" title="Base Types" :items.sync="config.rares.smallitems.basetypes"
                           :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
                           item-rarity="rare" item-class="?">
                     List of base types to show in addition to item classes above.
@@ -202,14 +213,14 @@
                 <checkboxWithTooltip id="crafting_show_atlas" v-model="config.crafting.atlas.always" label="Always show Atlas bases">
                     Always show atlas base types, even at lower levels.
                 </checkboxWithTooltip>
-                <itemList title="Always Show" :items.sync="config.crafting.always" item-style="normal" item-rarity="normal">
+                <itemList id="crafting_always_show" title="Always Show" :items.sync="config.crafting.always" item-style="normal" item-rarity="normal">
                     These items are always shown, even in low level areas.
                     If you have level-capped Essences and want to use them, add the base types you're looking for here.
                 </itemList>
-                <itemList title="Item Level 84+" :items.sync="config.crafting.ilvl84" item-style="normal" item-rarity="normal">
+                <itemList id="crafting_ilvl84" title="Item Level 84+" :items.sync="config.crafting.ilvl84" item-style="normal" item-rarity="normal">
                     These items are only shown if their item level is at least 84. At this item level, all possible affixes can roll on that item.
                 </itemList>
-                <itemList title="Chancing" :items.sync="config.crafting.chancing" item-style="normal" item-rarity="normal">
+                <itemList id="crafting_chancing" title="Chancing" :items.sync="config.crafting.chancing" item-style="normal" item-rarity="normal">
                     If you want to use Orbs of Chance, add your desired base types here. Normal-rarity drops of those will be shown.
                 </itemList>
             </div>
@@ -233,22 +244,22 @@
                     for strongly highlighted currency configured in the stylesheet.
                 </checkboxWithTooltip>
 
-                <thresholdSlider v-model="config.currency.thresholds.top_tier" title="Top Tier" op="≥"
+                <thresholdSlider id="currency-toptier" v-model="config.currency.thresholds.top_tier" title="Top Tier" op="≥"
                                  :overrides.sync="config.currency.overrides.top_tier" :prices="GameData.prices.currency"
                                  item-style="strong_highlight.currency" item-class="Currency">
                     Items worth more than this are very valuable. If you see this highlighting, it's time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.valuable" title="Valuable" op="≥"
+                <thresholdSlider id="currency-valuable" v-model="config.currency.thresholds.valuable" title="Valuable" op="≥"
                                  :overrides.sync="config.currency.overrides.valuable" :prices="GameData.prices.currency"
                                  item-style="highlight.currency" item-class="Currency">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.worthless" title="Worthless" op="<"
+                <thresholdSlider id="currency-worthless" v-model="config.currency.thresholds.worthless" title="Worthless" op="<"
                                  :overrides.sync="config.currency.overrides.worthless" :prices="GameData.prices.currency"
                                  item-style="smaller.currency" item-class="Currency">
                     Anything below this is usually not worth the time picking up, unless there's a lot them in one place.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.currency.thresholds.hidden" title="Hidden" op="<"
+                <thresholdSlider id="currency-hidden" v-model="config.currency.thresholds.hidden" title="Hidden" op="<"
                                  :overrides.sync="config.currency.overrides.hidden" :prices="GameData.prices.currency"
                                  item-style="hidden.currency" item-class="Currency" :hidden="true">
                     Anything below this will be hidden completely.
@@ -265,22 +276,22 @@
             <div v-show="currentPage === 'Divination Cards'">
                 <h1>Divination Cards</h1>
 
-                <thresholdSlider v-model="config.divcards.thresholds.top_tier" title="Top Tier" op="≥"
+                <thresholdSlider id="divcard-toptier" v-model="config.divcards.thresholds.top_tier" title="Top Tier" op="≥"
                                  :overrides.sync="config.divcards.overrides.top_tier" :prices="GameData.prices.divcards"
                                  item-style="strong_highlight.divcards" item-class="Divination Card">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.valuable" title="Valuable" op="≥"
+                <thresholdSlider id="divcard-valuable" v-model="config.divcards.thresholds.valuable" title="Valuable" op="≥"
                                  :overrides.sync="config.divcards.overrides.valuable" :prices="GameData.prices.divcards"
                                  item-style="highlight.divcards" item-class="Divination Card">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.worthless" title="Worthless" op="<"
+                <thresholdSlider id="divcard-worthless" v-model="config.divcards.thresholds.worthless" title="Worthless" op="<"
                                  :overrides.sync="config.divcards.overrides.worthless" :prices="GameData.prices.divcards"
                                  item-style="smaller.divcards" item-class="Divination Card">
                     Anything below this is usually not worth the time picking up, unless there's a lot of cards in one spot.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.divcards.thresholds.hidden" title="Hidden" op="<"
+                <thresholdSlider id="divcard-hidden" v-model="config.divcards.thresholds.hidden" title="Hidden" op="<"
                                  :overrides.sync="config.divcards.overrides.hidden" :prices="GameData.prices.divcards"
                                  item-style="hidden.divcards" item-class="Divination Card" :hidden="true">
                     Anything below this is will be hidden completely.
@@ -310,23 +321,23 @@
 
                 <hr>
 
-                <thresholdSlider v-model="config.uniques.thresholds.top_tier" title="Top Tier" op="≥"
+                <thresholdSlider id="unique-toptier" v-model="config.uniques.thresholds.top_tier" title="Top Tier" op="≥"
                                  :overrides.sync="config.uniques.overrides.top_tier" :prices="GameData.prices.uniques"
                                  item-style="strong_highlight.unique" item-rarity="unique">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.valuable" title="Valuable" op="≥"
+                <thresholdSlider id="unique-valuable" v-model="config.uniques.thresholds.valuable" title="Valuable" op="≥"
                                  :overrides.sync="config.uniques.overrides.valuable" :prices="GameData.prices.uniques"
                                  item-style="highlight.unique" item-rarity="unique">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.worthless" title="Worthless" op="<"
+                <thresholdSlider id="unique-worthless" v-model="config.uniques.thresholds.worthless" title="Worthless" op="<"
                                  :overrides.sync="config.uniques.overrides.worthless" :prices="GameData.prices.uniques"
                                  item-style="smaller.unique" item-rarity="unique">
                     Anything below this is usually not worth the time picking up, unless you're going for the 5 Uniques
                     prophecy.
                 </thresholdSlider>
-                <thresholdSlider v-model="config.uniques.thresholds.hidden" title="Hidden" op="<"
+                <thresholdSlider id="unique-hidden" v-model="config.uniques.thresholds.hidden" title="Hidden" op="<"
                                  :overrides.sync="config.uniques.overrides.hidden" :prices="GameData.prices.uniques"
                                  item-style="hidden.unique" item-rarity="unique" :hidden="true">
                     Anything below this will be hidden completely.
@@ -343,20 +354,20 @@
             <div v-show="currentPage === 'Skill Gems'">
                 <h1>Skill Gems</h1>
 
-                <linearSlider v-model="config.gems.high_quality" title="Top Tier" :min-value="0" :max-value="21" op="≥">
+                <linearSlider id="gems-toptier-threshold" v-model="config.gems.high_quality" title="Top Tier" :min-value="0" :max-value="21" op="≥">
                     Strong highlighting for very high quality gems.
                 </linearSlider>
-                <linearSlider v-model="config.gems.medium_quality" title="Valuable" :min-value="0" :max-value="21" op="≥">
+                <linearSlider id="gems-valuable-threshold" v-model="config.gems.medium_quality" title="Valuable" :min-value="0" :max-value="21" op="≥">
                     Highlighting for decently high quality gems.
                 </linearSlider>
-                <linearSlider v-model="config.gems.min_quality" title="Hidden" :min-value="0" :max-value="21" op="<">
+                <linearSlider id="gems-hidden-threshold" v-model="config.gems.min_quality" title="Hidden" :min-value="0" :max-value="21" op="<">
                     Gems with less than this will be hidden.
                 </linearSlider>
 
-                <itemList title="High Value" :items.sync="config.gems.high_value_gems" item-style="normal" item-rarity="normal">
+                <itemList id="gems-toptier-override" title="High Value" :items.sync="config.gems.high_value_gems" item-style="normal" item-rarity="normal">
                     High value gems that you should pick up regardless of quality.
                 </itemList>
-                <itemList title="Medium Value" :items.sync="config.gems.medium_value_gems" item-style="normal" item-rarity="normal">
+                <itemList id="gems-valuable-override" title="Medium Value" :items.sync="config.gems.medium_value_gems" item-style="normal" item-rarity="normal">
                     Medium value gems that you may also want to pick up regardless of quality.
                 </itemList>
 
@@ -369,10 +380,10 @@
                     especially with quality. You can configure the minimum quality at which to show certain flasks.
                 </p>
 
-                <linearSlider v-model="config.flasks.healing.min_quality" title="Life/Mana/Hybrid" :min-value="0" :max-value="20" op="≥">
+                <linearSlider id="flasks-life-threshold" v-model="config.flasks.healing.min_quality" title="Life/Mana/Hybrid" :min-value="0" :max-value="20" op="≥">
                     Show Life/Mana/Hybrid flasks only if they have at least this much quality.
                 </linearSlider>
-                <linearSlider v-model="config.flasks.utility.min_quality" title="Utility" :min-value="0" :max-value="20" op="≥">
+                <linearSlider id="flasks-utility-threshold" v-model="config.flasks.utility.min_quality" title="Utility" :min-value="0" :max-value="20" op="≥">
                     Show Utility Flasks only if they have at least this much quality.
                 </linearSlider>
             </div>
@@ -425,7 +436,7 @@
                     Always show Shaped maps, even if they would normally be hidden by the rule above.
                 </checkboxWithTooltip>
 
-                <itemList title="Always Show" :items.sync="config.maps.favorite_maps" item-style="normal" item-rarity="normal,magic,rare">
+                <itemList id="maps_favorite" title="Always Show" :items.sync="config.maps.favorite_maps" item-style="normal" item-rarity="normal,magic,rare">
                     These maps are always shown, even if they would normally be hidden based on their tier.
                 </itemList>
             </div>
