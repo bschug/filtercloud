@@ -386,7 +386,7 @@ Vue.component('socketlist', {
     props: ['socketConfigs'],
     methods: {
         addSocketConfig: function() {
-            this.socketConfigs.append({'sockets':'', 'level': 0});
+            this.socketConfigs.push({'sockets':'', 'level': 0});
             this.$emit('input', this.socketConfigs);
         },
         deleteSocketConfig: function(cfg) {
