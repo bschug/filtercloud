@@ -4,6 +4,7 @@
     GameData.baseTypes = {};  // baseType -> stats
     GameData.baseTypeToItemClass = {};  // baseType -> itemClass
     GameData.prices = {};  // currency|divcards|uniques -> { baseType -> price }
+    GameData.leagues = [];
 
     GameData.load = function(league) {
         var startTime = +new Date();
@@ -17,12 +18,14 @@
                 buildBaseTypeToItemClassIndex();
             });
 
-        var prices = axios.get('/api/filter/prices/' + league)
+        var prices = GameData.loadPrices(league);
+
+        var leagues = axios.get('/api/filter/leagues')
             .then(function(response) {
-                GameData.prices = response.data;
+                GameData.leagues = response.data;
             });
 
-        return Promise.all([constants, prices])
+        return Promise.all([constants, prices, leagues])
             .then(function(response) {
                 var duration = +new Date() - startTime;
                 console.log("Load GameData complete after " + duration + " ms");
@@ -31,6 +34,13 @@
                 console.log("Failed to load GameData:", error);
             });
     };
+
+    GameData.loadPrices = function(league) {
+        return axios.get('/api/filter/prices/' + league)
+            .then(function(response) {
+                GameData.prices = response.data;
+            });
+    }
 
     function buildAllItemsCategory() {
         var result = [];

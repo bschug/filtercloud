@@ -47,6 +47,9 @@
     <div class="page clearfix" id="page" v-cloak>
         <div class="sidebar">
             <div class="sidebar-box">
+                <select v-model="selectedLeague">
+                    <option v-for="league in GameData.leagues">{{ league }}</option>
+                </select>
                 <p class="download-button" @click="downloadFilter">Download</p>
                 <sidebarLink
                    v-for="page in ['Build', 'Base Types']" :key="page"

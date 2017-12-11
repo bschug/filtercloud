@@ -13,6 +13,7 @@
                     config: Config.current.data,
                     currentPage: null,
                     GameData: GameData,
+                    selectedLeague: 'Standard',
                     allUniqueItems: Object.keys(GameData.prices.uniques).sort()
                 },
                 methods: {
@@ -54,6 +55,20 @@
                             console.log("Download failed with error: ", error);
                             ga('send', 'event', 'download', 'error');
                         });
+                    }
+                },
+
+                watch: {
+                    selectedLeague: function() {
+                        GameData.loadPrices(this.selectedLeague)
+                            .then(function() {
+                                console.log("Received new prices");
+                                this.GameData = GameData;
+                                this.allUniqueItems = Object.keys(GameData.prices.uniques).sort();
+                            })
+                            .catch(function(error) {
+                                console.error("Failed to load prices for ", league, ": ", error);
+                            });
                     }
                 }
             });

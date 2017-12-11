@@ -73,6 +73,11 @@ def post_update_selectors():
     return "Selector update started"
 
 
+@app.route('/api/filter/leagues', methods=['GET'])
+def get_leagues():
+    return jsonify(['Standard', 'Hardcore', 'Abyss', 'Hardcore Abyss'])
+
+
 @app.route('/api/filter/game-constants', methods=['GET'])
 def get_game_constants():
     response = Response(WikiCache(get_db()).get_game_constants_json())
