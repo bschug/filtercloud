@@ -316,7 +316,7 @@ Vue.component('linearslider', {
                 ga('send', 'event', 'configure', this.id);
             }
             this.lastUpdate = new Date();
-            this.$emit('input', 0+val);
+            this.$emit('input', parseInt(val));
         },
     },
 });
