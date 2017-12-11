@@ -7,12 +7,14 @@ from box import Box
 
 from functioncache import JsonCache, cached
 from .constants import *
+from .selector import update_selectors
 
 
 def scrape_wiki(db):
-    """Runs the wiki scraper. For use with concurrent.futures."""
+    """Runs the wiki scraper and rebuilds the selectors. For use with concurrent.futures."""
     scraper = WikiScraper(db)
     scraper.scrape_items()
+    update_selectors(db)
     print("Wiki Scraper has finished")
 
 

@@ -65,6 +65,8 @@ def post_update_prices():
     return "Update Complete"
 
 
+# Selectors are rebuilt automatically after each wiki update.
+# You shouldn't ever need to call this manually unless you change the selector generator code.
 @app.route('/api/scraper/update-selectors', methods=['POST'])
 def post_update_selectors():
     executor.submit(update_selectors, get_db())
