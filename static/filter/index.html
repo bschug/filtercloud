@@ -311,23 +311,23 @@
                 <hr>
 
                 <thresholdSlider v-model="config.uniques.thresholds.top_tier" title="Top Tier" op="≥"
-                                 :overrides="config.uniques.overrides.top_tier" :prices="GameData.prices.uniques"
+                                 :overrides.sync="config.uniques.overrides.top_tier" :prices="GameData.prices.uniques"
                                  item-style="strong_highlight.unique" item-rarity="unique">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
                 <thresholdSlider v-model="config.uniques.thresholds.valuable" title="Valuable" op="≥"
-                                 :overrides="config.uniques.overrides.valuable" :prices="GameData.prices.uniques"
+                                 :overrides.sync="config.uniques.overrides.valuable" :prices="GameData.prices.uniques"
                                  item-style="highlight.unique" item-rarity="unique">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
                 <thresholdSlider v-model="config.uniques.thresholds.worthless" title="Worthless" op="<"
-                                 :overrides="config.uniques.overrides.worthless" :prices="GameData.prices.uniques"
+                                 :overrides.sync="config.uniques.overrides.worthless" :prices="GameData.prices.uniques"
                                  item-style="smaller.unique" item-rarity="unique">
                     Anything below this is usually not worth the time picking up, unless you're going for the 5 Uniques
                     prophecy.
                 </thresholdSlider>
                 <thresholdSlider v-model="config.uniques.thresholds.hidden" title="Hidden" op="<"
-                                 :overrides="config.uniques.overrides.hidden" :prices="GameData.prices.uniques"
+                                 :overrides.sync="config.uniques.overrides.hidden" :prices="GameData.prices.uniques"
                                  item-style="hidden.unique" item-rarity="unique" :hidden="true">
                     Anything below this will be hidden completely.
                 </thresholdSlider>
@@ -335,7 +335,7 @@
                 <thresholdItemList :prices="GameData.prices.uniques" :thresholds="config.uniques.thresholds"
                                    :hide-worthless="config.uniques.hide_low_value"
                                    style-context="unique" item-rarity="unique"
-                                   :overrides="config.uniques.overrides"
+                                   :overrides.sync="config.uniques.overrides"
                                    :style-overrides="{}">
                 </thresholdItemList>
             </div>

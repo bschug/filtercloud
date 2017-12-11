@@ -37,7 +37,7 @@ Vue.component('dropdownwithtooltip', {
     computed: {
         selectedLabel: {
             get: function() {
-                var idx = this.options.indexOf(this.selecteOption);
+                var idx = this.options.indexOf(this.selectedOption);
                 return this.optionLabels[idx];
             },
             set: function(newValue) {
@@ -142,11 +142,18 @@ Vue.component('itemclasslist', {
                     :item="item" :item-style="itemStyle" :item-rarity="itemRarity" :item-class="item" \
                     :deletable="true" @deleted="deleteItem(item)"/>\
             </div>\
-            <dropdownwithtooltip label="Add" :options="itemClasses" :optionLabels="itemClasses" value="" :id="id" @input="addItem">\
-                Add an item class to the list.\
-            </dropdownwithtooltip>\
+            <p>\
+                <select v-model="selectedAddItem">\
+                    <option disabled value="">Add</option>\
+                    <option v-for="itemClass in itemClasses">{{ itemClass }}</option>\
+                </select>\
+                <span class="tooltip">Add an item class to the list.</span>\
+            </p>\
         </div>',
     props: ['id', 'title', 'category', 'items', 'itemStyle', 'itemRarity'],
+    data: function() { return {
+        selectedAddItem: ''
+    }},
     computed: {
         itemClasses: function() { return GameData.itemCategories[this.category]; }
     },
@@ -159,6 +166,14 @@ Vue.component('itemclasslist', {
                 return;
             }
             this.items.push(item);
+        }
+    },
+    watch: {
+        'selectedAddItem': function(val) {
+            if (val !== '') {
+                this.addItem(val);
+                this.selectedAddItem = '';
+            }
         }
     }
 });
@@ -375,7 +390,7 @@ Vue.component('socketlist', {
             this.$emit('input', this.socketConfigs);
         },
         deleteSocketConfig: function(cfg) {
-            var idx = this.value.indexOf(cfg);
+            var idx = this.socketConfigs.indexOf(cfg);
             this.socketConfigs.splice(idx, 1);
             this.$emit('input', this.socketConfigs);
         }

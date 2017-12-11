@@ -11,8 +11,10 @@
 			"top_tier": 10
 		},
 		"overrides": {
+			"hidden": ["Blacksmith", "Armourer", "Scroll"],
+			"worthless": [],
 			"valuable": ["Perandus Coin"],
-			"hidden": ["Blacksmith", "Armourer", "Scroll"]
+			"top_tier": []
 		}
 	},
 	
@@ -41,7 +43,12 @@
 			"valuable": 5,
 			"top_tier": 30
 		},
-		"overrides": {}
+		"overrides": {
+			"hidden": [],
+			"worthless": [],
+			"valuable": [],
+			"top_tier": []
+		}
 	},
 	
 	"divcards": {
@@ -52,8 +59,12 @@
 			"top_tier": 15
 		},
 		"overrides": {
-			"hidden": ["The Carrion Crow"]
+			"hidden": ["The Carrion Crow"],
+			"worthless": [],
+			"valuable": [],
+			"top_tier": []
 		}
+
 	},
 	
 	"jewels": {
