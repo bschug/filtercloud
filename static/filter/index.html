@@ -53,7 +53,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Crafting', 'Currency', 'Uniques', 'Divination Cards', 'Skill Gems', 'Flasks', 'Jewels', 'Maps']"
+                   v-for="page in ['Currency', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Crafting', 'Flasks', 'Jewels', 'Leveling']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
             </div>
         </div>
@@ -441,21 +441,74 @@
                 </itemList>
             </div>
 
-            <div v-show="currentPage === 'Map Fragments'">
-                <h1>Map Fragments</h1>
-                <p>This filter uses strong highlighting for:</p>
-                <ul>
-                    <li>Offering to the Godess</li>
-                    <li>Mortal Hope / Ignorance</li>
-                    <li>Atlas Guardian Fragments</li>
-                    <li>Pale Court Keys</li>
-                </ul>
-                <p>And regular highlighting for:</p>
-                <ul>
-                    <li>Sacrifice at Midnight</li>
-                    <li>Mortal Grief / Rage</li>
-                </ul>
-                <p>Other Sacrifice fragments are shown normally.</p>
+            <div v-show="currentPage === 'Leveling'">
+                <h1>Leveling Rules</h1>
+                <p class="explanation">Here you can define offsets for different item types. The offset defines in which level range
+                the item will be visible. For example, an item that starts dropping at level 10, with an offset of 3, will be visible
+                when dropping from enemies of level 13 and below.</p>
+                <checkboxWithTooltip id="leveling_show_all_rares" label="Show All Rares" v-model="config.leveling.show_all_rares">
+                    Show all rare items during early game. Not recommended.
+                </checkboxWithTooltip>
+                <linearSlider id="leveling_earlygame" v-model="config.leveling.early_game_threshold" title="Early Game Threshold" :min-value="0" :max-value="99" op="≤">
+                    FilterCloud will only hide outleveled items with a drop level lower than this.
+                    Don't set it too high - check the droplevel of the lowest base that's still useful to you in early maps.
+                </linearSlider>
+                <linearSlider id="leveling_endgame" v-model="config.leveling.endgame_threshold" title="Endgame Threshold" :min-value="0" :max-value="99" op="≥">
+                    Leveling rules will be disabled after this level. In the endgame, finding actual gear upgrades is so unlikely that you
+                    shouldn't bother picking up rares and instead maximize your chaos per hour so you can buy your upgrades from other players.
+                </linearSlider>
+                <div class="bordered-section">
+                    <h2>Flasks</h2>
+                    <linearSlider id="leveling_flask_offset" v-model="config.leveling.flasks.offset" title="Flask Offset" :min-value="0" :max-value="99" op="=">
+                        Offset for life/mana flasks. Utility flasks are always shown.
+                    </linearSlider>
+                </div>
+                <div class="bordered-section">
+                    <h2>Boots</h2>
+                    <p class="explanation">Movespeed boots are important in early levels, so it makes sense to pick up
+                    magic and rare boots to continously upgrade your movespeed. FilterCloud highlights boots in early
+                    levels for you.</p>
+                    <linearSlider id="leveling_boots_magic_until" v-model="config.leveling.boots.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
+                        Highlight magic boots until this level.
+                    </linearSlider>
+                    <linearSlider id="leveling_boots_rare_until" v-model="config.leveling.boots.rare_until" title="Rare" :min-value="0" :max-value="99" op="≤">
+                        Highlight rare boots until this level.
+                    </linearSlider>
+                </div>
+                <div class="bordered-section">
+                    <h2>Jewelry</h2>
+                    <p class="explanation">Rings, Amulets and Belts are rare drops and often important sources of life and resists.
+                    You probably want to show magic jewelry longer than other items. Normal jewelry may be great for Essence crafting.</p>
+                    <linearSlider id="leveling_jewelry_magic_until" v-model="config.leveling.jewelry.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
+                        Show magic jewelry until this level.
+                    </linearSlider>
+                    <linearSlider id="leveling_jewelry_normal_until" v-model="config.leveling.jewelry.normal_until" title="Normal" :min-value="0" :max-value="99" op="≤">
+                        Show normal jewelry until this level.
+                    </linearSlider>
+                </div>
+                <div class="bordered-section">
+                    <h2>Weapons</h2>
+                    <p class="explanation">Only weapon classes you selected on the Build page will be shown.
+                    Magic weapons can be hidden after some point, but rare and normal (for crafting) are always shown.</p>
+                    <linearSlider id="leveling_weapons_offset" v-model="config.leveling.weapons.offset" title="Offset" :min-value="0" :max-value="99" op="=">
+                        Show weapons within this range.
+                    </linearSlider>
+                    <linearSlider id="leveling_weapons_magic_until" v-model="config.leveling.weapons.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
+                        Show magic weapons until this level.
+                    </linearSlider>
+                </div>
+                <div class="bordered-section">
+                    <h2>Armour</h2>
+                    <p class="explanation">Only armour types you selected on the Build page will be shown.
+                    Magic armour can be hidden after some point, but rare and normal (for crafting) are always shown.</p>
+                    <linearSlider id="leveling_armour_offset" v-model="config.leveling.armour.offset" title="Offset" :min-value="0" :max-value="99" op="=">
+                        Show armour within this range.
+                    </linearSlider>
+                    <linearSlider id="leveling_armour_magic_until" v-model="config.leveling.armour.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
+                        Show magic armour until this level.
+                    </linearSlider>
+                </div>
+
             </div>
         </div>
     </div>

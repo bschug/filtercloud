@@ -238,7 +238,8 @@ Vue.component('thresholdslider', {
         'sliderPosition': this.value === 0 ? -3001 : Math.log10(MathUtils.clamp(this.value, 0.001, 1000)) * 1000,
         'isExpanded': this.overrides && (this.overrides.length > 0),
         'selectedOverride': '',
-        'allItems': Object.keys(this.prices).sort()
+        'allItems': Object.keys(this.prices).sort(),
+        'lastUpdate': new Date()
     };},
     computed: {
         formattedValue: function() {
@@ -251,11 +252,17 @@ Vue.component('thresholdslider', {
             } else {
                 return this.value.toFixed(3);
             }
+        },
+        hasJustMoved: function() {
+            var now = new Date();
+            return now.getTime() - this.lastUpdate.getTime() < 1000;
         }
     },
     watch: {
         'sliderPosition': function(val) {
-            ga('send', 'event', 'configure', this.id + '-threshold')
+            if (!this.hasJustMoved) {
+                ga('send', 'event', 'configure', this.id + '-threshold');
+            }
             this.$emit('input', val < -3000 ? 0 : Math.pow(10, val / 1000));
         },
         'selectedOverride': function(val) {
@@ -300,7 +307,7 @@ Vue.component('linearslider', {
         // case. Otherwise it would spam events while the user is moving the slider.
         hasJustMoved: function() {
             var now = new Date();
-            return now.getTime() - lastUpdate.getTime() < 1000;
+            return now.getTime() - this.lastUpdate.getTime() < 1000;
         }
     },
     watch: {
