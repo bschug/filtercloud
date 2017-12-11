@@ -71,7 +71,7 @@ Vue.component('sidebarlink', {
 
 Vue.component('itemlist', {
     template: '\
-        <div class="item-list">\
+        <div class="item-list bordered-section">\
             <select class="item-class-filter" v-model="itemClassFilter">\
                 <option v-for="itemClass in allowedItemClasses">{{ itemClass }}</option>\
             </select>\
@@ -444,3 +444,34 @@ Vue.component('socketconfig', {
     }
 });
 
+
+Vue.component('craftingconfig', {
+    template: '\
+        <div class="bordered-section">\
+            <h2>{{ title }}<span class="tooltip"><slot></slot></span></h2>\
+            <checkboxwithtooltip v-if="\'show\' in value" :id="id + \'-show\'" v-model="value.show" label="Show">\
+                Completely enable / disable this rule.\
+            </checkboxwithtooltip>\
+            <p v-if="\'ilvl\' in value"><label :for="id + \'ilvl\'">Item Level</label>\
+                <input :id="id + \'ilvl\'" type="number" v-model="value.ilvl" @input="ilvl_changed()"></input>\
+                <span class="tooltip">Show only items with at least this item level. Set to 0 to ignore.</span>\
+            </p>\
+            <p v-if="\'links\' in value"><label :for="id + \'links\'">Linked Sockets</label>\
+                <input type="number" v-model="value.links" @input="links_changed"></input>\
+                <span class="tooltip">Show only items with at least this many linked sockets. Set to 0 to ignore.</span>\
+            </p>\
+            <checkboxwithtooltip v-if="\'highlight\' in value" :id="id + \'-highlight\'" v-model="value.highlight" label="Highlight">\
+                Use highlighting style for these items.\
+            </checkboxwithtooltip>\
+            <itemlist v-if="\'basetypes\' in value" :id="id + \'-basetypes\'" title="Base Types" :items="value.basetypes"\
+                      :itemStyle="value.highlight ? \'highlight.normal\' : \'normal.normal\'" itemRarity="normal" itemClass="?">\
+                Base types that his rule should apply for.\
+            </itemlist>\
+        </div>',
+    props: ['id', 'title', 'value'],
+    methods: {
+        // analytics hooks for the parts that aren't tracked by subcomponents already
+        'ilvl_changed': function() { ga('send', 'event', 'configure', this.id + '-ilvl'); },
+        'links_changed': function() { ga('send', 'event', 'configure', this.id + '-links'); }
+    }
+});

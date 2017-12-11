@@ -49,7 +49,7 @@
             <div class="sidebar-box">
                 <p class="download-button" @click="downloadFilter">Download</p>
                 <sidebarLink
-                   v-for="page in ['Build', 'Meta']" :key="page"
+                   v-for="page in ['Build', 'Base Types']" :key="page"
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
@@ -92,7 +92,7 @@
                     select here, plus any items that have the sockets you need.
                 </p>
 
-                <div class="armour-types">
+                <div class="armour-types bordered-section">
                     <h2>Armour Types</h2>
                     <p class="explanation">Show only armour pieces of these types while leveling.</p>
                     <checkboxWithTooltip v-model="config.build.armour_types.str" label="Str" id="armour_str">
@@ -125,16 +125,20 @@
 
             </div>
 
-            <div v-show="currentPage === 'Meta'">
-                <h1>Meta Base Types</h1>
+            <div v-show="currentPage === 'Base Types'">
+                <h1>Base Type Lists</h1>
                 <p class="explanation">
-                    This is a list of items that are used by many players in the current meta. This list is referenced
+                    This page defines a few sets of base types that are referenced
                     from a number of places in the filter to determine which items to show or highlight (see the
                     respective tabs, it's always mentioned there). Feel free to add or remove items as you see fit.
                 </p>
-                <itemList id="meta_base_types" title="Base Types" :items.sync="config.meta.tier1" item-style="normal.normal"
+                <itemList id="meta_tier1_bases" title="Meta Bases" :items.sync="config.meta.tier1" item-style="normal.normal"
                           item-rarity="normal" item-class="?">
                     List of base types that are popular in the current meta.
+                </itemList>
+                <itemList if="meta_atlas_bases" title="Atlas Bases" :items.sync="config.meta.atlas" item-style="normal.normal"
+                          item-rarity="normal" item-class="?">
+                    List of Atlas base types that can only drop in certain maps and have very powerful implicits.
                 </itemList>
             </div>
 
@@ -206,23 +210,19 @@
 
                 <hr>
 
-                <checkboxWithTooltip id="crafting_highlight_ilvl84_atlas" v-model="config.crafting.atlas.ilvl84" label="Highlight ilvl84 Atlas bases">
-                    Highlight atlas bases with item level 84+. Their high implicits make them especially valuable for crafting.
-                    Even if you don't want to craft, you can usually sell these as-is for a couple chaos, some even more than one exalt.
-                </checkboxWithTooltip>
-                <checkboxWithTooltip id="crafting_show_atlas" v-model="config.crafting.atlas.always" label="Always show Atlas bases">
-                    Always show atlas base types, even at lower levels.
-                </checkboxWithTooltip>
-                <itemList id="crafting_always_show" title="Always Show" :items.sync="config.crafting.always" item-style="normal" item-rarity="normal">
-                    These items are always shown, even in low level areas.
-                    If you have level-capped Essences and want to use them, add the base types you're looking for here.
-                </itemList>
-                <itemList id="crafting_ilvl84" title="Item Level 84+" :items.sync="config.crafting.ilvl84" item-style="normal" item-rarity="normal">
-                    These items are only shown if their item level is at least 84. At this item level, all possible affixes can roll on that item.
-                </itemList>
-                <itemList id="crafting_chancing" title="Chancing" :items.sync="config.crafting.chancing" item-style="normal" item-rarity="normal">
-                    If you want to use Orbs of Chance, add your desired base types here. Normal-rarity drops of those will be shown.
-                </itemList>
+                <craftingConfig id="crafting_meta" v-model="config.crafting.meta" title="Meta">
+                    This rule applies to the list of meta items defined in the Base Types tab.
+                </craftingConfig>
+                <craftingConfig id="crafting_atlas" v-model="config.crafting.atlas" title="Atlas Bases">
+                    This rule applies to the list of atlas bases defined in the Base Types tab.
+                </craftingConfig>
+                <craftingConfig id="crafting_other" v-model="config.crafting.other" title="Custom List">
+                    This rule allows you to define a custom list of items you're looking for for crafting.
+                </craftingConfig>
+                <craftingConfig id="crafting_chancing" v-model="config.crafting.chancing" title="Chancing">
+                    If you want to use Orbs of Chance, you can add the base type you want to chance here.
+                    Note that it may be more efficient to just buy the items from players.
+                </craftingConfig>
             </div>
 
             <div v-show="currentPage === 'Currency'">

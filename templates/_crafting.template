@@ -1,63 +1,40 @@
 # ------------------------------------- [CRAFTING] -------------------------------------
 
-{% if crafting.atlas.ilvl84 %}
-# Atlas Base Types (highlight when ilvl 84+)
-# Perfect implicits: 
-#   Blue Pearl: 56
-#   Bone Helmet: 40
-#   Crystal Belt: 80
-#   Fingerless: 16
-#   Gripped Gloves: 18
-#   Marble Amulet: 1.6
-#   Opal Ring: 25
-#   Spiked Gloves: 20
-#   Steel Ring: 14
-#   Two Toned: 20
-#   Vanguard Belt: 320
+{% if crafting.meta.show %}
+# Tier1 meta bases for crafting
 Show
-    Rarity Normal 
-	ItemLevel >= 84
-    BaseType "Steel Ring" "Opal Ring" "Crystal Belt" "Blue Pearl Amulet" "Marble Amulet" "Vanguard Belt" "Bone Helmet" "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves"
-{{ style.highlight.normal }}
-{% endif %}
-
-{% if crafting.atlas.always %}
-Show
-    Rarity Normal 
-    BaseType "Steel Ring" "Opal Ring" "Crystal Belt" "Blue Pearl Amulet" "Marble Amulet" "Vanguard Belt" "Bone Helmet" "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves"
-{{ style.normal.normal }}
-{% endif %}
-
-{% if crafting.ilvl84 %}
-# Good crafting bases, show only when ilvl 84+
-Show
-    ItemLevel >= 84
     Rarity Normal
-	BaseType {{ crafting.ilvl84|names }}
-{{ style.normal.normal }}
+    {% if crafting.meta.ilvl > 0 %}ItemLevel >= {{ crafting.meta.ilvl }}{% endif %}
+    {% if crafting.meta.links > 1 %}LinkedSockets >= {{ crafting.meta.links }}{% endif %}
+    BaseType {{ meta.tier1|names }}
+{% if crafting.meta.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
 {% endif %}
 
-{% if crafting.always %}
-# Always shown, even is lower level areas
-Show 
-	Rarity Normal
-	BaseType {{ crafting.always|names }}
-{{ style.normal.normal }}
-{% endif %}
-
-{% if crafting.always_4linked %}
-# Always shown when 4-linked
-Show 
-	Rarity Normal 
-	BaseType {{ crafting.always_4linked|names }}
-{{ style.normal.normal }}
-{% endif %}
-	
-# ----------------------------------- [CHANCING] ----------------------------------------
-
-{% if crafting.chancing %}
-Show 
+{% if crafting.atlas.show %}
+# Atlas bases for crafting
+Show
     Rarity Normal
-    BaseType {{ crafting.chancing|names }}
-{{ style.normal.normal }}
+    {% if crafting.atlas.ilvl > 0 %}ItemLevel >= {{ crafting.atlas.ilvl }}{% endif %}
+    {% if crafting.atlas.links > 1 %}LinkedSockets >= {{ crafting.atlas.links }}{% endif %}
+    BaseType {{ meta.atlas|names }}
+{% if crafting.atlas.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
 {% endif %}
+
+{% if crafting.other.basetypes %}
+# Custom base types for crafting
+Show
+    Rarity Normal
+    {% if crafting.other.ilvl > 0 %}ItemLevel >= {{ crafting.other.ilvl }}{% endif %}
+    {% if crafting.other.links > 1 %}LinkedSockets >= {{ crafting.other.links }}{% endif %}
+    BaseType {{ crafting.other.basetypes|names }}
+{% if crafting.other.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
+{% endif %}
+
+{% if crafting.chancing.basetypes %}
+# Chancing
+Show
+    Rarity Normal
+    BaseType {{ crafting.chancing.basetypes|names }}
+{% if crafting.chancing.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
+{% endif %}
+

@@ -28,11 +28,25 @@
 	},
 
 	"crafting": {
-		"ilvl84": [],
-		"chancing": [],
+		"meta": {
+			"ilvl": 84,
+			"links": 4,
+			"highlight": false
+		},
 		"atlas": {
-			"ilvl84": false,
-			"always": true
+			"ilvl": 80,
+			"links": 0,
+			"highlight": true
+		},
+		"other": {
+			"ilvl": 80,
+			"links": 4,
+			"highlight": false,
+			"basetypes": []
+		},
+		"chancing": {
+			"highlight": false,
+			"basetypes": []
 		}
 	},
 	
@@ -99,6 +113,10 @@
 	},
 
 	"meta": {
+		"atlas": [
+			"Steel Ring", "Opal Ring", "Crystal Belt", "Blue Pearl Amulet", "Marble Amulet", "Vanguard Belt",
+			"Bone Helmet", "Two-Toned Boots", "Spiked Gloves", "Gripped Gloves", "Fingerless Silk Gloves"
+		],
 		"tier1": [
 			"Ambusher", "Platinum Kris", "Imperial Skean", "Ezomyte Dagger",
 			"Imbued Wand",

@@ -114,19 +114,26 @@ div:hover > .tooltip { visibility: visible; }
 h2:hover > .tooltip { visibility: visible; }
 h3:hover > .tooltip { visibility: visible; }
 
-.armour-types {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+.bordered-section {
     padding: 10px;
     margin: 20px 0px 20px 0px;
     border: 2px solid #a0a0a0;
 }
+.bordered-section > h2 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+
+.armour-types {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
 .armour-types > h2 {
     grid-column: 1 / 4;
     grid-row: 1;
-    margin-top: 5px;
-    margin-bottom: 10px;
 }
 .armour-types > .explanation {
     grid-column: 1 / 4;
