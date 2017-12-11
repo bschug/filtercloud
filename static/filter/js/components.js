@@ -292,11 +292,23 @@ Vue.component('linearslider', {
         ',
     props: ['id', 'value', 'title', 'minValue', 'maxValue', 'op'],
     data: function() { return {
-        'sliderPosition': this.value
+        'sliderPosition': this.value,
+        'lastUpdate': new Date()
     };},
+    computed: {
+        // This tells us if the slider has been moved in the last second. We don't generate an analytics event in that
+        // case. Otherwise it would spam events while the user is moving the slider.
+        hasJustMoved: function() {
+            var now = new Date();
+            return now.getTime() - lastUpdate.getTime() < 1000;
+        }
+    },
     watch: {
         'sliderPosition': function(val) {
-            ga('send', 'event', 'configure', this.id);
+            if (!this.hasJustMoved) {
+                ga('send', 'event', 'configure', this.id);
+            }
+            this.lastUpdate = new Date();
             this.$emit('input', val);
         },
     },
