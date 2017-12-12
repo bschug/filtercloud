@@ -196,7 +196,7 @@
                     <checkboxWithTooltip id="highlight_small_rares" v-model="config.rares.smallitems.highlight" label="Highlight">
                         Highlight small items (otherwise shown normally)
                     </checkboxWithTooltip>
-                    <itemClassList id="small-rare-classes" title="Item Classes" category="" :items.sync="config.rares.smallitems.classes"
+                    <itemClassList id="small-rare-classes" title="Item Classes" category="all" :items.sync="config.rares.smallitems.classes"
                                    :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
                                    item-rarity="rare">
                         List of item classes to show.
