@@ -79,7 +79,7 @@ Show
 # Other Armour
 {% for ilvl in range(leveling.armour.offset, leveling.early_game_threshold) %}
 Show
-    Class "Body Armour"
+    Class Gloves Boots Helmets
     {% for sel in selector("other_armour", build.armour_types) %}
     BaseType {{ sel|names }}
     {% endfor %}
