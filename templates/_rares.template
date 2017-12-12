@@ -58,7 +58,19 @@ Show
 # Always show small rares
 Show
     Rarity Rare
-    BaseType {{ rares.smallitems.itemclasses|names }}
+    Class {{ rares.smallitems.itemclasses|names }}
+    ItemLevel > {{ leveling.early_game_threshold }}
+    {% if rares.smallitems.highlight %}
+    {{ style.highlight.rare }}
+    {% else %}
+    {{ style.normal.rare }}
+    {% endif %}
+{% endif %}
+
+{% if rares.smallitems.basetypes %}
+Show
+    Rarity Rare
+    BaseType {{ rares.smallitems.basetypes|names }}
     ItemLevel > {{ leveling.early_game_threshold }}
     {% if rares.smallitems.highlight %}
     {{ style.highlight.rare }}
