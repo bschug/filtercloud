@@ -56,7 +56,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Currency', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Crafting', 'Flasks', 'Jewels', 'Leveling']"
+                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Crafting', 'Flasks', 'Jewels', 'Leveling']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
             </div>
         </div>
@@ -145,7 +145,7 @@
                 </itemList>
             </div>
 
-            <div v-show="currentPage === 'Endgame Rares'">
+            <div v-show="currentPage === 'Rares'">
                 <h1>Endgame Rares</h1>
                 <p class="explanation">
                     When mapping, you want to stay in the flow and maintain your clearspeed. You don't want to stop
@@ -163,44 +163,50 @@
                     Show all fully linked rare boots, gloves and helmets, even if their basetype would normally be hidden.
                 </checkboxWithTooltip>
 
-                <p>Shaper / Elder Items</p>
-                <dropdownWithTooltip id="shaper_elder_highlight" v-model="config.rares.shaper_elder.highlight" label="Highlight"
-                                     options="[true, 'meta', false]" option-labels="['All', 'Meta', 'None']">
-                    Highlight items with Shaper/Elder mods on them. Select Meta to affect only the meta basetypes from
-                    the Basetypes tab.
-                </dropdownWithTooltip>
-                <dropdownWithTooltip id="shaper_elder_show" v-model="config.rares.shaper_elder.show" label="Show"
-                                     options="[true, 'meta', false]" option-labels="['All', 'Meta', 'None']">
-                    Show items with Shaper/Elder mods normally. Select Meta to affect only the meta basetypes from
-                    the Basetypes tab.
-                </dropdownWithTooltip>
+                <div class="bordered-section">
+                    <h2>Shaper / Elder Items</h2>
+                    <dropdownWithTooltip id="shaper_elder_highlight" v-model="config.rares.shaper_elder.highlight" label="Highlight"
+                                         :options="[true, 'meta', false]" :option-labels="['All', 'Meta', 'None']">
+                        Highlight items with Shaper/Elder mods on them. Select Meta to affect only the meta basetypes from
+                        the Basetypes tab.
+                    </dropdownWithTooltip>
+                    <dropdownWithTooltip id="shaper_elder_show" v-model="config.rares.shaper_elder.show" label="Show"
+                                         :options="[true, 'meta', false]" :option-labels="['All', 'Meta', 'None']">
+                        Show items with Shaper/Elder mods normally. Select Meta to affect only the meta basetypes from
+                        the Basetypes tab.
+                    </dropdownWithTooltip>
+                </div>
 
-                <p>Five-Links</p>
-                <dropdownWithTooltip id="fivelink_rare_highlight" v-model="config.rares.fivelink.highlight" label="Highlight"
-                                     options="[true, 'meta', false]" option-labels="['All', 'Meta', 'None']">
-                    Highlight rares with five linked sockets. Select Meta to affect only the meta basetypes from
-                    the Basetypes tab.
-                </dropdownWithTooltip>
-                <dropdownWithTooltip id="fivelink_rare_show" v-model="config.rares.fivelink.show" label="Show"
-                                     options="[true, 'meta', false]" option-labels="['All', 'Meta', 'None']">
-                    Show five-linked rares normally. Select Meta to affect only the meta basetypes from
-                    the Basetypes tab.
-                </dropdownWithTooltip>
+                <div class="bordered-section">
+                    <h2>Five-Links</h2>
+                    <dropdownWithTooltip id="fivelink_rare_highlight" v-model="config.rares.fivelink.highlight" label="Highlight"
+                                         :options="[true, 'meta', false]" :option-labels="['All', 'Meta', 'None']">
+                        Highlight rares with five linked sockets. Select Meta to affect only the meta basetypes from
+                        the Basetypes tab.
+                    </dropdownWithTooltip>
+                    <dropdownWithTooltip id="fivelink_rare_show" v-model="config.rares.fivelink.show" label="Show"
+                                         :options="[true, 'meta', false]" :option-labels="['All', 'Meta', 'None']">
+                        Show five-linked rares normally. Select Meta to affect only the meta basetypes from
+                        the Basetypes tab.
+                    </dropdownWithTooltip>
+                </div>
 
-                <p>Small Items</p>
-                <checkboxWithTooltip id="highlight_small_rares" v-model="config.rares.smallitems.highlight" label="Highlight">
-                    Highlight small items (otherwise shown normally)
-                </checkboxWithTooltip>
-                <itemClassList id="small-rare-classes" title="Item Classes" category="" :items.sync="config.rares.smallitems.classes"
-                               :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
-                               item-rarity="rare">
-                    List of item classes to show.
-                </itemClassList>
-                <itemList id="small_rare_basetypes" title="Base Types" :items.sync="config.rares.smallitems.basetypes"
-                          :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
-                          item-rarity="rare" item-class="?">
-                    List of base types to show in addition to item classes above.
-                </itemList>
+                <div class="bordered-section">
+                    <h2>Small Items</h2>
+                    <checkboxWithTooltip id="highlight_small_rares" v-model="config.rares.smallitems.highlight" label="Highlight">
+                        Highlight small items (otherwise shown normally)
+                    </checkboxWithTooltip>
+                    <itemClassList id="small-rare-classes" title="Item Classes" category="" :items.sync="config.rares.smallitems.classes"
+                                   :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
+                                   item-rarity="rare">
+                        List of item classes to show.
+                    </itemClassList>
+                    <itemList id="small_rare_basetypes" title="Base Types" :items.sync="config.rares.smallitems.basetypes"
+                              :item-style="config.rares.smallitems.highlight ? 'highlight.rare' : 'normal.rare'"
+                              item-rarity="rare" item-class="?">
+                        List of base types to show in addition to item classes above.
+                    </itemList>
+                </div>
             </div>
 
             <div v-show="currentPage === 'Crafting'">

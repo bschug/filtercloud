@@ -143,7 +143,7 @@ Vue.component('itemlist', {
 
 Vue.component('itemclasslist', {
     template: '\
-        <div class="item-list">\
+        <div class="item-list bordered-section">\
             <h2>{{ title }}</h2>\
             <p class="explanation"><slot></slot></p>\
             <div class="item-list-inner">\
@@ -324,7 +324,7 @@ Vue.component('linearslider', {
 
 Vue.component('thresholditemlist', {
     template: '\
-        <div class="item-list">\
+        <div class="item-list bordered-section">\
             <h2>Preview<span class="tooltip"><slot></slot></span></h2>\
             <div class="item-list-inner">\
                 <itempreview \
@@ -413,7 +413,7 @@ Vue.component('thresholditemlist', {
 
 Vue.component('socketlist', {
     template: '\
-        <div>\
+        <div class="bordered-section">\
             <p class="socket-list" v-for="entry in socketConfigs">\
                 <socketconfig :config="entry" @deleted="deleteSocketConfig(entry)"></socketConfig>\
             </p>\
