@@ -34,9 +34,28 @@ def update_selectors_for(name, items, db):
 def build_selector_for(items, mask):
     in_set = [x for x, y in items.items() if item_matches_attribute_mask(y, mask)]
     out_set = [x for x, y in items.items() if not item_matches_attribute_mask(y, mask)]
+    in_set, out_set = sanitize_item_names(in_set, out_set)
+
     selector = build_selector(in_set, out_set)
     validate_selector(selector, in_set, out_set)
     return selector
+
+
+def sanitize_item_names(in_set, out_set):
+    """
+    Two-Toned Boots match all hybrid types. The wiki has entries for each of them, with the respective elements in
+    brackets appended to the name. We need to remove the appendix and ensure that the name shows up either in the in_set
+    or the out_set, never in both.
+    """
+    logger.debug("Before sanitization: {} in, {} out".format(len(in_set), len(out_set)))
+    has_two_toned = any("Two-Toned" in x for x in in_set)
+    in_set = [x if "Two-Toned" not in x else "Two-Toned Boots" for x in in_set]
+    if has_two_toned:
+        out_set = [x for x in out_set if "Two-Toned" not in x]
+    else:
+        out_set = [x if "Two-Toned" not in x else "Two-Toned Boots" for x in out_set]
+    logger.debug("After sanitization: {} in, {} out".format(len(in_set), len(out_set)))
+    return in_set, out_set
 
 
 def item_matches_attribute_mask(item, mask):
