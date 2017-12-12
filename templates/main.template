@@ -42,7 +42,7 @@ Hide
 # Hide all endgame normal/magic items now, for performance
 Hide 
     Rarity <= Magic 
-    ItemLevel > 68
+    ItemLevel > {{ leveling.endgame_threshold }}
     Class Axes Bows Claws Daggers Maces Staves Swords Wands Armours Helmets Gloves Boots Shields Quivers Amulets Belts Rings
     {{ style.hidden.default }}
 
