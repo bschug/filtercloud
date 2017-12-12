@@ -7,18 +7,24 @@ volumes:
 services:
     nginx:
         image: nginx:latest
-        container_name: nginx01
+        container_name: filtercloud-nginx
         ports:
-            - "80:8080/tcp"
+            - "8001:8001/tcp"
         volumes:
             - ./config/nginx:/etc/nginx/conf.d
             - ./static:/www/data
         depends_on:
             - api
+        environment:
+            - VIRTUAL_HOST=filter.poe.gg
+            - VIRTUAL_NETWORK=nginx-proxy
+            - VIRTUAL_PORT=80
+            - LETSENCRYPT_HOST=filter.poe.gg
+            - LETSENCRYPT_EMAIL=benjaminschug@gmail.com
 
     api:
         build: .
-        container_name: api01
+        container_name: filtercloud-api
         command: bash -c "gunicorn -w 4 --forwarded-allow-ips='*' --proxy-allow-from='*' -b 0.0.0.0:8081 api.api:app"
         depends_on:
             - db
@@ -32,7 +38,7 @@ services:
 
     db:
         image: mongo:3.6
-        container_name: mongo01
+        container_name: filtercloud-db
         volumes:
             - mongo-data:/data/db
         expose:
