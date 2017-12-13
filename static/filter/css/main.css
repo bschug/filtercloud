@@ -1,12 +1,12 @@
 
 @font-face {
 	font-family: FontinSmallcaps;
-	src: url(/filter/fonts/fontin-smallcaps-webfont.woff);
+	src: url(/fonts/fontin-smallcaps-webfont.woff);
 }
 
 @font-face {
     font-family: Fontin;
-    src: url(/filter/fonts/Fontin-Regular.woff);
+    src: url(/fonts/Fontin-Regular.woff);
 }
 
 body {

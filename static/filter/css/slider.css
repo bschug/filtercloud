@@ -35,16 +35,16 @@
     border: none;
 }
 .threshold-slider > .more {
-    background-image: url(/filter/images/buttons/more.jpg);
+    background-image: url(/images/buttons/more.jpg);
 }
 .threshold-slider > .more:hover {
-    background-image: url(/filter/images/buttons/more-highlight.jpg);
+    background-image: url(/images/buttons/more-highlight.jpg);
 }
 .threshold-slider > .less {
-    background-image: url(/filter/images/buttons/less.jpg);
+    background-image: url(/images/buttons/less.jpg);
 }
 threshold-slider > .less:hover {
-    background-image: url(/filter/images/buttons/less-highlight.jpg);
+    background-image: url(/images/buttons/less-highlight.jpg);
 }
 
 /* The slider itself */
