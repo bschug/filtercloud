@@ -58,6 +58,8 @@
                 <sidebarLink
                    v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Crafting', 'Flasks', 'Jewels', 'Leveling']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
+                <hr>
+                <p class="link" @click="give_feedback">Feedback</p>
             </div>
         </div>
         <div class="content">

@@ -55,6 +55,11 @@
                             console.log("Download failed with error: ", error);
                             ga('send', 'event', 'download', 'error');
                         });
+                    },
+
+                    give_feedback: function() {
+                        ga('send', 'event', 'feedback');
+                        window.location = 'https://www.reddit.com/message/compose/?to=bschug';
                     }
                 },
 
