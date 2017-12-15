@@ -29,22 +29,32 @@
 
 	"crafting": {
 		"meta": {
+			"show": true,
 			"ilvl": 84,
-			"links": 4,
-			"highlight": false
+			"links": 0,
+			"highlight": "strong"
 		},
 		"atlas": {
-			"ilvl": 80,
+			"show": true,
+			"ilvl": 81,
 			"links": 0,
 			"highlight": true
 		},
 		"other": {
-			"ilvl": 80,
-			"links": 4,
-			"highlight": false,
+			"show": false,
+			"ilvl": 84,
+			"links": 0,
+			"highlight": true,
 			"basetypes": []
 		},
+		"all": {
+			"show": true,
+			"ilvl": 86,
+			"links": 0,
+			"highlight": "strong"
+		},
 		"chancing": {
+			"show": false,
 			"highlight": false,
 			"basetypes": []
 		}

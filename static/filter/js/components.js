@@ -467,9 +467,10 @@ Vue.component('craftingconfig', {
                 <input type="number" v-model="value.links" @input="links_changed"></input>\
                 <span class="tooltip">Show only items with at least this many linked sockets. Set to 0 to ignore.</span>\
             </p>\
-            <checkboxwithtooltip v-if="\'highlight\' in value" :id="id + \'-highlight\'" v-model="value.highlight" label="Highlight">\
+            <dropdownwithtooltip :id="id + \'-highlight\'" v-model="value.highlight" label="Highlight"\
+                :options="[\'strong\', true, false]" :option-labels="[\'Strong\', \'Regular\', \'None\']">\
                 Use highlighting style for these items.\
-            </checkboxwithtooltip>\
+            </dropdownwithtooltip>\
             <itemlist v-if="\'basetypes\' in value" :id="id + \'-basetypes\'" title="Base Types" :items="value.basetypes"\
                       :itemStyle="value.highlight ? \'highlight.normal\' : \'normal.normal\'" itemRarity="normal" itemClass="?">\
                 Base types that his rule should apply for.\
