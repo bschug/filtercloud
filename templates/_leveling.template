@@ -46,6 +46,7 @@ Show
 {{ style.normal }}
 {% endfor %}
 
+{% if leveling.show_shields %}
 # Shields
 {% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}
 Show
@@ -60,6 +61,7 @@ Show
 {% endif %}
 {{ style.normal }}
 {% endfor %}
+{% endif %}
 
 # Body Armour
 {% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}

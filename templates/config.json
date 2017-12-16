@@ -163,6 +163,7 @@
 		"early_game_threshold": 60,
 		"endgame_threshold": 72,
 		"show_all_rares": false,
+		"show_shields": true,
 		"flasks": {
 			"offset": 3
 		},

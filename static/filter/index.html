@@ -510,6 +510,9 @@
                     <linearSlider id="leveling_weapons_magic_until" v-model="config.leveling.weapons.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
                         Show magic weapons until this level.
                     </linearSlider>
+                    <checkboxWithTooltip id="leveling_weapons_shields" v-model="config.leveling.show_shields" label="Show Shields">
+                        Enable this to show shields for your build. Disable when using two-hand weapons.
+                    </checkboxWithTooltip>
                 </div>
                 <div class="bordered-section">
                     <h2>Armour</h2>
