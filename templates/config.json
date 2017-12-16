@@ -146,16 +146,17 @@
 		"armour_types": {
 			"str": true,
 			"dex": true,
-			"int": true,
+			"int": false,
 			"strdex": true,
-			"strint": true,
-			"dexint": true
+			"strint": false,
+			"dexint": false
 		},
-		"weapon_classes": ["Two Hand Axes"],
+		"weapon_classes": ["Two Hand Axes", "Two Hand Swords", "Two Hand Maces"],
+		"use_shields": false,
 		"sockets": [
 			{"level": 15, "sockets": "RRG"},
-			{"level": 50, "sockets": "RRGB"},
-			{"level": 99, "sockets": "RRRGB"}
+			{"level": 50, "sockets": "RRRG"},
+			{"level": 99, "sockets": "RRRRG"}
 		]
 	},
 
@@ -163,7 +164,6 @@
 		"early_game_threshold": 60,
 		"endgame_threshold": 72,
 		"show_all_rares": false,
-		"show_shields": true,
 		"flasks": {
 			"offset": 3
 		},

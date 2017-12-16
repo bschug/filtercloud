@@ -46,7 +46,7 @@ Show
 {{ style.normal }}
 {% endfor %}
 
-{% if leveling.show_shields %}
+{% if build.use_shields %}
 # Shields
 {% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}
 Show

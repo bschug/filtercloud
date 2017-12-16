@@ -29,6 +29,7 @@
                         formData.append('config', JSON.stringify(Config.current.data));
 
                         ga('send', 'event', 'download', 'start');
+                        console.log(Config.current.data);
 
                         axios.post('/api/filter/build', formData, {
                             responseType: 'arraybuffer'

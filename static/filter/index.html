@@ -124,7 +124,9 @@
                                :items.sync="config.build.weapon_classes" item-style="normal" item-rarity="normal">
                     Show only weapons of these types while leveling.
                 </itemClassList>
-
+                <checkboxWithTooltip id="leveling_weapons_shields" v-model="config.build.use_shields" label="Use Shields">
+                    Enable this to show shields for your build. Disable when using two-hand weapons.
+                </checkboxWithTooltip>
                 <h2>Sockets</h2>
                 <socketList :socket-configs="config.build.sockets"></socketList>
 
@@ -510,9 +512,6 @@
                     <linearSlider id="leveling_weapons_magic_until" v-model="config.leveling.weapons.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
                         Show magic weapons until this level.
                     </linearSlider>
-                    <checkboxWithTooltip id="leveling_weapons_shields" v-model="config.leveling.show_shields" label="Show Shields">
-                        Enable this to show shields for your build. Disable when using two-hand weapons.
-                    </checkboxWithTooltip>
                 </div>
                 <div class="bordered-section">
                     <h2>Armour</h2>
