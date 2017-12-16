@@ -7,7 +7,7 @@ Show
     {% if crafting.meta.ilvl > 0 %}ItemLevel >= {{ crafting.meta.ilvl }}{% endif %}
     {% if crafting.meta.links > 1 %}LinkedSockets >= {{ crafting.meta.links }}{% endif %}
     BaseType {{ meta.tier1|names }}
-{% if crafting.meta.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% else if crafting.meta.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
+{% if crafting.meta.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% elif crafting.meta.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
 {% endif %}
 
 {% if crafting.atlas.show %}
@@ -17,7 +17,7 @@ Show
     {% if crafting.atlas.ilvl > 0 %}ItemLevel >= {{ crafting.atlas.ilvl }}{% endif %}
     {% if crafting.atlas.links > 1 %}LinkedSockets >= {{ crafting.atlas.links }}{% endif %}
     BaseType {{ meta.atlas|names }}
-{% if crafting.atlas.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% else if crafting.atlas.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
+{% if crafting.atlas.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% elif crafting.atlas.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
 {% endif %}
 
 {% if crafting.other.show and crafting.other.basetypes %}
@@ -27,7 +27,7 @@ Show
     {% if crafting.other.ilvl > 0 %}ItemLevel >= {{ crafting.other.ilvl }}{% endif %}
     {% if crafting.other.links > 1 %}LinkedSockets >= {{ crafting.other.links }}{% endif %}
     BaseType {{ crafting.other.basetypes|names }}
-{% if crafting.other.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% else if crafting.other.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
+{% if crafting.other.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% elif crafting.other.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
 {% endif %}
 
 {% if crafting.all.show %}
@@ -36,7 +36,7 @@ Show
     Rarity Normal
     {% if crafting.all.ilvl > 0 %}ItemLevel >= {{ crafting.all.ilvl }}{% endif %}
     {% if crafting.all.links > 1 %}LinkedSockets >= {{ crafting.all.links }}{% endif %}
-{% if crafting.other.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% else if crafting.other.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
+{% if crafting.other.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% elif crafting.other.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
 {% endif %}
 
 {% if crafting.chancing.show and crafting.chancing.basetypes %}
@@ -44,6 +44,6 @@ Show
 Show
     Rarity Normal
     BaseType {{ crafting.chancing.basetypes|names }}
-{% if crafting.chancing.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
+{% if crafting.other.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% elif crafting.other.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
 {% endif %}
 
