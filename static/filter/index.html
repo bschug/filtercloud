@@ -484,6 +484,9 @@
                     <p class="explanation">Movespeed boots are important in early levels, so it makes sense to pick up
                     magic and rare boots to continously upgrade your movespeed. FilterCloud highlights boots in early
                     levels for you.</p>
+                    <linearSlider id="leveling_boots_normal_until" v-model="config.leveling.boots.normal_until" title="Normal" :min-value="0" :max-value="99" op="≤">
+                        Highlight normal boots until this level.
+                    </linearSlider>
                     <linearSlider id="leveling_boots_magic_until" v-model="config.leveling.boots.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
                         Highlight magic boots until this level.
                     </linearSlider>
@@ -495,30 +498,52 @@
                     <h2>Jewelry</h2>
                     <p class="explanation">Rings, Amulets and Belts are rare drops and often important sources of life and resists.
                     You probably want to show magic jewelry longer than other items. Normal jewelry may be great for Essence crafting.</p>
-                    <linearSlider id="leveling_jewelry_magic_until" v-model="config.leveling.jewelry.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
-                        Show magic jewelry until this level.
-                    </linearSlider>
                     <linearSlider id="leveling_jewelry_normal_until" v-model="config.leveling.jewelry.normal_until" title="Normal" :min-value="0" :max-value="99" op="≤">
                         Show normal jewelry until this level.
+                    </linearSlider>
+                    <linearSlider id="leveling_jewelry_magic_until" v-model="config.leveling.jewelry.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
+                        Show magic jewelry until this level.
                     </linearSlider>
                 </div>
                 <div class="bordered-section">
                     <h2>Weapons</h2>
                     <p class="explanation">Only weapon classes you selected on the Build page will be shown.
-                    Magic weapons can be hidden after some point, but rare and normal (for crafting) are always shown.</p>
+                    Normal and Magic weapons can be hidden after some point, but Rare are always shown.
+                    If your build uses shields, they will also be affected by weapon rules.</p>
                     <linearSlider id="leveling_weapons_offset" v-model="config.leveling.weapons.offset" title="Offset" :min-value="0" :max-value="99" op="=">
                         Show weapons within this range.
+                    </linearSlider>
+                    <linearSlider id="leveling_weapons_normal_until" v-model="config.leveling.weapons.normal_until" title="Normal" :min-value="0" :max-value="99" op="≤">
+                        Show normal weapons until this level.
                     </linearSlider>
                     <linearSlider id="leveling_weapons_magic_until" v-model="config.leveling.weapons.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
                         Show magic weapons until this level.
                     </linearSlider>
                 </div>
                 <div class="bordered-section">
-                    <h2>Armour</h2>
+                    <h2>Body Armour</h2>
                     <p class="explanation">Only armour types you selected on the Build page will be shown.
-                    Magic armour can be hidden after some point, but rare and normal (for crafting) are always shown.</p>
+                    Normal and Magic armour can be hidden after some point, but Rare are always shown.</p>
+                    <linearSlider id="leveling_body_offset" v-model="config.leveling.body.offset" title="Offset" :min-value="0" :max-value="99" op="=">
+                        Show armour within this range.
+                    </linearSlider>
+                    <linearSlider id="leveling_body_normal_until" v-model="config.leveling.body.normal_until" title="Normal" :min-value="0" :max-value="99" op="≤">
+                        Show normal weapons until this level.
+                    </linearSlider>
+                    <linearSlider id="leveling_body_magic_until" v-model="config.leveling.body.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
+                        Show magic armour until this level.
+                    </linearSlider>
+                </div>
+                <div class="bordered-section">
+                    <h2>Other Armour</h2>
+                    <p class="explanation">This affects boots (unless covered by highlighting above), helmets and gloves.
+                    Only armour types you selected on the Build page will be shown.
+                    Normal and Magic armour can be hidden after some point, but Rare are always shown.</p>
                     <linearSlider id="leveling_armour_offset" v-model="config.leveling.armour.offset" title="Offset" :min-value="0" :max-value="99" op="=">
                         Show armour within this range.
+                    </linearSlider>
+                    <linearSlider id="leveling_armour_normal_until" v-model="config.leveling.armour.normal_until" title="Normal" :min-value="0" :max-value="99" op="≤">
+                        Show normal weapons until this level.
                     </linearSlider>
                     <linearSlider id="leveling_armour_magic_until" v-model="config.leveling.armour.magic_until" title="Magic" :min-value="0" :max-value="99" op="≤">
                         Show magic armour until this level.

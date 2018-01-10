@@ -168,6 +168,7 @@
 			"offset": 3
 		},
 		"boots": {
+			"normal_until": 20,
 			"magic_until": 20,
 			"rare_until": 60
 		},
@@ -177,10 +178,17 @@
 		},
 		"weapons": {
 			"offset": 5,
+			"normal_until": 72,
+			"magic_until": 5
+		},
+		"body": {
+			"offset": 5,
+			"normal_until": 15,
 			"magic_until": 5
 		},
 		"armour": {
 			"offset": 10,
+			"normal_until": 15,
 			"magic_until": 5
 		}
 	},
