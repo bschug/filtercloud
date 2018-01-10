@@ -25,6 +25,7 @@ Show
 
 {% for socketcfg in build.sockets %}
 Show
+    Class {{ build.weapon_classes|names }} "Body Armour" Gloves Helmets Boots
     ItemLevel <= {{ socketcfg.level }}
     SocketGroup "{{ socketcfg.sockets }}"
 {{ style.normal }}
