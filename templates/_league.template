@@ -1,5 +1,19 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
+{% if jewels.show_magic %}
+Show
+{% else %}
+Hide
+{% endif %}
+    Class "Abyss Jewel"
+    Rarity Magic
+{{ style.highlight.magic }}
+
+Show
+    Class "Abyss Jewel"
+    Rarity Rare
+{{ style.highlight.rare }}
+
 Show
 	Class Piece
 {{ style.ultra_rare.currency }}
