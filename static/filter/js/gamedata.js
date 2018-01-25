@@ -60,9 +60,8 @@
 
     function buildBaseTypeToItemClassIndex() {
         for (var itemClass in GameData.itemClasses) {
-            var baseTypes = GameData.itemClasses[itemClass];
-            for (var i=0; i < baseTypes.length; i++) {
-                GameData.baseTypeToItemClass[baseTypes[i]] = itemClass;
+            for (var baseType in GameData.itemClasses[itemClass]) {
+                GameData.baseTypeToItemClass[baseType] = itemClass;
             }
         }
     }
