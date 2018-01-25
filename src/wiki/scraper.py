@@ -72,7 +72,7 @@ class WikiItem(object):
     def __init__(self, data, itemclass, basetype):
         self.rawdata = data
         self.itemclass = itemclass
-        self.basetype = basetype
+        self._basetype = basetype
 
     def to_dict(self):
         keys = ['itemclass', 'basetype', 'droplevel', 'armour', 'evasion', 'energy_shield',
@@ -87,6 +87,13 @@ class WikiItem(object):
             return default
         except IndexError:
             return default
+
+    @property
+    def basetype(self):
+        # Portal is stored in the Wiki as "Portal (gem)"
+        if "(gem)" in self._basetype:
+            return self._basetype[:-len(" (gem)")]
+        return self._basetype
 
     @property
     def droplevel(self):

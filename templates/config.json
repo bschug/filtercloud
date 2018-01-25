@@ -23,8 +23,8 @@
 		"high_quality": 20,
 		"medium_quality": 17,
 		"min_quality": 10,
-		"high_value_gems": ["Empower", "Enlighten", "Enhance", "Vaal Breach", "Vaal Haste"],
-		"medium_value_gems": ["Vaal Clarity", "Vaal Grace", "Added Chaos Damage", "Portal"]
+		"high_value_gems": ["Empower Support", "Enlighten Support", "Enhance Support", "Vaal Breach", "Vaal Haste"],
+		"medium_value_gems": ["Vaal Clarity", "Vaal Grace", "Added Chaos Damage Support", "Portal"]
 	},
 
 	"crafting": {
