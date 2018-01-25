@@ -139,7 +139,8 @@
 			"Amber Amulet", "Jade Amulet", "Lapis Amulet", "Gold Amulet", "Agate Amulet", "Citrine Amulet", "Turquoise Amulet",
 			"Sapphire Ring", "Topaz Ring", "Ruby Ring", "Diamond Ring", "Two-Stone Ring", "Prismatic Ring",
 			"Heavy Belt"
-		]
+		],
+		"quivers": ["Spike-Point Arrow Quiver", "Penetrating Arrow Quiver"]
 	},
 
 	"build": {
@@ -153,6 +154,7 @@
 		},
 		"weapon_classes": ["Two Hand Axes", "Two Hand Swords", "Two Hand Maces"],
 		"use_shields": false,
+		"show_quivers": false,
 		"sockets": [
 			{"level": 15, "sockets": "RRG"},
 			{"level": 50, "sockets": "RRRG"},

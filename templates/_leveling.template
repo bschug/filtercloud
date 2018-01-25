@@ -86,9 +86,32 @@ Show
 {{ style.normal }}
 {% endfor %}
 
+{% if build.show_quivers %}
+# Quivers
+Show
+    Class Quivers
+    Rarity Normal
+    ItemLevel <= {{ leveling.armour.normal_until }}
+    {% if build.show_quivers == 'meta' %}BaseType {{ meta.quivers|names }}{% endif %}
+{{ style.normal }}
+
+Show
+    Class Quivers
+    Rarity Magic
+    ItemLevel <= {{ leveling.armour.magic_until }}
+    {% if build.show_quivers == 'meta' %}BaseType {{ meta.quivers|names }}{% endif %}
+{{ style.normal }}
+
+Show
+    Class Quivers
+    Rarity Rare
+    ItemLevel <= {{ leveling.early_game_threshold }}
+    {% if build.show_quivers == 'meta' %}BaseType {{ meta.quivers|names }}{% endif %}
+{{ style.normal }}
+{% endif %}
 
 Hide
-    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armour" Gloves Boots Helmets Shields
+    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armour" Gloves Boots Helmets Shields Quivers
 {% if leveling.show_all_rares %}
     Rarity Normal Magic
 {% endif %}

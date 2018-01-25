@@ -124,9 +124,14 @@
                                :items.sync="config.build.weapon_classes" item-style="normal" item-rarity="normal">
                     Show only weapons of these types while leveling.
                 </itemClassList>
-                <checkboxWithTooltip id="leveling_weapons_shields" v-model="config.build.use_shields" label="Use Shields">
+                <checkboxWithTooltip id="build_weapons_shields" v-model="config.build.use_shields" label="Use Shields">
                     Enable this to show shields for your build. Disable when using two-hand weapons.
                 </checkboxWithTooltip>
+                <dropdownWithTooltip id="build_quivers" v-model="config.build.show_quivers" label="Use Quivers"
+                                     :options="[true, 'meta', false]" :option-labels="['All', 'Meta', 'No']">
+                    Show Quivers while leveling. Select Meta to show only the quivers defined in the Quivers list on
+                    the Base Types tab.
+                </dropdownWithTooltip>
                 <h2>Sockets</h2>
                 <socketList :socket-configs="config.build.sockets"></socketList>
 
@@ -143,9 +148,13 @@
                           item-rarity="normal" item-class="?">
                     List of base types that are popular in the current meta.
                 </itemList>
-                <itemList if="meta_atlas_bases" title="Atlas Bases" :items.sync="config.meta.atlas" item-style="normal.normal"
+                <itemList id="meta_atlas_bases" title="Atlas Bases" :items.sync="config.meta.atlas" item-style="normal.normal"
                           item-rarity="normal" item-class="?">
                     List of Atlas base types that can only drop in certain maps and have very powerful implicits.
+                </itemList>
+                <itemList id="meta_quivers" title="Quivers" :items.sync="config.meta.quivers" item-style="normal.normal"
+                          item-rarity="normal" item-class="Quivers">
+                    List of Quivers to show for bow builds. This is used when you set Quivers to Meta in the build tab.
                 </itemList>
             </div>
 
