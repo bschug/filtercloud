@@ -2,12 +2,15 @@
 
 {% if jewels.show_magic %}
 Show
-{% else %}
-Hide
-{% endif %}
     Class "Abyss Jewel"
     Rarity Magic
 {{ style.highlight.magic }}
+{% else %}
+Hide
+    Class "Abyss Jewel"
+    Rarity Magic
+{{ style.normal.magic }}
+{% endif %}
 
 Show
     Class "Abyss Jewel"
