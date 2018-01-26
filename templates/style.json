@@ -5,7 +5,7 @@
 			"background": "240 180 40",
 			"fontsize": "48",
 			"border": "0 0 0",
-			"sound": "6 300"
+			"sound": "1 300"
 		}
 	},
 	"strong_highlight": {
@@ -13,7 +13,7 @@
 			"textcolor": "0 0 0",
 			"border": "0 0 0",
 			"fontsize": "48",
-			"sound": "6 300"
+			"sound": "1 300"
 		},
 		
 		"normal": {
@@ -46,7 +46,7 @@
 		"default": {
 			"border": "0 0 0",
 			"fontsize": "40",
-			"sound": "1 300"
+			"sound": "6 300"
 		},
 		"normal": {
 			"background": "80 80 80 220"
