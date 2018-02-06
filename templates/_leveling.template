@@ -45,6 +45,13 @@ Show
 {{ style.normal }}
 {% endfor %}
 
+Show
+    Class {{ build.weapon_classes|names }}
+    ItemLevel <= {{ leveling.endgame_threshold }}
+    DropLevel >= {{ leveling.early_game_threshold }}
+    Rarity Rare
+{{ style.normal }}
+
 {% if build.use_shields %}
 # Shields
 {% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}
@@ -52,39 +59,68 @@ Show
     Class Shields
     ItemLevel <= {{ ilvl }}
     DropLevel >= {{ ilvl - leveling.weapons.offset }}
+    Rarity {% if ilvl <= leveling.weapons.normal_until %}Normal{% endif %} {% if ilvl <= leveling.weapons.magic_until %}Magic{% endif %} Rare
     {% for sel in selector("shields", build.armour_types) %}
     BaseType {{ sel|names }}
     {% endfor %}
-    Rarity {% if ilvl <= leveling.weapons.normal_until %}Normal{% endif %} {% if ilvl <= leveling.weapons.magic_until %}Magic{% endif %} Rare
 {{ style.normal }}
 {% endfor %}
+
+Show
+    Class Shields
+    ItemLevel <= {{ leveling.endgame_threshold }}
+    DropLevel >= {{ leveling.early_game_threshold }}
+    Rarity Rare
+    {% for sel in selector("shields", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
 {% endif %}
 
 # Body Armour
 {% for ilvl in range(leveling.body.offset, leveling.early_game_threshold) %}
 Show
     Class "Body Armour"
-    {% for sel in selector("body", build.armour_types) %}
-    BaseType {{ sel|names }}
-    {% endfor %}
     ItemLevel <= {{ ilvl }}
     DropLevel >= {{ ilvl - leveling.weapons.offset }}
     Rarity {% if ilvl <= leveling.body.normal_until %}Normal{% endif %} {% if ilvl <= leveling.body.magic_until %}Magic{% endif %} Rare
+    {% for sel in selector("body", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
 {{ style.normal }}
 {% endfor %}
+
+Show
+    Class "Body Armour"
+    ItemLevel <= {{ leveling.endgame_threshold }}
+    DropLevel >= {{ leveling.early_game_threshold }}
+    Rarity Rare
+    {% for sel in selector("body", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
+{{ style.normal }}
 
 # Other Armour
 {% for ilvl in range(leveling.armour.offset, leveling.early_game_threshold) %}
 Show
     Class Gloves Boots Helmets
-    {% for sel in selector("other_armour", build.armour_types) %}
-    BaseType {{ sel|names }}
-    {% endfor %}
     ItemLevel <= {{ ilvl }}
     DropLevel >= {{ ilvl - leveling.armour.offset }}
     Rarity {% if ilvl <= leveling.armour.normal_until %}Normal{% endif %} {% if ilvl <= leveling.armour.magic_until %}Magic{% endif %} Rare
+    {% for sel in selector("other_armour", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
 {{ style.normal }}
 {% endfor %}
+
+Show
+    Class Gloves Boots Helmets
+    ItemLevel < {{ leveling.endgame_threshold }}
+    DropLevel >= {{ leveling.early_game_threshold }}
+    Rarity Rare
+    {% for sel in selector("other_armour", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
+{{ style.normal }}
 
 {% if build.show_quivers %}
 # Quivers
@@ -115,7 +151,6 @@ Hide
 {% if leveling.show_all_rares %}
     Rarity Normal Magic
 {% endif %}
-    ItemLevel < {{ leveling.early_game_threshold }}
 
 # ------------------------------------ Jewelry ---------------------------------------
 
