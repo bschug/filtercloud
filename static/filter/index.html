@@ -430,12 +430,23 @@
                     specifically go for that though, they're not worth picking up.
                 </p>
 
-                <hr>
-
                 <checkboxWithTooltip id="jewels_show_magic" v-model="config.jewels.show_magic" label="Show Magic Jewels">
                     Show magic jewels. Only enable this very early in the league, or when you want to try and craft a
                     corrupted unique jewel.
                 </checkboxWithTooltip>
+
+                <hr>
+
+                <p>
+                    Abyss Jewels are a bit different. Their affix pool is much more dependent on the item level, so
+                    if you want to craft Abyss Jewels, you should make sure that they're high enough level to do so.
+                    This also means that high level magic Abyss Jewels may be very valuable and worth picking up even
+                    if you don't plan to craft them yourself.
+                </p>
+
+                <linearSlider id="jewels_abyss_magic_min_level" v-model="config.jewels.abyss_magic_min_level" title="Show Magic Abyss Jewels With Level" :min-value="0" :max-value="100" op="≥">
+                    Show Magic Abyss Jewels only if their item level is at least this much.
+                </linearSlider>
             </div>
 
             <div v-show="currentPage === 'Maps'">

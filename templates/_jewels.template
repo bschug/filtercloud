@@ -1,7 +1,7 @@
 # ------------------------------------- [JEWELS] -----------------------------------------
 
 {% if jewels.show_magic %}
-Show 
+Show
 {% else %}
 Hide
 {% endif %}
@@ -18,3 +18,20 @@ Show
     Class Jewel
     Rarity Unique
 {{ style.highlight.unique }}
+
+
+Show
+    Class "Abyss Jewel"
+    Rarity Magic
+    ItemLevel >= {{ jewels.abyss_magic_min_level }}
+{{ style.highlight.magic }}
+
+Hide
+    Class "Abyss Jewel"
+    Rarity Magic
+{{ style.normal.magic }}
+
+Show
+    Class "Abyss Jewel"
+    Rarity Rare
+{{ style.highlight.rare }}

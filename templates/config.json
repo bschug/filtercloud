@@ -92,7 +92,8 @@
 	},
 	
 	"jewels": {
-		"show_magic": false
+		"show_magic": false,
+		"abyss_magic_min_level": 84
 	},
 
 	"flasks": {
