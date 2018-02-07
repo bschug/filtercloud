@@ -13,6 +13,7 @@ def load_template(filename):
     )
     env.filters['names'] = format_list_filter
     env.filters['setstyle'] = setstyle_filter
+    env.filters['any_true'] = any_true_filter
     return env.get_template(os.path.basename(filename))
 
 
@@ -49,3 +50,5 @@ def setstyle_filter(style, *args, fontsize=None, textcolor=None, background=None
     return newstyle
 
 
+def any_true_filter(obj):
+    return any(obj.values())

@@ -35,6 +35,7 @@ Show
 
 # -------------------------- Weapons, Body Armour & Shields ---------------------------- 
 
+{% if build.weapon_classes %}
 # Weapons
 {% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}
 Show
@@ -51,8 +52,9 @@ Show
     DropLevel >= {{ leveling.early_game_threshold }}
     Rarity Rare
 {{ style.normal }}
+{% endif %}
 
-{% if build.use_shields %}
+{% if build.use_shields and build.armour_types|any_true %}
 # Shields
 {% for ilvl in range(leveling.weapons.offset, leveling.early_game_threshold) %}
 Show
@@ -76,6 +78,7 @@ Show
     {% endfor %}
 {% endif %}
 
+{% if build.armour_types|any_true %}
 # Body Armour
 {% for ilvl in range(leveling.body.offset, leveling.early_game_threshold) %}
 Show
@@ -98,7 +101,9 @@ Show
     BaseType {{ sel|names }}
     {% endfor %}
 {{ style.normal }}
+{% endif %}
 
+{% if build.armour_types|any_true %}
 # Other Armour
 {% for ilvl in range(leveling.armour.offset, leveling.early_game_threshold) %}
 Show
@@ -121,6 +126,7 @@ Show
     BaseType {{ sel|names }}
     {% endfor %}
 {{ style.normal }}
+{% endif %}
 
 {% if build.show_quivers %}
 # Quivers

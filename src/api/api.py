@@ -33,6 +33,7 @@ logger.setLevel(logging.INFO)
 app = Flask('api', template_folder='/templates')
 app.add_template_filter(lootfilter.templating.format_list_filter, 'names')
 app.add_template_filter(lootfilter.templating.setstyle_filter, 'setstyle')
+app.add_template_filter(lootfilter.templating.any_true_filter, 'any_true')
 app.add_template_global(get_selector, 'selector')
 
 executor = ThreadPoolExecutor(2)

@@ -29,7 +29,7 @@
                         formData.append('config', JSON.stringify(Config.current.data));
 
                         ga('send', 'event', 'download', 'start');
-                        console.log(Config.current.data);
+                        console.log(JSON.parse(JSON.stringify(Config.current.data)));
 
                         axios.post('/api/filter/build', formData, {
                             responseType: 'arraybuffer'
@@ -47,7 +47,7 @@
                                 window.location = downloadUrl;
                             } else {
                                 link.href = window.URL.createObjectURL(blob);
-                                link.download = Config.current.data.include_leveling_rules ? 'gg-leveling.filter' : 'gg-endgame.filter';
+                                link.download = 'poe.gg.filter';
                                 document.body.appendChild(link);
                                 link.click();
                             }
