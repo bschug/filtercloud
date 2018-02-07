@@ -56,7 +56,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Crafting', 'Flasks', 'Jewels', 'Leveling']"
+                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <p class="link" @click="give_feedback">Feedback</p>
@@ -570,6 +570,21 @@
                     </linearSlider>
                 </div>
 
+            </div>
+
+            <div v-show="currentPage === 'Misc'">
+                <h1>Misc</h1>
+
+                <p>
+                    Ususally, you want to hide identified items because most of the time, these are trash items you discarded
+                    from your inventory. Exceptions are "Items drop identified" Strongboxes or Tempests and Warbands.
+                    Warbands can drop magic items with unique affixes that can be valuable for crafting. Unless you
+                    specifically go after those though, it's not worth the hassle.
+                </p>
+                <dropdownWithTooltip id="misc_identified" v-model="config.misc.identified" label="Identified Items"
+                                     :options="['Show All', 'Show Magic', 'Hide All']" :option-labels="['Show All', 'Show Magic', 'Hide All']">
+                    Show / hide identified items. Select "Show Magic" to show only magic items.
+                </dropdownWithTooltip>
             </div>
         </div>
     </div>

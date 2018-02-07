@@ -10,6 +10,7 @@ from lootfilter.style import StyleCollection, ItemStyle, parse_color, parse_soun
 def load_config(settings, style, db):
     return {
         'date': datetime.now(),
+        'misc': settings.get('misc'),
         'crafting': settings.get('crafting'),
         'currency': build_currency_config(settings, db),
         'rares': settings.get('rares'),

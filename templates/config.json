@@ -1,6 +1,10 @@
 {
 	"league": "Standard",
-	
+
+	"misc": {
+		"identified": "Hide All"
+	},
+
 	"currency": {
 		"use_shaper_voice": true,
 		"ultra_rare": ["Mirror of Kalandra"],

@@ -19,17 +19,24 @@
 # Only the two highest available flask types are shown for life, mana and hybrid respectively. 
 # Items with three linked sockets are always shown until level 40, 4-links are shown until maps.
 
-# Hide identified rares because we probably dropped them
-# Don't hide corrupted items because they are always identified
-# Don't hide magic items because they may be warbands items 
-# (and it's not that common to identify & drop blues in endgame)
+{% if misc.identified != "Show All" %}
+# Hide identified items because they're probably just stuff we discarded from our inventory.
+# Don't hide corrupted items because they're always identified.
 # Press Alt to see items dropped from Always Identified strongboxes.
 # Not reducing font size so they show up normally on Alt.
-Hide 
+{% endif %}
+{% if misc.identified == "Show Magic" %}
+# Don't hide magic items because they may be warbands items
+# (and it's not that common to identify & drop blues in endgame)
+Hide
 	Rarity Rare
 	Identified True
 	Corrupted False
-
+{% elif misc.identified == "Hide All" %}
+Hide
+    Identified True
+    Corrupted False
+{% endif %}
 	
 ###################################################
 
