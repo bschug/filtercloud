@@ -43,7 +43,7 @@
                             var link = document.createElement('a');
                             // workaround for old browsers
                             if (typeof link.download === 'undefined') {
-                                console.log("WORKAROUND")
+                                console.log("WORKAROUND");
                                 window.location = downloadUrl;
                             } else {
                                 link.href = window.URL.createObjectURL(blob);
@@ -75,6 +75,14 @@
                             .catch(function(error) {
                                 console.error("Failed to load prices for ", league, ": ", error);
                             });
+                    },
+
+                    config: {
+                        handler: function() {
+                            console.log("Config Changed");
+                            Config.persist_session();
+                        },
+                        deep: true
                     }
                 }
             });
