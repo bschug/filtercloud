@@ -31,7 +31,13 @@
             console.log("No previous filter config found");
             return;
         }
-        Config.current.data = JSON.parse(storedConfig);
+        storedConfig = JSON.parse(storedConfig);
+        if (storedConfig.version !== Config.current.data.version) {
+            alert("A new version of the filter is available. Your stored settings have been reset to default.");
+            return;
+        }
+        Config.current.data = storedConfig;
+        console.log("Restored config from saved session");
     };
 
     Config.persist_session = function() {
