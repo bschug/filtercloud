@@ -41,13 +41,9 @@ Show
     BaseType Vaal
 {{ style.normal.gem }}
 
-# ----------------- Rest -------------------
+# ----------------- Hidden -------------------
 
 # Hide worthless gems
-{% if gems.show_all %}
-Show
-{% else %}
 Hide
-{% endif %}
 	Class "Skill Gem"
 {{ style.smaller.gem }}
