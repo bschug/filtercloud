@@ -108,6 +108,7 @@ Show
 Hide
     Rarity Rare
     ItemLevel > {{ leveling.endgame_threshold }}
+    Class Amulets Rings Quivers Belts Gloves Boots "Body Armours" Helmets Shields Claws Daggers Wands Swords Axes Maces Sceptres
 
 
 
