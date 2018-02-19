@@ -44,6 +44,6 @@ Show
 Show
     Rarity Normal
     BaseType {{ crafting.chancing.basetypes|names }}
-{% if crafting.other.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% elif crafting.other.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
+{% if crafting.chancing.highlight == 'strong' %}{{ style.strong_highlight.normal }}{% elif crafting.chancing.highlight %}{{ style.highlight.normal }}{% else %}{{ style.normal.normal }}{% endif %}
 {% endif %}
 
