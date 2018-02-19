@@ -1,5 +1,3 @@
-
-
 .header > .bar {
     position: relative;
     width: 100%;
@@ -50,4 +48,24 @@
     font-size: 22px;
     color: black;
     cursor: pointer;
+}
+
+/* --------------------------- Login Button --------------------------- */
+
+.header > .login-ui {
+    position: absolute;
+    left: 0px;
+    top: 5px;
+    font-family: Roboto;
+}
+
+#login-button {
+    position: absolute;
+    width: 191px;
+    height: 46px;
+    background-image: url(/images/buttons/btn_google_signin_light_normal_web.png)
+}
+
+#login-button :hover {
+    background-image: url(/images/buttons/btn_google_signin_light_focus_web.png)
 }

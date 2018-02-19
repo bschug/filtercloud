@@ -5,7 +5,7 @@
         console.log("Loading files before init...");
         Promise.all([Style.load(), Config.load(), GameData.load('Standard')])
         .then(function() {
-            console.log("Initializing now...")
+            console.log("Initializing now...");
             FilterCloud.app = new Vue({
                 el: '#page-root',
                 data: {
@@ -14,7 +14,8 @@
                     currentPage: null,
                     GameData: GameData,
                     selectedLeague: 'Standard',
-                    allUniqueItems: Object.keys(GameData.prices.uniques).sort()
+                    allUniqueItems: Object.keys(GameData.prices.uniques).sort(),
+                    UserSession: window.UserSession
                 },
                 methods: {
 

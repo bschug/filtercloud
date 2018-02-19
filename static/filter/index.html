@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/itemlist.css">
@@ -15,6 +16,7 @@
     <script src="js/components.js"></script>
     <script src="js/config.js"></script>
     <script src="js/gamedata.js"></script>
+    <script src="js/loginbutton.js"></script>
     <script src="js/main.js"></script>
     <script src="js/style.js"></script>
     <script src="js/utils.js"></script>
@@ -31,11 +33,16 @@
         ga('create', 'UA-67186151-5', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <!-- Google Login -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 </head>
 <body onload="FilterCloud.init();">
 <div class="root">
 <div class="page-root" id="page-root">
     <div class="header">
+        <loginbutton></loginbutton>
         <div class="bar">
             <div class="left"></div>
             <div class="right"></div>
