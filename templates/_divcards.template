@@ -36,7 +36,7 @@ Show
 
 {% if divcards.hidden %}
 # Hide troll cards
-Show
+Hide
     Class "Divination Card"
     BaseType {{ divcards.hidden|names }}
 {{ style.smaller.divcard }}
