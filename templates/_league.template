@@ -82,9 +82,9 @@ Show
 	BaseType "Deafening Essence of"
 {{ style.ultra_rare.currency }}
 
-# Decently highlight T6 and corruption-only essences	
+# Decently highlight T6 and corruption-only essences
 Show 
-	BaseType "Shrieking Essence of" "Essence of Hysteria" "Essence of Insanity" "Essence of Horror" "Essence of Delirium" 
+	BaseType "Shrieking Essence of" "Essence of Hysteria" "Essence of Insanity" "Essence of Horror" "Essence of Delirium" "Remnant of Corruption"
 {{ style.strong_highlight.currency }}
 	
 # Highlight remaining essences
