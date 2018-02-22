@@ -3,7 +3,10 @@
 
     FilterCloud.init = function() {
         console.log("Loading files before init...");
-        Promise.all([Style.load(), Config.load(), GameData.load('Standard')])
+        var settings = FilterCloud.parseUrlParams();
+        console.log("Settings:", settings);
+
+        Promise.all([Style.load(settings.style), Config.load(settings.config), GameData.load('Standard')])
         .then(function() {
             console.log("Initializing now...");
             FilterCloud.app = new Vue({
@@ -88,6 +91,40 @@
                 }
             });
         });
+    };
+
+    FilterCloud.parseUrlParams = function() {
+        var result = {
+            config: 'default',
+            style: 'default'
+        };
+
+        // Filter config name can be passed as url like https://filter.poe.gg#username/filtername?style=stylename
+        var hash = window.location.hash;
+        var re = /#([a-zA-Z0-9][a-zA-Z0-9\-_.]*\/[a-zA-Z0-9][a-zA-Z0-9\-_.]*)?\??(.*)?/;
+        var match = hash.match(re);
+
+        // If url doesn't have that form, use the default filter
+        if (match === null) {
+            return result;
+        }
+
+        // If url contains a config name, use that one
+        if (match[1]) {
+            result.config = match[1];
+        }
+
+        // If result contains a query string, parse it further
+        if (match[2]) {
+            match[2].split('&').forEach(function(query) {
+                var queryMatch = query.match(/([a-z]*)=(.*)/);
+                if (queryMatch && queryMatch[1]) {
+                    result[queryMatch[1]] = queryMatch[2];
+                }
+            });
+        }
+
+        return result;
     };
 
 }( window.FilterCloud = window.FilterCloud || {} ));

@@ -31,16 +31,20 @@
             result.textcolor = '175 96 37';
 
         return result;
-    }
+    };
 
-    Style.load = function() {
-        return axios.get('/api/filter/style/default')
+    Style.load = function(id) {
+        return axios.get('/api/filter/style/' + id)
             .then(function(response) {
-                console.log("Loaded default style");
+                console.log("Loaded style: " + id);
                 Style.data = response.data;
             })
             .catch(function(error) {
                 console.error("Failed to load Style: ", error);
+                if (id !== 'default') {
+                    console.log("Loading default style instead");
+                    return Style.load('default');
+                }
             });
     };
 

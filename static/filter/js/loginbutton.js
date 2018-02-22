@@ -17,7 +17,6 @@ Vue.component('loginbutton', {
                 client_id: '951108445762-a8btp1qpeku524l2pe9p5ldst7qqgon1.apps.googleusercontent.com',
                 cookiepolicy: 'single_host_origin'
             });
-            console.log("Attaching Click Handler");
             auth2.attachClickHandler(document.getElementById('login-button'), {},
                 function(googleUser) { window.UserSession.onGoogleLogin(googleUser); },
                 function(error) { console.error(error) }
@@ -34,14 +33,15 @@ Vue.component('loginbutton', {
 (function(UserSession) {
     UserSession.loggedIn = false;
     UserSession.username = "";
+    UserSession.sessionToken = null;
 
     UserSession.onGoogleLogin = function(googleUser) {
         var profile = googleUser.getBasicProfile();
-        UserSession.loggedIn = true;
-        UserSession.username = profile.getName();
-
-        var id_token = googleUser.getAuthResponse().id_token;
-    }
+        this.loggedIn = true;
+        this.username = profile.getName();
+        this.sessionToken = googleUser.getAuthResponse().id_token;
+        ga('send', 'event', 'login', 'google');
+    };
 
 }(window.UserSession = window.UserSession || {}));
 

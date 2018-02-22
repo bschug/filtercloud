@@ -115,9 +115,10 @@ def build():
 
 @app.route('/api/filter/style/<id>', methods=['GET'])
 def style_instance(id):
-    filename = os.path.join(app.template_folder, 'style.json')
-    app.logger.info('Trying to return file %s' % filename)
-    return send_file(filename)
+    if id == 'default':
+        filename = os.path.join(app.template_folder, 'style.json')
+        return send_file(filename)
+    raise ApiException("style not found: '{}'".format(id), status_code=404, data=id)
 
 
 @app.route('/api/filter/config/<id>', methods=['GET'])
@@ -125,7 +126,7 @@ def config_instance(id):
     if id == 'default':
         filename = os.path.join(app.template_folder, 'config.json')
         return send_file(filename)
-    return "unknown filter '{}'".format(id)
+    raise ApiException("config not found: '{}'".format(id), status_code=404, data=id)
 
 
 def settings_from_post(key):

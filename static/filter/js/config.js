@@ -13,16 +13,24 @@
                 })
                 .catch(function(error) {
                     console.error("Failed to load Config: ", error);
+                    if (id !== 'default') {
+                        console.log("Loading default Config instead");
+                        return self.load('default');
+                    }
                 });
         }
     }
 
-    Config.load = function() {
+    Config.load = function(name) {
+        if (name === undefined) {
+            name = 'default';
+        }
+
         var config = new ConfigSettings();
-        return config.load('default')
+        return config.load(name)
                      .then(function(response) { Config.current = config; })
-                     .then(function(response) { Config.restore_session(); })
-                     .catch(function(error) { console.error("Failed to load config: " + error); });
+                     .then(function(response) { if (name === 'default') { Config.restore_session(); } })
+                     .catch(function(error) { console.error("Failed to load config: ", error); });
     };
 
     Config.restore_session = function() {
