@@ -69,3 +69,31 @@
 #login-button :hover {
     background-image: url(/images/buttons/btn_google_signin_light_focus_web.png)
 }
+
+.login-ui .username-error {
+    position: relative;
+    z-index: 100;
+    font-family: Roboto sans-serif;
+    font-style: italic;
+    color: red;
+}
+
+#logout-button p {
+    margin-top: 0px;
+    margin-bottom: 0.3em;
+}
+
+#logout-button .username {
+    font-weight: bold;
+    color: #ffbb55;
+}
+
+#logout-button .logout-text {
+    border: 1px solid black;
+    padding: 2px;
+    cursor: pointer;
+}
+
+#logout-button .logout-text :hover {
+    background-color: white;
+}

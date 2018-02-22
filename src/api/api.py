@@ -6,18 +6,20 @@ from concurrent.futures import ThreadPoolExecutor
 
 from box import Box
 from flask import Flask, session, request, g, render_template, send_file, jsonify, Response
-from pymongo import MongoClient
-import bson
+from flask_login import LoginManager, login_required, login_user, current_user
+import pymongo
+import pymongo.errors
 
 import lootfilter
 from wiki import WikiCache, scrape_wiki, update_selectors
 import pricechecking
+import users
 
 
 def get_db():
     """Open database connection if it's not already open."""
     if not hasattr(g, 'mongo_db'):
-        g.mongo_db = MongoClient('db')
+        g.mongo_db = pymongo.MongoClient('db')
     return g.mongo_db.filterforge
 
 
@@ -28,13 +30,22 @@ def get_selector(name, mask):
 
 logger = logging.getLogger()
 logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 app = Flask('api', template_folder='/templates')
 app.add_template_filter(lootfilter.templating.format_list_filter, 'names')
 app.add_template_filter(lootfilter.templating.setstyle_filter, 'setstyle')
 app.add_template_filter(lootfilter.templating.any_true_filter, 'any_true')
 app.add_template_global(get_selector, 'selector')
+
+app.config.update(
+    SESSION_COOKIE_PATH='/',
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_HTTPONLY=True,
+)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 executor = ThreadPoolExecutor(2)
 
@@ -113,20 +124,64 @@ def build():
         return str(ex)
 
 
+@app.route('/api/filter/style/', defaults={'id': None}, methods=['GET'])
 @app.route('/api/filter/style/<id>', methods=['GET'])
 def style_instance(id):
-    if id == 'default':
+    if id is None:
         filename = os.path.join(app.template_folder, 'style.json')
         return send_file(filename)
     raise ApiException("style not found: '{}'".format(id), status_code=404, data=id)
 
 
+@app.route('/api/filter/config/', defaults={'id': None}, methods=['GET'])
 @app.route('/api/filter/config/<id>', methods=['GET'])
 def config_instance(id):
-    if id == 'default':
+    if id is None:
         filename = os.path.join(app.template_folder, 'config.json')
         return send_file(filename)
     raise ApiException("config not found: '{}'".format(id), status_code=404, data=id)
+
+
+@app.route('/api/filter/user/', methods=['POST'])
+def login_or_register():
+    """
+    Login or register the user.
+    When called with a valid token for a registered user, login that user.
+    Otherwise you need to also provide a valid, unused name.
+    :return: User object
+    """
+    try:
+        token = request.json['token']
+        name = request.json.get('name')
+
+        # If user is already registered, just return their account details
+        if load_user(token).is_active:
+            logger.debug("known user, logging in")
+            return jsonify(load_user(token).to_dict())
+
+        user = users.create(token, name, get_db())
+        return jsonify(user.to_dict())
+
+    except users.AuthenticationError as ex:
+        raise ApiException('Registration failed: Authentication error', status_code=401, data={'reason': ex.reason})
+
+    except pymongo.errors.DuplicateKeyError as ex:
+        raise ApiException('Name is already taken', status_code=409)
+
+    except Exception as ex:
+        logger.error(ex)
+        raise ApiException('Internal Server Error', status_code=500)
+
+
+@login_required
+@app.route('/api/filter/user/', methods=['GET'])
+def get_user_details():
+    return jsonify(current_user.to_dict())
+
+
+@login_manager.user_loader
+def load_user(token):
+    return users.load(token, get_db())
 
 
 def settings_from_post(key):
@@ -153,5 +208,6 @@ class ApiException(Exception):
 def handle_api_error(ex):
     response = jsonify(ex.to_dict())
     response.status_code = ex.status_code
+    logger.exception(ex)
     return response
 

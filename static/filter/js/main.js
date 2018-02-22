@@ -95,13 +95,13 @@
 
     FilterCloud.parseUrlParams = function() {
         var result = {
-            config: 'default',
-            style: 'default'
+            config: '',
+            style: ''
         };
 
         // Filter config name can be passed as url like https://filter.poe.gg#username/filtername?style=stylename
         var hash = window.location.hash;
-        var re = /#([a-zA-Z0-9][a-zA-Z0-9\-_.]*\/[a-zA-Z0-9][a-zA-Z0-9\-_.]*)?\??(.*)?/;
+        var re = /#([a-zA-Z0-9][a-zA-Z0-9\-]*\/[a-zA-Z0-9][a-zA-Z0-9\-_.]*)?\??(.*)?/;
         var match = hash.match(re);
 
         // If url doesn't have that form, use the default filter

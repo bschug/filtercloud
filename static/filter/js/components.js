@@ -20,6 +20,26 @@ Vue.component('checkboxwithtooltip', {
 });
 
 
+Vue.component('textboxwithtooltip', {
+    template: '\
+        <p>\
+            <label :for="id">{{ label }}</label> \
+            <input type="text" :placeholder="placeholder" :id="id" \
+                   v-model="value" @change="e => updateValue(e.target.value)">\
+            <span class="tooltip"> \
+                <slot></slot> \
+            </span> \
+        </p>',
+    props: ['value', 'id', 'label', 'placeholder'],
+    methods: {
+        updateValue: function(value) {
+            ga('send', 'event', 'configure', this.id);
+            this.$emit('input', value);
+        }
+    }
+});
+
+
 Vue.component('dropdownwithtooltip', {
     template: '\
         <p>\
