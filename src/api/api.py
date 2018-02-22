@@ -42,8 +42,8 @@ executor = ThreadPoolExecutor(2)
 @app.teardown_appcontext
 def close_db(error):
     """Close the database at the end of the request."""
-    if hasattr(g, 'postgres_db'):
-        g.postgres_db.close()
+    if hasattr(g, 'mongo_db'):
+        g.mongo_db.close()
 
 
 @app.route('/api/filter/helloworld', methods=['GET'])
