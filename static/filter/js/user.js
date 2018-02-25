@@ -22,7 +22,7 @@ Vue.component('loginbutton', {
     mounted: function() {
         window.gapi.load('auth2', function() {
             var auth2 = window.gapi.auth2.init({
-                client_id: '951108445762-a8btp1qpeku524l2pe9p5ldst7qqgon1.apps.googleusercontent.com',
+                client_id: '951108445762-7bp1popjbdemfdhhnkmiqm2ml9u8kdmp.apps.googleusercontent.com',
                 cookiepolicy: 'single_host_origin'
             });
             auth2.attachClickHandler(document.getElementById('login-button'), {},

@@ -93,7 +93,7 @@ def get_userid_from_google_token(token):
 
     try:
         idinfo = id_token.verify_oauth2_token(token, requests.Request(),
-                                              "951108445762-a8btp1qpeku524l2pe9p5ldst7qqgon1.apps.googleusercontent.com")
+                                              "951108445762-7bp1popjbdemfdhhnkmiqm2ml9u8kdmp.apps.googleusercontent.com")
         if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise AuthenticationError('bad_token')
 
