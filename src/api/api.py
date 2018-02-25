@@ -152,7 +152,7 @@ def upload_style(username, stylename):
 
     style = json.loads(request.form['data'])
     users.store_style(user.name, stylename, style, get_db())
-    return "OK"
+    return jsonify(load_user(request.form['token']).styles)
 
 
 @app.route('/api/filter/config/<username>/<configname>', methods=['POST'])
@@ -163,7 +163,7 @@ def upload_config(username, configname):
 
     config = json.loads(request.form['data'])
     users.store_config(user.name, configname, config, get_db())
-    return "OK"
+    return jsonify(load_user(request.form['token']).configs)
 
 
 @app.route('/api/filter/user/', methods=['POST'])

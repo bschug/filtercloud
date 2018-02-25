@@ -58,9 +58,9 @@
                     <option v-for="league in GameData.leagues">{{ league }}</option>
                 </select>
                 <p class="download-button" @click="downloadFilter">Download</p>
-                <sidebarLink v-show="UserSession.loggedIn" :current-page.sync="currentPage" page="Save"></sidebarLink>
-                <sidebarLink v-show="UserSession.loggedIn" :current-page.sync="currentPage" page="Load"></sidebarLink>
-                <hr v-show="UserSession.loggedIn">
+                <sidebarLink v-show="user.loggedIn" :current-page.sync="currentPage" page="Save"></sidebarLink>
+                <sidebarLink v-show="user.loggedIn" :current-page.sync="currentPage" page="Load"></sidebarLink>
+                <hr v-show="user.loggedIn">
                 <sidebarLink
                    v-for="page in ['Build', 'Base Types']" :key="page"
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
@@ -114,6 +114,21 @@
                 <h2>Style</h2>
                 <saveUI id="save-style" v-model="styleName" @save="saveStyle(styleName)"
                         url-format="https://filter.poe.gg/#?style={owner}/{name}"></saveUI-->
+            </div>
+
+            <div v-show="currentPage === 'Load'">
+                <h1>Load</h1>
+                <p class="explanation" v-show="user.configs.length == 0">
+                    You don't have any saved filter configs. Save a filter config, and you will be
+                    able to load it (and other saved filter configs) from here.
+                </p>
+
+                <ul>
+                    <li v-for="name in user.configs" :key="name">
+                        <a class="url" :href="'/#' + user.username + '/' + name"
+                           @click="loadConfig(name)">{{ name }}</a>
+                    </li>
+                </ul>
             </div>
 
             <div v-show="currentPage === 'Build'">

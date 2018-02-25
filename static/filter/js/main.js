@@ -20,7 +20,7 @@
                     GameData: GameData,
                     selectedLeague: 'Standard',
                     allUniqueItems: Object.keys(GameData.prices.uniques).sort(),
-                    UserSession: window.UserSession
+                    user: window.UserSession
                 },
                 methods: {
 
@@ -65,7 +65,15 @@
                     },
 
                     saveConfig: Config.save,
-                    loadConfig: Config.load,
+                    loadConfig: function(name) {
+                        var self = this;
+                        Config.load({owner: UserSession.username, name: name})
+                        .then(function() {
+                            console.log("LOAD COMPLETE");
+                            self.config = Config.data;
+                        });
+                    },
+
                     saveStyle: Style.save,
                     loadStyle: Style.load,
 
