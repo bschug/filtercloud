@@ -80,6 +80,62 @@ Vue.component('loginbutton', {
     }
 });
 
+Vue.component('saveui', {
+    template: '\
+        <div>\
+            <p>\
+                <label :for="id + \'-name\'">Name:</label>\
+                <input :id="id + \'-name\'" type="text" v-bind:value="value"\
+                       v-on:input="updateName($event.target.value)">\
+                <button type="button" @click="save()" :disabled="!isValidName">Save</button>\
+            </p>\
+            <p v-show="!isValidName" class="username-error">{{ errorMessage }}</p>\
+            <p>Share url: <a :href="shareUrl">{{ shareUrl }}</a></p>\
+        </div>',
+
+    props: ['id', 'value', 'urlFormat'],
+
+    computed: {
+        isValidName: function() {
+            return this.value.match(/^[a-z0-9][a-z0-9\-.]*[a-z0-9]$/) !== null;
+        },
+        errorMessage: function() {
+            if (this.isValidName) {
+                return "";
+            }
+            if (this.value.length < 2) {
+                return "Name must be at least 2 characters long";
+            }
+            if (this.value.match(/^[a-z0-9\-.]+$/) === null) {
+                return "Only lowercase letters, numbers, . and - are allowed";
+            }
+            if (this.value.match(/^[a-z0-9].*[a-z0-9]$/) === null) {
+                return "Name must not begin or end with - or .";
+            }
+            return "Unknown error";
+        },
+        shareUrl: function() {
+            if (!this.isValidName) {
+                return '(invalid name)';
+            }
+            return this.urlFormat.formatUnicorn({
+                owner: UserSession.username,
+                name: this.value
+            });
+        }
+    },
+
+    methods: {
+        save: function() {
+            this.$emit('save', null);
+        },
+        updateName: function(name) {
+            this.$emit('input', name);
+        }
+    },
+
+});
+
 
 (function(UserSession) {
     UserSession.authenticated = false;

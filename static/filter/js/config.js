@@ -1,5 +1,7 @@
 (function(Config) {
-    Config.current = null;
+    Config.owner = '';
+    Config.name = '';
+    Config.data = null;
 
     function ConfigSettings() {
         this.data = null;
@@ -21,17 +23,58 @@
         }
     }
 
-    Config.load = function(name) {
-        if (name === undefined) {
-            name = 'default';
+    Config.load = function(id) {
+        Config.owner = '';
+        Config.name = '';
+
+        var path = ''
+        if (id) {
+            path = id.owner + '/' + id.name;
+            Config.owner = id.owner;
+            Config.name = id.name;
         }
 
-        var config = new ConfigSettings();
-        return config.load(name)
-                     .then(function(response) { Config.current = config; })
-                     .then(function(response) { if (name === 'default') { Config.restore_session(); } })
-                     .catch(function(error) { console.error("Failed to load config: ", error); });
+        return axios.get('/api/filter/config/' + path)
+            .then(function(response) {
+                console.log("Loaded config " + id);
+                Config.data = response.data;
+            })
+            .then(function(response) {
+                // Restore session only if we're not explicitly loading a different config
+                // We need to do this after we've loaded the filter to be able to detect
+                // breaking changes in the filter format.
+                if (path === '') {
+                    Config.restore_session();
+                }
+            })
+            .catch(function(error) {
+                console.error("Failed to load Config: ", error);
+                if (id !== 'default') {
+                    console.log("Loading default Config instead");
+                    return Config.load();
+                }
+            })
     };
+
+    Config.save = function(name) {
+        Config.owner = UserSession.username;
+        Config.name = name;
+
+        var formData = new FormData();
+        formData.append('token', UserSession.getSessionToken());
+        formData.append('data', JSON.stringify(Config.data));
+
+        var path = '/api/filter/config/' + UserSession.username + '/' + Config.name;
+
+        axios.post(path, formData)
+        .then(function(response) {
+            console.log("Config " + Config.name + " saved successfully");
+        })
+        .catch(function(response) {
+            console.error("Failed to save config");
+            console.error(response);
+        });
+    }
 
     Config.restore_session = function() {
         var storedConfig = localStorage.getItem('poegg-filter-config');
@@ -40,17 +83,17 @@
             return;
         }
         storedConfig = JSON.parse(storedConfig);
-        if (storedConfig.version !== Config.current.data.version) {
+        if (storedConfig.version !== Config.data.version) {
             alert("A new version of the filter is available. Your stored settings have been reset to default.");
             return;
         }
-        Config.current.data = storedConfig;
+        Config.data = storedConfig;
         console.log("Restored config from saved session");
     };
 
     Config.persist_session = function() {
         console.log("I will remember that");
-        localStorage.setItem('poegg-filter-config', JSON.stringify(Config.current.data));
+        localStorage.setItem('poegg-filter-config', JSON.stringify(Config.data));
     }
 
 }( window.Config = window.Config || {} ));

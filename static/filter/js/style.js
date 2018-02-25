@@ -1,6 +1,9 @@
 (function( Style ) {
     Style.data = null;
+    Style.owner = '';
+    Style.name = '';
 
+    // Default styles the game uses when the filter doesn't override it
     Style.defaultStyle = function(rarity, itemClass) {
         result = {
             'textcolor': '200 200 200',
@@ -34,16 +37,26 @@
     };
 
     Style.load = function(id) {
-        return axios.get('/api/filter/style/' + id)
+        Style.owner = '';
+        Style.name = '';
+
+        var path = '';
+        if (id) {
+            path = owner + '/' + name;
+            Style.owner = id.owner;
+            Style.name = id.name;
+        }
+
+        return axios.get('/api/filter/style/' + path)
             .then(function(response) {
-                console.log("Loaded style: " + id);
+                console.log("Loaded style: " + path);
                 Style.data = response.data;
             })
             .catch(function(error) {
                 console.error("Failed to load Style: ", error);
                 if (id !== 'default') {
                     console.log("Loading default style instead");
-                    return Style.load('default');
+                    return Style.load();
                 }
             });
     };

@@ -16,10 +16,10 @@
     <script src="js/components.js"></script>
     <script src="js/config.js"></script>
     <script src="js/gamedata.js"></script>
-    <script src="js/loginbutton.js"></script>
     <script src="js/main.js"></script>
     <script src="js/style.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/user.js"></script>
 
     <title>poe.gg FilterCloud</title>
 
@@ -58,6 +58,9 @@
                     <option v-for="league in GameData.leagues">{{ league }}</option>
                 </select>
                 <p class="download-button" @click="downloadFilter">Download</p>
+                <sidebarLink v-show="UserSession.loggedIn" :current-page.sync="currentPage" page="Save"></sidebarLink>
+                <sidebarLink v-show="UserSession.loggedIn" :current-page.sync="currentPage" page="Load"></sidebarLink>
+                <hr v-show="UserSession.loggedIn">
                 <sidebarLink
                    v-for="page in ['Build', 'Base Types']" :key="page"
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
@@ -94,6 +97,23 @@
                 <h2>Customizable Behaviour</h2>
                 <p>You can customize the behaviour of the filter wherever it makes sense, defining your own thresholds
                 and fitting it perfectly to your playstyle.</p>
+            </div>
+
+            <div v-show="currentPage === 'Save'">
+                <h1>Save</h1>
+                <p class="explanation">
+                    Your changes will always be saved locally in your browser. But if
+                    you want to switch between different filters (e.g. for different builds),
+                    or you want to share your filter with others, you can upload them here.
+                </p>
+
+                <h2>Filter Config</h2>
+                <saveUI id="save-config" v-model="configName" @save="saveConfig(configName)"
+                        url-format="https://filter.poe.gg/#{owner}/{name}"></saveUI>
+                <hr>
+                <h2>Style</h2>
+                <saveUI id="save-style" v-model="styleName" @save="saveStyle(styleName)"
+                        url-format="https://filter.poe.gg/#?style={owner}/{name}"></saveUI>
             </div>
 
             <div v-show="currentPage === 'Build'">

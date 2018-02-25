@@ -70,7 +70,7 @@
     background-image: url(/images/buttons/btn_google_signin_light_focus_web.png)
 }
 
-.login-ui .username-error {
+.username-error {
     position: relative;
     z-index: 100;
     font-family: Roboto sans-serif;

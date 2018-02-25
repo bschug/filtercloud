@@ -6,7 +6,6 @@ from concurrent.futures import ThreadPoolExecutor
 
 from box import Box
 from flask import Flask, session, request, g, render_template, send_file, jsonify, Response
-from flask_login import LoginManager, login_required, login_user, current_user
 import pymongo
 import pymongo.errors
 
@@ -43,9 +42,6 @@ app.config.update(
     SESSION_COOKIE_SECURE=True,
     SESSION_COOKIE_HTTPONLY=True,
 )
-
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 executor = ThreadPoolExecutor(2)
 
@@ -124,22 +120,50 @@ def build():
         return str(ex)
 
 
-@app.route('/api/filter/style/', defaults={'id': None}, methods=['GET'])
-@app.route('/api/filter/style/<id>', methods=['GET'])
-def style_instance(id):
-    if id is None:
+@app.route('/api/filter/style/', defaults={'username': None, 'stylename': None}, methods=['GET'])
+@app.route('/api/filter/style/<username>/<stylename>', methods=['GET'])
+def download_style(username, stylename):
+    if username is None:
         filename = os.path.join(app.template_folder, 'style.json')
         return send_file(filename)
-    raise ApiException("style not found: '{}'".format(id), status_code=404, data=id)
+    style = users.load_style(username, stylename, get_db())
+    if style is None:
+        raise ApiException("style not found: '{}'".format(id), status_code=404, data=id)
+    return jsonify(style)
 
 
-@app.route('/api/filter/config/', defaults={'id': None}, methods=['GET'])
-@app.route('/api/filter/config/<id>', methods=['GET'])
-def config_instance(id):
-    if id is None:
+@app.route('/api/filter/config/', defaults={'username': None, 'configname': None}, methods=['GET'])
+@app.route('/api/filter/config/<username>/<configname>', methods=['GET'])
+def config_instance(username, configname):
+    if username is None:
         filename = os.path.join(app.template_folder, 'config.json')
         return send_file(filename)
-    raise ApiException("config not found: '{}'".format(id), status_code=404, data=id)
+    config = users.load_config(username, configname, get_db())
+    if config is None:
+        raise ApiException("config not found: '{}'".format(id), status_code=404, data=id)
+    return jsonify(config)
+
+
+@app.route('/api/filter/style/<username>/<stylename>', methods=['POST'])
+def upload_style(username, stylename):
+    user = load_user(request.form['token'])
+    if user.name != username:
+        raise ApiException("You don't own that style", status_code=403)
+
+    style = json.loads(request.form['data'])
+    users.store_style(user.name, stylename, style, get_db())
+    return "OK"
+
+
+@app.route('/api/filter/config/<username>/<configname>', methods=['POST'])
+def upload_config(username, configname):
+    user = load_user(request.form['token'])
+    if user.name != username:
+        raise ApiException("You don't own that config", status_code=403)
+
+    config = json.loads(request.form['data'])
+    users.store_config(user.name, configname, config, get_db())
+    return "OK"
 
 
 @app.route('/api/filter/user/', methods=['POST'])
@@ -153,13 +177,13 @@ def login_or_register():
     try:
         token = request.json['token']
         name = request.json.get('name')
+        user = load_user(token)
 
-        # If user is already registered, just return their account details
-        if load_user(token).is_active:
-            logger.debug("known user, logging in")
-            return jsonify(load_user(token).to_dict())
+        # Try to register the user with the given name if it's not already registered
+        # This will raise an exception if it fails for any reason.
+        if not user.is_active:
+            user = users.create(token, name, get_db())
 
-        user = users.create(token, name, get_db())
         return jsonify(user.to_dict())
 
     except users.AuthenticationError as ex:
@@ -173,13 +197,6 @@ def login_or_register():
         raise ApiException('Internal Server Error', status_code=500)
 
 
-@login_required
-@app.route('/api/filter/user/', methods=['GET'])
-def get_user_details():
-    return jsonify(current_user.to_dict())
-
-
-@login_manager.user_loader
 def load_user(token):
     return users.load(token, get_db())
 

@@ -13,7 +13,9 @@
                 el: '#page-root',
                 data: {
                     style: Style.data,
-                    config: Config.current.data,
+                    styleName: Style.name,
+                    config: Config.data,
+                    configName: Config.name,
                     currentPage: null,
                     GameData: GameData,
                     selectedLeague: 'Standard',
@@ -30,10 +32,10 @@
                     downloadFilter: function() {
                         var formData = new FormData();
                         formData.append('style', JSON.stringify(Style.data));
-                        formData.append('config', JSON.stringify(Config.current.data));
+                        formData.append('config', JSON.stringify(Config.data));
 
                         ga('send', 'event', 'download', 'start');
-                        console.log(JSON.parse(JSON.stringify(Config.current.data)));
+                        console.log(JSON.parse(JSON.stringify(Config.data)));
 
                         axios.post('/api/filter/build', formData, {
                             responseType: 'arraybuffer'
@@ -61,6 +63,11 @@
                             ga('send', 'event', 'download', 'error');
                         });
                     },
+
+                    saveConfig: Config.save,
+                    loadConfig: Config.load,
+                    saveStyle: Style.save,
+                    loadStyle: Style.load,
 
                     give_feedback: function() {
                         ga('send', 'event', 'feedback');
@@ -95,13 +102,13 @@
 
     FilterCloud.parseUrlParams = function() {
         var result = {
-            config: '',
-            style: ''
+            config: null,
+            style: null
         };
 
         // Filter config name can be passed as url like https://filter.poe.gg#username/filtername?style=stylename
         var hash = window.location.hash;
-        var re = /#([a-zA-Z0-9][a-zA-Z0-9\-]*\/[a-zA-Z0-9][a-zA-Z0-9\-_.]*)?\??(.*)?/;
+        var re = /#([a-z0-9][a-z0-9\-]*[a-z0-9])\/([a-z0-9][a-z0-9\-.]*[a-z0-9])?\??(.*)?/;
         var match = hash.match(re);
 
         // If url doesn't have that form, use the default filter
@@ -110,18 +117,40 @@
         }
 
         // If url contains a config name, use that one
-        if (match[1]) {
-            result.config = match[1];
+        if (match[1] && match[2]) {
+            result.config = {
+                owner: match[1],
+                name: match[2]
+            }
+        }
+
+        function parseQuery(query) {
+            var match = query.match(/([a-z]*)=(.*)/);
+            if (!match || !match[1] || !match[2]) { return null; }
+
+            var key = match[1];
+            if (key === 'style') {
+                return {key: 'style', value: parseStyle(match[2])};
+            }
+        }
+
+        function parseStyle(text) {
+            var re = /^([a-z0-9][a-z0-9\-]*[a-z0-9])\/([a-z0-9][a-z0-9\-.]*[a-z0-9])$/;
+            var match = text.match(re);
+            if (!match || !match[1] || !match[2]) {
+                return null;
+            }
+            return { owner: match[1], name: match[2] };
         }
 
         // If result contains a query string, parse it further
-        if (match[2]) {
-            match[2].split('&').forEach(function(query) {
-                var queryMatch = query.match(/([a-z]*)=(.*)/);
-                if (queryMatch && queryMatch[1]) {
-                    result[queryMatch[1]] = queryMatch[2];
+        if (match[3]) {
+            match[3].split('&').forEach(function(query) {
+                var kv = parseQuery(query);
+                if (kv) {
+                    result[kv.key] = kv.value;
                 }
-            });
+            })
         }
 
         return result;
