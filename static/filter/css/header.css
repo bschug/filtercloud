@@ -70,14 +70,6 @@
     background-image: url(/images/buttons/btn_google_signin_light_focus_web.png)
 }
 
-.username-error {
-    position: relative;
-    z-index: 100;
-    font-family: Roboto sans-serif;
-    font-style: italic;
-    color: red;
-}
-
 #logout-button p {
     margin-top: 0px;
     margin-bottom: 0.3em;

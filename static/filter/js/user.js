@@ -8,7 +8,7 @@ Vue.component('loginbutton', {
                     <input v-model="usernameInput" type="text" placeholder="Pick a username">\
                     <button type="button" @click="register()" :disabled="!isValidName">OK</button>\
                 </p>\
-                <p class="username-error">{{ errorMessage }}</p>\
+                <p class="input-error">{{ errorMessage }}</p>\
                 <span class="tooltip">\
                     You need to pick a username before you can save and share your filters.\
                 </span>\
@@ -89,8 +89,8 @@ Vue.component('saveui', {
                        v-on:input="updateName($event.target.value)">\
                 <button type="button" @click="save()" :disabled="!isValidName">Save</button>\
             </p>\
-            <p v-show="!isValidName" class="username-error">{{ errorMessage }}</p>\
-            <p>Share url: <a :href="shareUrl">{{ shareUrl }}</a></p>\
+            <p v-show="!isValidName" class="input-error">{{ errorMessage }}</p>\
+            <p>Share url: <a class="url" :href="shareUrl">{{ shareUrl }}</a></p>\
         </div>',
 
     props: ['id', 'value', 'urlFormat'],

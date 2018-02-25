@@ -143,3 +143,16 @@ h3:hover > .tooltip { visibility: visible; }
 [v-cloak] {
     display: none;
 }
+
+.input-error {
+    position: relative;
+    z-index: 100;
+    font-family: Roboto sans-serif;
+    font-style: italic;
+    color: red;
+}
+
+.url {
+    font-family: Roboto sans-serif;
+    color: #ffbb00;
+}
