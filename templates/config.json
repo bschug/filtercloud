@@ -201,7 +201,7 @@
 	},
 
 	"maps": {
-		"hide_low_tier": true,
+		"hide_low_tier": false,
 		"favorite_maps": [],
 		"always_show_shaped": true
 	}
