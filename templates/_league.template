@@ -1,5 +1,16 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
+# Nets
+Show
+    BaseType "Rope Net" "Iron Net" "Steel Net"
+{{ style.highlight.currency }}
+
+Show
+    BaseType "Thaumaturgical Net"
+{{ style.strong_highlight.currency }}
+
+
+# Harbinger
 Show
 	Class Piece
 {{ style.ultra_rare.currency }}
