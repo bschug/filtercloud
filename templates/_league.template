@@ -6,7 +6,7 @@ Show
 {{ style.highlight.currency }}
 
 Show
-    BaseType "Thaumaturgical Net"
+    BaseType "Thaumaturgical Net" "Necromancy Net"
 {{ style.strong_highlight.currency }}
 
 
