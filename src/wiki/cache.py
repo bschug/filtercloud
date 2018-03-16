@@ -1,10 +1,3 @@
-import json
-
-from bson.json_util import dumps
-
-from .constants import *
-
-
 class WikiCache(object):
     def __init__(self, db):
         self.db = db

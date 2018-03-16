@@ -1,8 +1,6 @@
 import json
 from datetime import datetime
 
-from box import Box
-
 import pricechecking
 from lootfilter.style import StyleCollection, ItemStyle, parse_color, parse_sound
 

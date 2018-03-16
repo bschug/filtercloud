@@ -1,6 +1,6 @@
 import os
 
-from jinja2 import Template, Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 
 from lootfilter.style import ItemStyle, parse_color, parse_sound
 
