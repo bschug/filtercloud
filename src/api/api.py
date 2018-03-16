@@ -117,7 +117,7 @@ def build():
 
     except Exception as ex:
         app.logger.exception("/filter/api/build failed -- payload was: " + json.dumps(request.form))
-        return str(ex)
+        raise ApiException("Building Filter Failed", status_code=500, data=str(ex))
 
 
 @app.route('/api/filter/style/', defaults={'username': None, 'stylename': None}, methods=['GET'])
