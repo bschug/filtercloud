@@ -16,7 +16,7 @@
 			"top_tier": 10
 		},
 		"overrides": {
-			"hidden": ["Blacksmith", "Armourer", "Scroll"],
+			"hidden": [],
 			"worthless": [],
 			"valuable": ["Perandus Coin"],
 			"top_tier": []
