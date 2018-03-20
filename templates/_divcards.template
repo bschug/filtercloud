@@ -39,7 +39,7 @@ Show
 Hide
     Class "Divination Card"
     BaseType {{ divcards.hidden|names }}
-{{ style.smaller.divcard }}
+{{ style.hidden.divcard }}
 {% endif %}
 
 # Draw pink border around all cards not recognized by the filter

@@ -11,12 +11,13 @@ class StyleCollection(object):
 
 
 class ItemStyle(object):
-    def __init__(self, textcolor=None, background=None, border=None, fontsize=None, sound=None):
+    def __init__(self, textcolor=None, background=None, border=None, fontsize=None, sound=None, disable_drop_sound=None):
         self.textcolor = textcolor
         self.background = background
         self.border = border
         self.fontsize = fontsize
         self.sound = sound
+        self.disable_drop_sound = disable_drop_sound
 
     def fill_with(self, defaults):
         """Apply default style without overriding anything set in this style (only overrides None entries)."""
@@ -25,6 +26,7 @@ class ItemStyle(object):
         self.border = defaults.border if self.border is None else self.border.fill_with(defaults.border)
         self.fontsize = defaults.fontsize if self.fontsize is None else self.fontsize
         self.sound = defaults.sound if self.sound is None else self.sound.fill_with(defaults.sound)
+        self.disable_drop_sound = defaults.disable_drop_sound if self.disable_drop_sound is None else self.disable_drop_sound
         return self
 
     def generate(self):
@@ -40,6 +42,8 @@ class ItemStyle(object):
             yield '    PlayAlertSound ' + str(self.sound)
         if self.sound and self.sound.positional:
             yield '    PlayAlertSoundPositional ' + str(self.sound)
+        if self.disable_drop_sound:
+            yield '    DisableDropSound'
 
     def __str__(self):
         return '\n'.join(self.generate())

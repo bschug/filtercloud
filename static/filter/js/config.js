@@ -27,7 +27,7 @@
         Config.owner = '';
         Config.name = '';
 
-        var path = ''
+        var path = '';
         if (id) {
             path = id.owner + '/' + id.name;
             Config.owner = id.owner;
@@ -49,6 +49,7 @@
             })
             .catch(function(error) {
                 console.error("Failed to load Config: ", error);
+                alert("Failed to load Config: " + path);
                 if (id !== 'default') {
                     console.log("Loading default Config instead");
                     return Config.load();
@@ -74,8 +75,9 @@
         .catch(function(response) {
             console.error("Failed to save config");
             console.error(response);
+            alert("Failed to save config");
         });
-    }
+    };
 
     Config.restore_session = function() {
         var storedConfig = localStorage.getItem('poegg-filter-config');
@@ -84,10 +86,10 @@
             return;
         }
         storedConfig = JSON.parse(storedConfig);
-        if (storedConfig.version !== Config.data.version) {
+        /*if (storedConfig.version !== Config.data.version) {
             alert("A new version of the filter is available. Your stored settings have been reset to default.");
             return;
-        }
+        }*/
         Config.data = storedConfig;
         console.log("Restored config from saved session");
     };

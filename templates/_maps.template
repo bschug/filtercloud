@@ -76,7 +76,7 @@ Hide
 	Class Maps 
 	ItemLevel >= 74
 	DropLevel <= 72
-{{ style.map.white }}
+{{ style.hidden }}
 
 {% if maps.favorite_maps %}
 # Always show good yellow maps
@@ -105,7 +105,7 @@ Hide
 	Class Maps 
 	DropLevel < 77
 	ItemLevel >= 77
-{{ style.map.yellow }}
+{{ style.hidden }}
 
 {% else %} {# hide_low_tier #}
 

@@ -46,4 +46,4 @@ Show
 # Hide worthless gems
 Hide
 	Class "Skill Gem"
-{{ style.smaller.gem }}
+{{ style.hidden.gem }}

@@ -20,6 +20,7 @@ Hide
     ItemLevel >= 70
     Rarity < Unique 
     Class Flasks
+{{ style.hidden }}
 
 
 # Highlight all quality flasks on low levels
@@ -37,6 +38,7 @@ Hide
 	BaseType Life Mana
 	DropLevel < {{ droplevel }}
 	ItemLevel > {{ droplevel + leveling.flasks.offset }}
+{{ style.hidden }}
 {% endfor %}
 	
 # Hide all out-leveled hybrid flasks
@@ -46,6 +48,7 @@ Hide
 	BaseType Hybrid
 	DropLevel < {{ droplevel }}
 	ItemLevel > {{ droplevel + leveling.flasks.offset }}
+{{ style.hidden }}
 {% endfor %}
 
 # Highlight non-outleveled flasks
@@ -63,4 +66,4 @@ Show
 Hide 
     Class Flask 
     Rarity < Unique 
-
+{{ style.hidden }}

@@ -88,6 +88,7 @@ Show
 Hide 
     Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armours" Shields Boots Gloves Helmets Quivers Amulets Belts Rings 
     SetFontSize 10
+{{ style.hidden }}
     
 # Pink font and border for anything we somehow haven't covered (which would be a bug in the filter)
 Show

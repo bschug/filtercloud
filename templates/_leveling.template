@@ -157,6 +157,7 @@ Hide
 {% if leveling.show_all_rares %}
     Rarity Normal Magic
 {% endif %}
+{{ style.hidden }}
 
 # ------------------------------------ Jewelry ---------------------------------------
 

@@ -60,7 +60,7 @@ Show
 Hide
     Class Currency
     BaseType {{ currency.hidden|names }}
-{{ style.smaller.currency }}
+{{ style.hidden.currency }}
 {% endif %}
 
 # Mark all missing currency with pink border

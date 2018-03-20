@@ -15,4 +15,8 @@ class WikiCache(object):
 
     def get_selector(self, name, mask):
         """Return selector for given item category and attributes"""
-        return self.db.selectors.find_one({'name':name, **mask})['selector']
+        try:
+            return self.db.selectors.find_one({'name':name, **mask})['selector']
+        except (KeyError, TypeError):
+            import json
+            raise ValueError("No {} selector for mask {}".format(name, json.dumps(mask)))

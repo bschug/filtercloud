@@ -44,7 +44,7 @@ Show
 Hide
     Rarity Unique
     BaseType {{ uniques.hidden|names }}
-{{ style.smaller.unique }}
+{{ style.hidden.unique }}
 {% endif %}
 
 # Draw pink border around unknown Uniques

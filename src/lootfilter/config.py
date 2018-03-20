@@ -1,11 +1,15 @@
 import json
 from datetime import datetime
 
+import logging
+logger = logging.getLogger("filtercloud.lootfilter")
+
 import pricechecking
 from lootfilter.style import StyleCollection, ItemStyle, parse_color, parse_sound
 
 
 def load_config(settings, style, db):
+    settings = upgrade_config(settings)
     return {
         'date': datetime.now(),
         'misc': settings.get('misc'),
@@ -26,6 +30,7 @@ def load_config(settings, style, db):
 
 
 def load_style(settings):
+    settings = upgrade_style(settings)
     return build_styles_config(settings)
 
 
@@ -81,8 +86,15 @@ def build_style(cfg, default):
     border = parse_color(cfg.get('border'))
     fontsize = cfg.get('fontsize')
     sound = parse_sound(cfg.get('sound'))
+    disable_drop_sound = cfg.get('disable_drop_sound')
 
-    style = ItemStyle(textcolor=textcolor, background=background, border=border, fontsize=fontsize, sound=sound)
+    style = ItemStyle(
+        textcolor=textcolor,
+        background=background,
+        border=border,
+        fontsize=fontsize,
+        sound=sound,
+        disable_drop_sound=disable_drop_sound)
     style.fill_with(default)
     return style
 
@@ -94,3 +106,25 @@ def build_style_collection(settings):
         styles[name] = build_style(config, default)
     return StyleCollection(default, styles)
 
+
+def upgrade_config(settings):
+    """
+    If config settings are older, upgrade them to the latest version.
+    If config settings are multiple versions behind, applies all conversion operations in order between the given one
+    and the latest.
+    """
+    return settings
+
+
+def upgrade_style(settings):
+    """
+    If style settings are older, upgrade them to the latest version.
+    If style settings are multiple versions behind, applies all conversion operations in order between the given one
+    and the latest.
+    """
+    if settings.version <= 1:
+        settings.hidden.default['disable_drop_sound'] = True
+    if settings.version != 2:
+        logger.debug("Upgraded style settings from {} to 2".format(settings.version))
+        settings.version = 2
+    return settings

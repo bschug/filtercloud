@@ -54,6 +54,7 @@
             })
             .catch(function(error) {
                 console.error("Failed to load Style: ", error);
+                alert("Failed to load Style: " + path);
                 if (id !== 'default') {
                     console.log("Loading default style instead");
                     return Style.load();
