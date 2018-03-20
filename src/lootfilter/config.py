@@ -29,11 +29,6 @@ def load_style(settings):
     return build_styles_config(settings)
 
 
-def load_settings(filename):
-    with open(filename) as fp:
-        return json.load(fp)
-
-
 def build_currency_config(settings, db):
     league = settings.league
     thresholds = settings.currency.thresholds
