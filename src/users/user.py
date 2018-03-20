@@ -111,4 +111,5 @@ class AuthenticationError(Exception):
     Raise if the authentication token provided by the user wasn't valid.
     """
     def __init__(self, reason):
+        super().__init__('Authentication Error')
         self.reason = reason
