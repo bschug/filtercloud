@@ -1,11 +1,7 @@
-from datetime import timedelta
 import json
-import itertools
 
 import mwclient
-from box import Box
 
-from functioncache import JsonCache, cached
 from .constants import *
 from .selector import update_selectors
 
