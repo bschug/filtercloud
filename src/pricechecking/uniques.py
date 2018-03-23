@@ -5,7 +5,9 @@ import requests
 # Some Uniques can only be acquired from prophecies / breachstones, not dropped by enemies.
 # We should not take those into account for highlighting purposes.
 BLACKLIST = {
-    # Prophecy Uniques
+    # FATED UNIQUES
+    # These can only be obtained by carrying their un-fated version in your inventory while completing the respective
+    # prophecy.
     "Amplification Rod",
     "Asenath's Chant",
     "Atziri's Reflection",
@@ -57,7 +59,8 @@ BLACKLIST = {
     "Windshriek",
     "Winterweave",
 
-    # Breach Uniques
+    # BREACH UNIQUES
+    # These can only be obtained by applying a Breachlord's Blessing on their respective un-upgraded counterpart.
     "Xoph's Nurture",
     "The Formless Inferno",
     "Xoph's Blood",
@@ -75,6 +78,21 @@ BLACKLIST = {
     "The Red Nightmare",
     "The Green Nightmare",
     "The Blue Nightmare",
+
+    # VENDOR RECIPE UNIQUES
+    # These can only be obtained by handing in a certain combination of items to a vendor.
+    "Arborix", # ?
+    "Duskdawn", # ?
+    "Hyrri's Bite", # ?
+    "Kingmaker", # ?
+    "Magna Eclipsis", # ?
+    "Star of Wraeclast", # ?
+    "The Anima Stone", # ?
+    "The Goddess Scorned",
+    "The Goddess Unleashed",
+    "The Retch",
+    "The Taming",
+    "The Vinktar Square",
 }
 
 
