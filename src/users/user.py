@@ -89,11 +89,17 @@ class User(object):
 
 def get_userid_from_google_token(token):
     from google.oauth2 import id_token
-    from google.auth.transport import requests
+    import google.auth.transport.requests
+    import cachecontrol
+    import requests
 
     try:
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(),
-                                              "951108445762-7bp1popjbdemfdhhnkmiqm2ml9u8kdmp.apps.googleusercontent.com")
+        session = requests.session()
+        cached_session = cachecontrol.CacheControl(session)
+        request = google.auth.transport.requests.Request(session=cached_session)
+
+        client_id = "951108445762-7bp1popjbdemfdhhnkmiqm2ml9u8kdmp.apps.googleusercontent.com"
+        idinfo = id_token.verify_oauth2_token(token, request, client_id)
         if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise AuthenticationError('bad_token')
 
