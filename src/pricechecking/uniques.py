@@ -61,33 +61,33 @@ BLACKLIST = {
 
     # BREACH UNIQUES
     # These can only be obtained by applying a Breachlord's Blessing on their respective un-upgraded counterpart.
-    "Xoph's Nurture",
-    "The Formless Inferno",
-    "Xoph's Blood",
-    "Tulfall",
-    "The Perfect Form",
-    "The Pandemonius",
-    "Hand of Wisdom and Action",
-    "Esh's Visage",
     "Choir of the Storm",
-    "Uul-Netol's Embrace",
+    "Esh's Visage",
+    "Hand of Wisdom and Action",
+    "Presence of Chayula",
+    "Skin of the Lords",
+    "The Blue Nightmare",
+    "The Formless Inferno",
+    "The Green Nightmare",
+    "The Pandemonius",
+    "The Perfect Form",
+    "The Red Nightmare",
     "The Red Trail",
     "The Surrender",
+    "Tulfall",
     "United in Dream",
-    "Skin of the Lords",
-    "The Red Nightmare",
-    "The Green Nightmare",
-    "The Blue Nightmare",
+    "Uul-Netol's Embrace",
+    "Xoph's Blood",
+    "Xoph's Nurture",
 
     # VENDOR RECIPE UNIQUES
     # These can only be obtained by handing in a certain combination of items to a vendor.
-    "Arborix", # ?
-    "Duskdawn", # ?
-    "Hyrri's Bite", # ?
-    "Kingmaker", # ?
-    "Magna Eclipsis", # ?
-    "Star of Wraeclast", # ?
-    "The Anima Stone", # ?
+    "Arborix",
+    "Duskdawn",
+    "Kingmaker",
+    "Magna Eclipsis",
+    "Star of Wraeclast",
+    "The Anima Stone",
     "The Goddess Scorned",
     "The Goddess Unleashed",
     "The Retch",
