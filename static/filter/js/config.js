@@ -70,7 +70,8 @@
         axios.post(path, formData)
         .then(function(response) {
             console.log("Config " + Config.name + " saved successfully");
-            UserSession.configs = response.data
+            UserSession.configs = response.data;
+            alert("Saved as " + Config.name);
         })
         .catch(function(response) {
             console.error("Failed to save config");
