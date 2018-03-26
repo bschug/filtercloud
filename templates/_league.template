@@ -3,11 +3,11 @@
 # Nets
 Show
     BaseType "Rope Net" "Iron Net" "Steel Net"
-{{ style.highlight.currency }}
+{{ style.normal.currency }}
 
 Show
     BaseType "Thaumaturgical Net" "Necromancy Net"
-{{ style.strong_highlight.currency }}
+{{ style.highlight.currency }}
 
 
 # Harbinger
