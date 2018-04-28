@@ -113,6 +113,14 @@ def upgrade_config(settings):
     If config settings are multiple versions behind, applies all conversion operations in order between the given one
     and the latest.
     """
+    if settings.version <= 1:
+        for k, v in settings.get('crafting', {}).items():
+            v.ilvl = int(v.ilvl)
+            v.links = int(v.links)
+
+    if settings.version != 2:
+        logger.debug("Upgraded config settings from {} to 2".format(settings.version))
+        settings.version = 2
     return settings
 
 

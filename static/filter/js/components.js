@@ -460,7 +460,7 @@ Vue.component('socketconfig', {
     template: '\
         <p class="socket-config">\
             <label>Sockets:</label><input type="text" v-model="config.sockets"></input>\
-            <label>Level:</label><input type="number" v-model="config.level"></input>\
+            <label>Level:</label><input type="number" v-model.number="config.level"></input>\
             <img src="images/buttons/close.png" alt="delete" class="delete-button" @click="deleteItem"></img>\
         </p>',
     props: ['config'],
@@ -480,11 +480,11 @@ Vue.component('craftingconfig', {
                 Completely enable / disable this rule.\
             </checkboxwithtooltip>\
             <p v-if="\'ilvl\' in value"><label :for="id + \'ilvl\'">Item Level</label>\
-                <input :id="id + \'ilvl\'" type="number" v-model="value.ilvl" @input="ilvl_changed()"></input>\
+                <input :id="id + \'ilvl\'" type="number" v-model.number="value.ilvl" @input="ilvl_changed()"></input>\
                 <span class="tooltip">Show only items with at least this item level. Set to 0 to ignore.</span>\
             </p>\
             <p v-if="\'links\' in value"><label :for="id + \'links\'">Linked Sockets</label>\
-                <input type="number" v-model="value.links" @input="links_changed"></input>\
+                <input type="number" v-model.number="value.links" @input="links_changed"></input>\
                 <span class="tooltip">Show only items with at least this many linked sockets. Set to 0 to ignore.</span>\
             </p>\
             <dropdownwithtooltip :id="id + \'-highlight\'" v-model="value.highlight" label="Highlight"\
