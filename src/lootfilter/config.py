@@ -115,8 +115,8 @@ def upgrade_config(settings):
     """
     if settings.version <= 1:
         for k, v in settings.get('crafting', {}).items():
-            v.ilvl = int(v.ilvl)
-            v.links = int(v.links)
+            v['ilvl'] = int(v.get('ilvl', 0))
+            v['links'] = int(v.get('links', 0))
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))
