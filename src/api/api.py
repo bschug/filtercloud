@@ -66,7 +66,7 @@ def post_scrape_wiki():
 
 @app.route('/api/scraper/update-prices', methods=['POST'])
 def post_update_prices():
-    for league in ['Bestiary', 'Hardcore Bestiary', 'Standard', 'Hardcore']:
+    for league in ['Incursion', 'Hardcore Incursion', 'Standard', 'Hardcore']:
         pricechecking.update_currency_prices(league, get_db())
         pricechecking.update_divcard_prices(league, get_db())
         pricechecking.update_unique_prices(league, get_db())
@@ -83,7 +83,7 @@ def post_update_selectors():
 
 @app.route('/api/filter/leagues', methods=['GET'])
 def get_leagues():
-    return jsonify(['Standard', 'Hardcore', 'Bestiary', 'Hardcore Bestiary'])
+    return jsonify(['Standard', 'Hardcore', 'Incursion', 'Hardcore Incursion'])
 
 
 @app.route('/api/filter/game-constants', methods=['GET'])

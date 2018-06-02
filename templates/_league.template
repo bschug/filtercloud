@@ -1,7 +1,22 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
-# Nets
+# Incursion
 Show
+    Class "Incursion Item"
+{{ style.quest }}
+
+Show
+    BaseType "Vial"
+    Class "Stackable Currency"
+{{ style.strong_highlight.currency }}
+
+
+# Bestiary
+Show
+    BaseType "Strong Steel Net"
+{{ style.normal.currency }}
+
+Hide
     BaseType "Rope Net" "Iron Net" "Steel Net"
 {{ style.normal.currency }}
 
@@ -76,8 +91,7 @@ Show
 # Labyrinth Items	
 Show 
 	BaseType "Treasure Key" "Golden Key" "Silver Key" "Bane of the Loyal" "Portal Shredder" "Rod of Detonation" "Sand of Eternity" "Heart of the Gargoyle" "Cube Of Absorption" "Cogs of Disruption"
-	SetTextColor 74 230 58
-    SetFontSize 45 
+	{{ style.quest }}
 
 # Breach Splinters
 Show

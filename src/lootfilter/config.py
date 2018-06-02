@@ -77,6 +77,7 @@ def build_styles_config(settings):
         'hidden': build_style_collection(settings.hidden),
         'leveling': build_style_collection(settings.leveling),
         'map': build_style_collection(settings.map),
+        'quest': build_style_collection(settings.quest),
     }
 
 
@@ -130,9 +131,19 @@ def upgrade_style(settings):
     If style settings are multiple versions behind, applies all conversion operations in order between the given one
     and the latest.
     """
-    if settings.version <= 1:
+    if settings.version < 2:
         settings.hidden.default['disable_drop_sound'] = True
-    if settings.version != 2:
-        logger.debug("Upgraded style settings from {} to 2".format(settings.version))
-        settings.version = 2
+
+    if settings.version < 3:
+        settings.quest = {'default': {
+            "fontsize": "48",
+            "textcolor": "74 230 58",
+            "border": "74 230 58",
+            "background": "255 255 255",
+            "sound": "1 300"
+        }}
+
+    if settings.version != 3:
+        logger.debug("Upgraded style settings from {} to 3".format(settings.version))
+        settings.version = 3
     return settings
