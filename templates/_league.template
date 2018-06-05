@@ -135,4 +135,4 @@ Show
 # Quest Items
 Show 
     Class Quest 
-    SetFontSize 45
+{{ style.quest }}
