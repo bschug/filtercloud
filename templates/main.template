@@ -19,6 +19,13 @@
 # Only the two highest available flask types are shown for life, mana and hybrid respectively. 
 # Items with three linked sockets are always shown until level 40, 4-links are shown until maps.
 
+# Show identified items with Incursion mods on them
+Show
+    HasExplicitMod "Tacati's" "Citaqualotl's" "Matatl's" "Topotante's" "Xopec's" "Guatelitzi's" "of Tacati" "of Citaqualotl" "of Matatl" "of Puhuarte" "of Guatelitzi"
+    SetFontSize 48
+    SetBorderColor 255 120 80
+
+
 {% if misc.identified != "Show All" %}
 # Hide identified items because they're probably just stuff we discarded from our inventory.
 # Don't hide corrupted items because they're always identified.
