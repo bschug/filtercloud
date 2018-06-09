@@ -22,9 +22,8 @@
 # Show identified items with Incursion mods on them
 Show
     HasExplicitMod "Tacati's" "Citaqualotl's" "Matatl's" "Topotante's" "Xopec's" "Guatelitzi's" "of Tacati" "of Citaqualotl" "of Matatl" "of Puhuarte" "of Guatelitzi"
-    SetFontSize 48
+    SetFontSize 40
     SetBorderColor 255 120 80
-
 
 {% if misc.identified != "Show All" %}
 # Hide identified items because they're probably just stuff we discarded from our inventory.

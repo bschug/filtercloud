@@ -124,7 +124,24 @@
 			"highlight": false,
 			"itemclasses": ["Amulets", "Rings", "Belts"],
 			"basetypes": []
-		}
+		},
+		"breach_ring_explicit": [
+			{
+				"conditions": [
+					["of Expulsion", "of Exile", "of Bameth"],
+					["Virile"],
+					["of the Ice", "of Haast", "of the Magma", "of Tzteosh", "of the Lightning", "of Ephij", "of the Rainbow"]
+				],
+				"highlight": true
+			},
+			{
+				"conditions": [
+					["Virile"],
+					["of the Ice", "of Haast", "of the Magma", "of Tzteosh", "of the Lightning", "of Ephij", "of the Rainbow"]
+				],
+				"highlight": false
+			}
+		]
 	},
 
 	"meta": {

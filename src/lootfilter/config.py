@@ -114,10 +114,13 @@ def upgrade_config(settings):
     If config settings are multiple versions behind, applies all conversion operations in order between the given one
     and the latest.
     """
-    if settings.version <= 1:
+    if settings.version < 2:
         for k, v in settings.get('crafting', {}).items():
             v['ilvl'] = int(v.get('ilvl', 0))
             v['links'] = int(v.get('links', 0))
+
+    if settings.version < 3:
+        settings.rares['breach_ring_explicit'] = settings.rares.get('breach_ring_explicit', [])
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))
