@@ -78,6 +78,7 @@ def build_styles_config(settings):
         'leveling': build_style_collection(settings.leveling),
         'map': build_style_collection(settings.map),
         'quest': build_style_collection(settings.quest),
+        'animate_weapon': build_style_collection(settings.animate_weapon),
     }
 
 
@@ -119,8 +120,8 @@ def upgrade_config(settings):
             v['ilvl'] = int(v.get('ilvl', 0))
             v['links'] = int(v.get('links', 0))
 
-    if settings.version < 3:
-        settings.rares['breach_ring_explicit'] = settings.rares.get('breach_ring_explicit', [])
+    settings.rares['breach_ring_explicit'] = settings.rares.get('breach_ring_explicit', [])
+    settings.build['animate_weapon'] = settings.build.get('animate_weapon', False)
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))
@@ -134,17 +135,17 @@ def upgrade_style(settings):
     If style settings are multiple versions behind, applies all conversion operations in order between the given one
     and the latest.
     """
-    if settings.version < 2:
-        settings.hidden.default['disable_drop_sound'] = True
-
-    if settings.version < 3:
-        settings.quest = {'default': {
-            "fontsize": "48",
-            "textcolor": "74 230 58",
-            "border": "74 230 58",
-            "background": "255 255 255",
-            "sound": "1 300"
-        }}
+    settings.hidden.default['disable_drop_sound'] = settings.hidden.default.get('disable_drop_sound', True)
+    settings['quest'] = settings.get('quest', {'default': {
+        "fontsize": "48",
+        "textcolor": "74 230 58",
+        "border": "74 230 58",
+        "background": "255 255 255",
+        "sound": "1 300"
+    }})
+    settings['animate_weapon'] = settings.get('animate_weapon', {'default': {
+        'border': '180 60 60'
+    }})
 
     if settings.version != 3:
         logger.debug("Upgraded style settings from {} to 3".format(settings.version))

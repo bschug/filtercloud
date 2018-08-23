@@ -152,6 +152,13 @@ Show
 {{ style.normal }}
 {% endif %}
 
+{% if build.animate_weapon %}
+Show
+    Rarity Normal
+    Class Axes Claws Daggers Maces Sceptres Staves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+{{ style.animate_weapon }}
+{% endif %}
+
 Hide
     Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armour" Gloves Boots Helmets Shields Quivers
 {% if leveling.show_all_rares %}

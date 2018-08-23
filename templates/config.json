@@ -177,6 +177,7 @@
 		"weapon_classes": ["Two Hand Axes", "Two Hand Swords", "Two Hand Maces"],
 		"use_shields": false,
 		"show_quivers": false,
+		"animate_weapon": false,
 		"sockets": [
 			{"level": 15, "sockets": "RRG"},
 			{"level": 50, "sockets": "RRRG"},

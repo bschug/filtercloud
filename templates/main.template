@@ -30,6 +30,15 @@ Show
     HasExplicitMod "Brinerot" "Mutewind" "Redblade" "Betrayer's" "Deceiver's" "Turncoat's"
     SetFontSize 40
 
+{% if misc.identified != "Show All" and build.animate_weapon %}
+# Show identified weapons that we can animate
+Show
+    Rarity > Normal
+    Identified True
+    Class Axes Claws Daggers Maces Sceptres Staves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+{{ style.animate_weapon }}
+{% endif %}
+
 {% if misc.identified != "Show All" %}
 # Hide identified items because they're probably just stuff we discarded from our inventory.
 # Don't hide corrupted items because they're always identified.
@@ -57,11 +66,20 @@ Hide
 
 {% include "_crafting.template" %}
 
+{% if build.animate_weapon %}
+# Show endgame animateable weapons (don't show leveling weapons yet because leveling rules should take precedence)
+Show
+    Rarity Normal
+    ItemLevel > {{ leveling.endgame_threshold }}
+    Class Axes Claws Daggers Maces Sceptres Staves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+{{ style.animate_weapon }}
+{% endif %}
+
 # Hide all endgame normal/magic items now, for performance
 Hide 
     Rarity <= Magic 
     ItemLevel > {{ leveling.endgame_threshold }}
-    Class Axes Bows Claws Daggers Maces Staves Swords Wands Armours Helmets Gloves Boots Shields Quivers Amulets Belts Rings
+    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands Armours Helmets Gloves Boots Shields Quivers Amulets Belts Rings
     {{ style.hidden.default }}
 
 {% include "_jewels.template" %}
@@ -90,10 +108,19 @@ Hide
 
 # -------------------------------- [GENERIC WHITELIST] -------------------------- 
 
+{% if build.animate_weapon %}
+# Show low level animateable weapons that were not highlighted by the leveling rules
+Show
+    Rarity Normal
+    Class Axes Claws Daggers Maces Sceptres Staves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+{{ style.animate_weapon }}
+{% endif %}
+
+
 # Show all rares that weren't explicitly hidden 
 Show 
 	Rarity Rare
-	
+
 # Hide all the other trash 
 # Use explicit blacklist of item classes to avoid hiding stuff we forgot to whitelist 
 Hide 

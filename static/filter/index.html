@@ -182,6 +182,11 @@
                     Show Quivers while leveling. Select Meta to show only the quivers defined in the Quivers list on
                     the Base Types tab.
                 </dropdownWithTooltip>
+                <dropdownWithTooltip id="build_animate_weapon" v-model="config.build.animate_weapon" label="Use Animate Weapon"
+                                     :options="[false, true, 'Ranged']" :option-labels="['No', 'Melee', 'Melee + Ranged']">
+                    Mark weapons that can be used for Animate Weapon. If you use the Spirit Guards threshold jewel,
+                    set this to Melee + Ranged, so that ranged weapons are also marked.
+                </dropdownWithTooltip>
                 <h2>Sockets</h2>
                 <socketList :socket-configs="config.build.sockets"></socketList>
 
