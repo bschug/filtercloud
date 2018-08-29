@@ -401,29 +401,36 @@
 
                 <hr>
 
+                <leagueUniqueSelection id="league-unique-selection" v-model="config.uniques.leagues"
+                                       title="Include League-Specific Uniques from:" :all-leagues="GameData.allLeagues">
+                    Select all leagues from which you expect to find drops, e.g. because you run this league as a Zana
+                    mod. League-specific uniques not whitelisted here will be ignored for price-based highlighting.
+                </leagueUniqueSelection>
+
+
                 <thresholdSlider id="unique-toptier" v-model="config.uniques.thresholds.top_tier" title="Top Tier" op="≥"
-                                 :overrides.sync="config.uniques.overrides.top_tier" :prices="GameData.prices.uniques"
+                                 :overrides.sync="config.uniques.overrides.top_tier" :prices="uniqueBaseTypePrices"
                                  item-style="strong_highlight.unique" item-rarity="unique">
                     Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
                 </thresholdSlider>
                 <thresholdSlider id="unique-valuable" v-model="config.uniques.thresholds.valuable" title="Valuable" op="≥"
-                                 :overrides.sync="config.uniques.overrides.valuable" :prices="GameData.prices.uniques"
+                                 :overrides.sync="config.uniques.overrides.valuable" :prices="uniqueBaseTypePrices"
                                  item-style="highlight.unique" item-rarity="unique">
                     Anything above this is valuable, and you should always pick them up.
                 </thresholdSlider>
                 <thresholdSlider id="unique-worthless" v-model="config.uniques.thresholds.worthless" title="Worthless" op="<"
-                                 :overrides.sync="config.uniques.overrides.worthless" :prices="GameData.prices.uniques"
+                                 :overrides.sync="config.uniques.overrides.worthless" :prices="uniqueBaseTypePrices"
                                  item-style="smaller.unique" item-rarity="unique">
                     Anything below this is usually not worth the time picking up, unless you're going for the 5 Uniques
                     prophecy.
                 </thresholdSlider>
                 <thresholdSlider id="unique-hidden" v-model="config.uniques.thresholds.hidden" title="Hidden" op="<"
-                                 :overrides.sync="config.uniques.overrides.hidden" :prices="GameData.prices.uniques"
+                                 :overrides.sync="config.uniques.overrides.hidden" :prices="uniqueBaseTypePrices"
                                  item-style="hidden.unique" item-rarity="unique" :hidden="true">
                     Anything below this will be hidden completely.
                 </thresholdSlider>
 
-                <thresholdItemList :prices="GameData.prices.uniques" :thresholds="config.uniques.thresholds"
+                <thresholdItemList :prices="uniqueBaseTypePrices" :thresholds="config.uniques.thresholds"
                                    :hide-worthless="config.uniques.hide_low_value"
                                    style-context="unique" item-rarity="unique"
                                    :overrides.sync="config.uniques.overrides"

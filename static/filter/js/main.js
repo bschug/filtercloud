@@ -6,7 +6,11 @@
         var settings = FilterCloud.parseUrlParams();
         console.log("Settings:", settings);
 
-        Promise.all([Style.load(settings.style), Config.load(settings.config), GameData.load('Standard')])
+        Promise.all([Style.load(settings.style), Config.load(settings.config)])
+        .then(function() {
+            var uniqueLeagues = Config.data.uniques.leagues;
+            return GameData.load('Standard', uniqueLeagues);
+        })
         .then(function() {
             console.log("Initializing now...");
             FilterCloud.app = new Vue({
@@ -102,6 +106,44 @@
                             Config.persist_session();
                         },
                         deep: true
+                    }
+                },
+
+                computed: {
+                    uniqueBaseTypePrices: function() {
+                        var blacklist = this.uniqueBlacklist;
+                        var prices = {}
+                        for (var unique of GameData.prices.uniques) {
+                            if (blacklist.has(unique.name)) {
+                                continue;
+                            }
+                            if (prices.hasOwnProperty(unique.baseType)) {
+                                if (prices[unique.baseType] > unique.chaosValue) {
+                                    continue;
+                                }
+                            }
+                            prices[unique.baseType] = unique.chaosValue;
+                        }
+                        return prices;
+                    },
+
+                    uniqueBlacklist: function() {
+                        // Begin by blacklisting all league specific uniques
+                        var blacklist = new Set();
+                        for (var league of Object.keys(GameData.leagueUniques)) {
+                            for (var uniqueName of GameData.leagueUniques[league]) {
+                                blacklist.add(uniqueName);
+                            }
+                        }
+
+                        // Then remove the ones that are in whitelisted leagues
+                        for (var league of this.config.uniques.leagues) {
+                            for (var uniqueName of GameData.leagueUniques[league]) {
+                                blacklist.delete(uniqueName);
+                            }
+                        }
+
+                        return blacklist;
                     }
                 }
             });

@@ -1,6 +1,9 @@
 import requests
 from collections import defaultdict
 
+from .utils import build_date_string
+
+
 # We use an explicit list of currencies because poe.ninja is missing some currencies (like Alchemy Shards) and contains
 # others we don't want (like Breach Splinters)
 ALL_CURRENCY = [
@@ -62,8 +65,8 @@ def update_currency_prices(league, db):
 
 
 def scrape_currency_prices(league):
-    url = "http://poe.ninja/api/Data/GetCurrencyOverview"
-    response = requests.get(url, params={'league': league}).json()
+    url = "https://poe.ninja/api/data/currencyoverview"
+    response = requests.get(url, params={'league': league, 'type': 'Currency', 'date': build_date_string()}).json()
     prices = defaultdict(lambda: 0)
     for line in response['lines']:
         name = line['currencyTypeName']

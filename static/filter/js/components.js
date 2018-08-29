@@ -503,3 +503,27 @@ Vue.component('craftingconfig', {
         'links_changed': function() { ga('send', 'event', 'configure', this.id + '-links'); }
     }
 });
+
+
+
+Vue.component('leagueuniqueselection', {
+    template: '\
+        <div class="league-unique-selection"> \
+            <h3>{{ title }}<span class="tooltip"><slot></slot></span></h3> \
+            <ul> \
+                <span v-for="league in allLeagues"> \
+                    <input type="checkbox" :id="id + \'-\' + league" :value="league" v-model="checkedLeagues"> \
+                    <label :for="id + \'-\' + league">{{ league }}</label> \
+                </span> \
+            </ul> \
+        </div>',
+    props: ['id', 'value', 'allLeagues', 'title'],
+    data: function() { return {
+        'checkedLeagues': this.value
+    }},
+    watch: {
+        'checkedLeagues': function(val) {
+            this.$emit('input', val);
+        }
+    }
+});

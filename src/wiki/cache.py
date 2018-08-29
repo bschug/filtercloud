@@ -7,7 +7,13 @@ class WikiCache(object):
         Returns the game constants as serialized JSON.
         Must exist in the database already, i.e. you must have run the WikiScraper before.
         """
-        return self.db.game_constants.find_one({}, projection={'json': True})['json']
+        #return self.db.game_constants.find_one({}, projection={'json': True})['json']
+        import json
+        from .constants import ALL_LEAGUES, LEAGUE_UNIQUES
+        constants = self.get_game_constants()
+        constants['leagues'] = ALL_LEAGUES
+        constants['leagueUniques'] = {k: list(v) for k, v in LEAGUE_UNIQUES.items()}
+        return json.dumps(constants)
 
     def get_game_constants(self):
         """Return game constants as json-compatible dict."""

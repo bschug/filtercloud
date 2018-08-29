@@ -62,6 +62,10 @@
             });
     };
 
+    Style.save = function() {
+        console.error("Style Saving not implemented yet");
+    }
+
     Style.toCSS = function(style, isHidden) {
         var result = {
             borderStyle: 'none',

@@ -11,6 +11,7 @@ import pymongo.errors
 
 import lootfilter
 from wiki import WikiCache, scrape_wiki, update_selectors
+from wiki.constants import ALL_LEAGUES, LEAGUE_UNIQUES
 import pricechecking
 import users
 
@@ -66,7 +67,7 @@ def post_scrape_wiki():
 
 @app.route('/api/scraper/update-prices', methods=['POST'])
 def post_update_prices():
-    for league in ['Incursion', 'Hardcore Incursion', 'Standard', 'Hardcore']:
+    for league in ['Standard', 'Hardcore']:
         pricechecking.update_currency_prices(league, get_db())
         pricechecking.update_divcard_prices(league, get_db())
         pricechecking.update_unique_prices(league, get_db())
@@ -106,8 +107,9 @@ def get_prices(league):
 def build():
     try:
         print("START BUILDING FILTER")
+        league_uniques = LEAGUE_UNIQUES
         style = lootfilter.load_style(settings_from_post('style'))
-        config = lootfilter.load_config(settings_from_post('config'), style, get_db())
+        config = lootfilter.load_config(settings_from_post('config'), style, league_uniques, get_db())
         filtercode = render_template('main.template', **config)
         print("DONE BUILDING FILTER")
         response = Response(filtercode)

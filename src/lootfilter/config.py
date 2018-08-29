@@ -8,7 +8,7 @@ import pricechecking
 from lootfilter.style import StyleCollection, ItemStyle, parse_color, parse_sound
 
 
-def load_config(settings, style, db):
+def load_config(settings, style, league_uniques, db):
     settings = upgrade_config(settings)
     return {
         'date': datetime.now(),
@@ -17,7 +17,7 @@ def load_config(settings, style, db):
         'currency': build_currency_config(settings, db),
         'rares': settings.get('rares'),
         'maps': settings.get('maps'),
-        'uniques': build_unique_config(settings, db),
+        'uniques': build_unique_config(settings, league_uniques, db),
         'divcards': build_divcards_config(settings, db),
         'gems': settings.get('gems'),
         'jewels': settings.get('jewels'),
@@ -42,10 +42,13 @@ def build_currency_config(settings, db):
     return {**settings.currency, **config}
 
 
-def build_unique_config(settings, db):
+def build_unique_config(settings, league_uniques, db):
     league = settings.league
     thresholds = settings.uniques.thresholds
-    config = pricechecking.get_unique_tiers(league=league, thresholds=thresholds, db=db)
+    whitelisted_leagues = settings.uniques.leagues
+    blacklist = pricechecking.build_blacklist(league_uniques, whitelisted_leagues)
+    config = pricechecking.get_unique_tiers(
+        league=league, thresholds=thresholds, blacklist=blacklist, db=db)
     apply_overrides(config, settings.uniques.overrides)
     return config
 

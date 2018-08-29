@@ -156,3 +156,12 @@ h3:hover > .tooltip { visibility: visible; }
     font-family: Roboto sans-serif;
     color: #ffbb00;
 }
+
+.league-unique-selection ul {
+    column-count: 4;
+}
+
+.league-unique-selection span {
+    margin-right: 2.5em;
+    display: inline-block;
+}
