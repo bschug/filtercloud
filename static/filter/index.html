@@ -62,7 +62,7 @@
                 <sidebarLink v-show="user.loggedIn" :current-page.sync="currentPage" page="Load"></sidebarLink>
                 <hr v-show="user.loggedIn">
                 <sidebarLink
-                   v-for="page in ['Build', 'Base Types']" :key="page"
+                   v-for="page in ['Build', 'Style', 'Base Types']" :key="page"
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
@@ -190,6 +190,222 @@
                 <h2>Sockets</h2>
                 <socketList :socket-configs="config.build.sockets"></socketList>
 
+            </div>
+
+            <div v-show="currentPage === 'Style'">
+                <h1>Style Overview</h1>
+                <p class="explanation">
+                    FilterCloud uses a hierarchical style system. Each category has a default style,
+                    which can override the default look of the game. Most categories can also have override
+                    styles per rarity or item type that can overwrite some aspects of the default style.
+                    If a property is not set in the override style, it will use the one from the default style.
+                    If it also isn't set there, it will use the default look of the game.
+                </p>
+
+                <h2>Ultra Rare<span class="tooltip">For rare special items like Mirrors, Fishing Rods, Rhoa Feathers and Reliquary Keys</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="ultra_rare" item-rarity="normal" item-class="Currency"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Currency" item-style="ultra_rare.currency" item-rarity="normal" item-class="Currency"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Fishing" item-style="ultra_rare.fishing" item-rarity="normal" item-class="Fishing Rods"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Strong Highlight<span class="tooltip">For very valuable items worth at least a few dozen chaos. Thresholds are configurable. Six-Links always get a strong highlight.</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="strong_highlight" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Normal" item-style="strong_highlight.normal" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Magic" item-style="strong_highlight.magic" item-rarity="magic" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Rare" item-style="strong_highlight.rare" item-rarity="rare" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Unique" item-style="strong_highlight.unique" item-rarity="unique" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Currency" item-style="strong_highlight.currency" item-rarity="normal" item-class="Stackable Currency"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Gem" item-style="strong_highlight.gem" item-rarity="normal" item-class="Skill Gems"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="League Item" item-style="strong_highlight.breach" item-rarity="normal" item-class="none"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Divination Card" item-style="strong_highlight.divcard" item-rarity="normal" item-class="Divination Cards"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Highlight<span class="tooltip">Items that are always worth picking up.</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="highlight" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Normal" item-style="highlight.normal" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Magic" item-style="highlight.magic" item-rarity="magic" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Rare" item-style="highlight.rare" item-rarity="rare" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Unique" item-style="highlight.unique" item-rarity="unique" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Currency" item-style="highlight.currency" item-rarity="normal" item-class="Stackable Currency"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Gem" item-style="highlight.gem" item-rarity="normal" item-class="Skill Gems"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="League Item" item-style="highlight.breach" item-rarity="normal" item-class="none"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Divination Card" item-style="highlight.divcard" item-rarity="normal" item-class="Divination Cards"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Regular<span class="tooltip">Items you usually want to pick up but might skip if you'd have to go out of your way. In the default style, these don't have alert sounds.</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="normal" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Normal" item-style="normal.normal" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Magic" item-style="normal.magic" item-rarity="magic" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Rare" item-style="normal.rare" item-rarity="rare" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Unique" item-style="normal.unique" item-rarity="unique" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Currency" item-style="normal.currency" item-rarity="normal" item-class="Stackable Currency"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Gem" item-style="normal.gem" item-rarity="normal" item-class="Skill Gems"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="League Item" item-style="normal.breach" item-rarity="normal" item-class="none"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Divination Card" item-style="normal.divcard" item-rarity="normal" item-class="Divination Cards"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Smaller<span class="tooltip">Items that you usually wouldn't pick up but still want to see for some reason.</span> </h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="smaller" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Normal" item-style="smaller.normal" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Magic" item-style="smaller.magic" item-rarity="magic" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Rare" item-style="smaller.rare" item-rarity="rare" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Unique" item-style="smaller.unique" item-rarity="unique" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Currency" item-style="smaller.currency" item-rarity="normal" item-class="Stackable Currency"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Gem" item-style="smaller.gem" item-rarity="normal" item-class="Skill Gems"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="League Item" item-style="smaller.breach" item-rarity="normal" item-class="none"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Divination Card" item-style="smaller.divcard" item-rarity="normal" item-class="Divination Cards"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Maps<span class="tooltip">Maps get special treatment because they are highlighted based on tier.</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="map" item-rarity="normal" item-class="Maps"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="White Map" item-style="map.white" item-rarity="normal" item-class="Maps"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Yellow Map" item-style="map.yellow" item-rarity="normal" item-class="Maps"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Red Map" item-style="map.red" item-rarity="normal" item-class="Maps"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Hidden<span class="tooltip">When you press Alt, the game will show you items hidden by the filter. This controls what they will look like.</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="hidden" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Normal" item-style="hidden.normal" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Magic" item-style="hidden.magic" item-rarity="magic" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Rare" item-style="hidden.rare" item-rarity="rare" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Unique" item-style="hidden.unique" item-rarity="unique" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Currency" item-style="hidden.currency" item-rarity="normal" item-class="Stackable Currency"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Gem" item-style="hidden.gem" item-rarity="normal" item-class="Skill Gems"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="League Item" item-style="hidden.breach" item-rarity="normal" item-class="none"
+                        :deletable="false" :hidden="false"></itempreview>
+                    <itempreview
+                        item="Divination Card" item-style="hidden.divcard" item-rarity="normal" item-class="Divination Cards"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Leveling<span class="tooltip">Leveling rules will highlight items that are good for your build at your current level.</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="leveling" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Animate Weapon<span class="tooltip">The filter can optionally show weapons usable with Animate Weapon.</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="animate_weapon" item-rarity="normal" item-class="Wands"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
+
+                <h2>Quest Items<span class="tooltip">This includes regular quest items, but also Labyrinth items like Silver Keys, Portal Shredder, etc.</span></h2>
+                <p>
+                    <itempreview
+                        item="Default" item-style="quest" item-rarity="normal" item-class="Quest Items"
+                        :deletable="false" :hidden="false"></itempreview>
+                </p>
             </div>
 
             <div v-show="currentPage === 'Base Types'">
