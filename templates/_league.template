@@ -52,10 +52,15 @@ Show
 {{ style.highlight.unique }}
 	
 
-# Breachstones, Reliquary Keys    
+# Breachstones
 Show
-    Class "Misc Map Items"
-{{ style.ultra_rare.map }}
+    BaseType Breachstone
+{{ style.strong_highlight.breach }}
+
+# Reliquary Keys
+Show
+    BaseType "Reliquary Key"
+{{ style.ultra_rare.misc }}
 
 # Warbands
 Show 
@@ -130,7 +135,7 @@ Show
 
 Show
     BaseType "Divine Vessel"
-{{ style.ultra_rare.currency }}
+{{ style.strong_highlight.currency }}
 	
 # Quest Items
 Show 
