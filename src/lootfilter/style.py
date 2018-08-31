@@ -11,13 +11,14 @@ class StyleCollection(object):
 
 
 class ItemStyle(object):
-    def __init__(self, textcolor=None, background=None, border=None, fontsize=None, sound=None, disable_drop_sound=None):
+    def __init__(self, textcolor=None, background=None, border=None, fontsize=None, sound=None, disable_drop_sound=None, map_icon=None):
         self.textcolor = textcolor
         self.background = background
         self.border = border
         self.fontsize = fontsize
         self.sound = sound
         self.disable_drop_sound = disable_drop_sound
+        self.map_icon = map_icon
 
     def fill_with(self, defaults):
         """Apply default style without overriding anything set in this style (only overrides None entries)."""
@@ -27,6 +28,7 @@ class ItemStyle(object):
         self.fontsize = defaults.fontsize if self.fontsize is None else self.fontsize
         self.sound = defaults.sound if self.sound is None else self.sound.fill_with(defaults.sound)
         self.disable_drop_sound = defaults.disable_drop_sound if self.disable_drop_sound is None else self.disable_drop_sound
+        self.map_icon = defaults.map_icon if self.map_icon is None else self.map_icon
         return self
 
     def generate(self):
@@ -42,6 +44,8 @@ class ItemStyle(object):
             yield '    ' + str(self.sound)
         if self.disable_drop_sound:
             yield '    DisableDropSound'
+        if self.map_icon:
+            yield '    MinimapIcon ' + str(self.map_icon)
 
     def __str__(self):
         return '\n'.join(self.generate())
@@ -99,6 +103,25 @@ class Sound(object):
             return '{} {}'.format(action, self.soundid)
 
 
+class MapIcon(object):
+    def __init__(self, size=None, color=None, shape=None):
+        self.size = size
+        self.color = color
+        self.shape = shape
+
+    def fill_with(self, defaults):
+        if defaults is None:
+            return self
+        self.size = self.size if self.size is not None else defaults.size
+        self.color = self.color if self.color is not None else defaults.color
+        self.shape = self.shape if self.shape is not None else defaults.shape
+        assert not any(x is None for x in (self.size, self.color, self.shape))
+        return self
+
+    def __str__(self):
+        return '{} {} {}'.format(self.size, self.color, self.shape)
+
+
 def parse_color(text):
     if isinstance(text, Color):
         return text
@@ -128,3 +151,13 @@ def parse_sound(text):
     else:
         soundid, volume = parts
         return Sound(soundid=soundid, volume=volume, positional=False, custom=False)
+
+
+def parse_map_icon(obj):
+    if isinstance(obj, MapIcon):
+        return obj
+
+    if obj is None:
+        return None
+
+    return MapIcon(size=obj.get('size'), color=obj.get('color'), shape=obj.get('shape'))

@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger("filtercloud.lootfilter")
 
 import pricechecking
-from lootfilter.style import StyleCollection, ItemStyle, parse_color, parse_sound
+from lootfilter.style import StyleCollection, ItemStyle, parse_color, parse_sound, parse_map_icon
 
 
 def load_config(settings, style, league_uniques, db):
@@ -92,6 +92,7 @@ def build_style(cfg, default):
     fontsize = cfg.get('fontsize')
     sound = parse_sound(cfg.get('sound'))
     disable_drop_sound = cfg.get('disable_drop_sound')
+    map_icon = parse_map_icon(cfg.get('map_icon'))
 
     style = ItemStyle(
         textcolor=textcolor,
@@ -99,7 +100,8 @@ def build_style(cfg, default):
         border=border,
         fontsize=fontsize,
         sound=sound,
-        disable_drop_sound=disable_drop_sound)
+        disable_drop_sound=disable_drop_sound,
+        map_icon=map_icon)
     style.fill_with(default)
     return style
 
