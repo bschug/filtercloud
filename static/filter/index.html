@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="content">
-            <div id="faq-page" v-show="currentPage === null">
+            <div id="faq-page" v-if="currentPage === null">
                 <h1>FilterCloud: Your Personal Loot Filter</h1>
 
                 <h2>Play PoE, Not Tetris</h2>
@@ -107,7 +107,7 @@
                 <p>Click the Feedback button on the left and let me know!</p>
             </div>
 
-            <div v-show="currentPage === 'Save'">
+            <div v-if="currentPage === 'Save'">
                 <h1>Save</h1>
                 <p class="explanation">
                     Your changes will always be saved locally in your browser. But if
@@ -124,7 +124,7 @@
                         url-format="https://filter.poe.gg/#?style={owner}/{name}"></saveUI-->
             </div>
 
-            <div v-show="currentPage === 'Load'">
+            <div v-if="currentPage === 'Load'">
                 <h1>Load</h1>
                 <p class="explanation" v-show="user.configs.length == 0">
                     You don't have any saved filter configs. Save a filter config, and you will be
@@ -139,7 +139,7 @@
                 </ul>
             </div>
 
-            <div v-show="currentPage === 'Build'">
+            <div v-if="currentPage === 'Build'">
                 <h1>Your Build</h1>
                 <p class="explanation">
                     This is where you tell FilterCloud what build you're using. These settings are most important for
@@ -192,7 +192,7 @@
 
             </div>
 
-            <div v-show="currentPage === 'Style'">
+            <div v-if="currentPage === 'Style'">
                 <h1>Style Overview</h1>
                 <p class="explanation">
                     FilterCloud uses a hierarchical style system. Each category has a default style.
@@ -200,6 +200,93 @@
                     If a property is not set in the override style, it will use the one from the default style.
                     If it also isn't set there, it will use the default look of the game.
                 </p>
+
+                <div id="style-editor" v-if="false">
+                    <h3>Edit Style</h3>
+                    <div class="style-editor-body">
+                        <p>
+                            <input type="checkbox">
+                            <span class="label">Font Size: </span>
+                            <select><option v-for="x in [18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]">{{ x }}</option></select>
+                        </p>
+                        <p>
+                            <input type="checkbox">
+                            <span class="label">Text Color: </span>
+                            <input type="color">
+                        </p>
+                        <p>
+                            <input type="checkbox">
+                            <span class="label">Background: </span>
+                            <input type="color">
+                            <span class="label">Opacity: </span>
+                            <input type="range" min="0" max="255">
+                        </p>
+                        <p>
+                            <input type="checkbox">
+                            <span class="label">Border: </span>
+                            <input type="color">
+                            <span class="label">Opacity: </span>
+                            <input type="range" min="0" max="255">
+                        </p>
+                        <p>
+                            <input type="checkbox">
+                            <span class="label">Map Icon: </span>
+                            <select>
+                                <option>None</option>
+                                <option>Circle</option>
+                                <option>Diamond</option>
+                                <option>Hexagon</option>
+                                <option>Square</option>
+                                <option>Star</option>
+                                <option>Triangle</option>
+                            </select>
+                            <select>
+                                <option>Small</option>
+                                <option>Medium</option>
+                                <option>Large</option>
+                            </select>
+                            <select>
+                                <option>Red</option>
+                                <option>Green</option>
+                                <option>Blue</option>
+                                <option>Brown</option>
+                                <option>White</option>
+                                <option>Yellow</option>
+                            </select>
+                        </p>
+                        <p>
+                            <input type="checkbox">
+                            <span class="label">Beam: </span>
+                            <select>
+                                <option>None</option>
+                                <option>Red</option>
+                                <option>Green</option>
+                                <option>Blue</option>
+                                <option>Brown</option>
+                                <option>White</option>
+                                <option>Yellow</option>
+                            </select>
+                        </p>
+                        <div>
+
+                            <h4><input type="checkbox">Alert Sound</h4>
+                            <p>
+                                <input type="radio" name="sound-type">
+                                <span class="label">Built-in: </span>
+                                <select>
+                                    <option v-for="x in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]">{{ x }}</option>
+                                </select>
+                                <span class="label">Volume: </span>
+                                <input type="range" min="0" max="300">
+                            </p>
+                            <p>
+                                <input type="radio" name="sound-type">
+                                <span class="label">Custom Sound:</span>
+                                <input type="text">
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
                 <h2>Ultra Rare<span class="tooltip">For rare special items like Mirrors, Fishing Rods, Rhoa Feathers and Reliquary Keys</span></h2>
                 <p>
@@ -407,7 +494,7 @@
                 </p>
             </div>
 
-            <div v-show="currentPage === 'Base Types'">
+            <div v-if="currentPage === 'Base Types'">
                 <h1>Base Type Lists</h1>
                 <p class="explanation">
                     This page defines a few sets of base types that are referenced
@@ -428,7 +515,7 @@
                 </itemList>
             </div>
 
-            <div v-show="currentPage === 'Rares'">
+            <div v-if="currentPage === 'Rares'">
                 <h1>Endgame Rares</h1>
                 <p class="explanation">
                     When mapping, you want to stay in the flow and maintain your clearspeed. You don't want to stop
@@ -492,7 +579,7 @@
                 </div>
             </div>
 
-            <div v-show="currentPage === 'Crafting'">
+            <div v-if="currentPage === 'Crafting'">
                 <h1>Crafting</h1>
                 <p>
                     Crafting only really makes sense with items that have at least ItemLevel 84 or more, to ensure that
@@ -520,7 +607,7 @@
                 </craftingConfig>
             </div>
 
-            <div v-show="currentPage === 'Currency'">
+            <div v-if="currentPage === 'Currency'">
                 <h1>Currency</h1>
                 <p>
                     Generally, you want to pick up most currency items because they're small and most of them have a
@@ -568,7 +655,7 @@
                 </thresholdItemList>
             </div>
 
-            <div v-show="currentPage === 'Divination Cards'">
+            <div v-if="currentPage === 'Divination Cards'">
                 <h1>Divination Cards</h1>
 
                 <thresholdSlider id="divcard-toptier" v-model="config.divcards.thresholds.top_tier" title="Top Tier" op="≥"
@@ -600,7 +687,7 @@
                 </thresholdItemList>
             </div>
 
-            <div v-show="currentPage === 'Uniques'">
+            <div v-if="currentPage === 'Uniques'">
                 <h1>Uniques</h1>
                 <p>
                     Some base types have multiple uniques that can spawn on them. For example, there are five different
@@ -653,7 +740,7 @@
                 </thresholdItemList>
             </div>
 
-            <div v-show="currentPage === 'Skill Gems'">
+            <div v-if="currentPage === 'Skill Gems'">
                 <h1>Skill Gems</h1>
 
                 <linearSlider id="gems-toptier-threshold" v-model="config.gems.high_quality" title="Top Tier" :min-value="0" :max-value="21" op="≥">
@@ -675,7 +762,7 @@
 
             </div>
 
-            <div v-show="currentPage === 'Flasks'">
+            <div v-if="currentPage === 'Flasks'">
                 <h1>Flasks</h1>
                 <p>
                     In endgame, your flask setup should already be optimal. Some flasks may still fetch a good price though,
@@ -690,7 +777,7 @@
                 </linearSlider>
             </div>
 
-            <div v-show="currentPage === 'Jewels'">
+            <div v-if="currentPage === 'Jewels'">
                 <h1>Jewels</h1>
                 <p>
                     Rare Jewels are very likely to be valuable. Magic jewels are usually worthless, unless both affixes
@@ -726,7 +813,7 @@
                 </linearSlider>
             </div>
 
-            <div v-show="currentPage === 'Maps'">
+            <div v-if="currentPage === 'Maps'">
                 <h1>Maps</h1>
                 <p>
                     Once you've reached red maps, you no longer want to pick up white ones. That's why this filter has
@@ -754,7 +841,7 @@
                 </itemList>
             </div>
 
-            <div v-show="currentPage === 'Leveling'">
+            <div v-if="currentPage === 'Leveling'">
                 <h1>Leveling Rules</h1>
                 <p class="explanation">Here you can define offsets for different item types. The offset defines in which level range
                 the item will be visible. For example, an item that starts dropping at level 10, with an offset of 3, will be visible
@@ -849,7 +936,7 @@
 
             </div>
 
-            <div v-show="currentPage === 'Misc'">
+            <div v-if="currentPage === 'Misc'">
                 <h1>Misc</h1>
 
                 <p>
