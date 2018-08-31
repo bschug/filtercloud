@@ -11,7 +11,7 @@ class StyleCollection(object):
 
 
 class ItemStyle(object):
-    def __init__(self, textcolor=None, background=None, border=None, fontsize=None, sound=None, disable_drop_sound=None, map_icon=None):
+    def __init__(self, textcolor=None, background=None, border=None, fontsize=None, sound=None, disable_drop_sound=None, map_icon=None, beam=None):
         self.textcolor = textcolor
         self.background = background
         self.border = border
@@ -19,6 +19,7 @@ class ItemStyle(object):
         self.sound = sound
         self.disable_drop_sound = disable_drop_sound
         self.map_icon = map_icon
+        self.beam = beam
 
     def fill_with(self, defaults):
         """Apply default style without overriding anything set in this style (only overrides None entries)."""
@@ -28,7 +29,8 @@ class ItemStyle(object):
         self.fontsize = defaults.fontsize if self.fontsize is None else self.fontsize
         self.sound = defaults.sound if self.sound is None else self.sound.fill_with(defaults.sound)
         self.disable_drop_sound = defaults.disable_drop_sound if self.disable_drop_sound is None else self.disable_drop_sound
-        self.map_icon = defaults.map_icon if self.map_icon is None else self.map_icon
+        self.map_icon = defaults.map_icon if self.map_icon is None else self.map_icon.fill_with(defaults.map_icon)
+        self.beam = defaults.beam if self.beam is None else self.beam.fill_with(defaults.beam)
         return self
 
     def generate(self):
@@ -46,6 +48,8 @@ class ItemStyle(object):
             yield '    DisableDropSound'
         if self.map_icon:
             yield '    MinimapIcon ' + str(self.map_icon)
+        if self.beam:
+            yield '    PlayEffect ' + str(self.beam)
 
     def __str__(self):
         return '\n'.join(self.generate())
@@ -122,6 +126,25 @@ class MapIcon(object):
         return '{} {} {}'.format(self.size, self.color, self.shape)
 
 
+class Beam(object):
+    def __init__(self, color=None, temp=None):
+        self.color = color
+        self.temp = temp
+
+    def fill_with(self, defaults):
+        if defaults is None:
+            return self
+        self.color = self.color if self.color is not None else defaults.color
+        self.temp = self.temp if self.temp is not None else defaults.temp
+        assert self.color is not None
+        return self
+
+    def __str__(self):
+        if self.temp:
+            return '{} Temp'.format(self.color)
+        return self.color
+
+
 def parse_color(text):
     if isinstance(text, Color):
         return text
@@ -161,3 +184,13 @@ def parse_map_icon(obj):
         return None
 
     return MapIcon(size=obj.get('size'), color=obj.get('color'), shape=obj.get('shape'))
+
+
+def parse_beam(obj):
+    if isinstance(obj, Beam):
+        return obj
+
+    if obj is None:
+        return None
+
+    return Beam(color=obj.get('color'), temp=obj.get('temp'))
