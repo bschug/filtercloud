@@ -38,10 +38,8 @@ class ItemStyle(object):
             yield '    SetBorderColor ' + str(self.border)
         if self.fontsize:
             yield '    SetFontSize ' + str(self.fontsize)
-        if self.sound and not self.sound.positional:
-            yield '    PlayAlertSound ' + str(self.sound)
-        if self.sound and self.sound.positional:
-            yield '    PlayAlertSoundPositional ' + str(self.sound)
+        if self.sound:
+            yield '    ' + str(self.sound)
         if self.disable_drop_sound:
             yield '    DisableDropSound'
 
@@ -74,10 +72,11 @@ class Color(object):
 
 
 class Sound(object):
-    def __init__(self, soundid=None, volume=None, positional=None):
+    def __init__(self, soundid=None, volume=None, positional=None, custom=None):
         self.soundid = soundid
         self.volume = volume
         self.positional = positional
+        self.custom = custom
 
     def fill_with(self, defaults):
         if defaults is None:
@@ -85,14 +84,19 @@ class Sound(object):
         self.soundid = self.soundid or defaults.soundid
         self.volume = self.volume or defaults.volume
         self.positional = self.positional if self.positional is not None else defaults.positional
-        assert not any(x is None for x in (self.soundid, self.volume, self.positional))
+        self.custom = self.custom if self.custom is not None else defaults.custom
+        assert not any(x is None for x in (self.soundid, self.volume, self.positional, self.custom))
         return self
 
     def __str__(self):
+        if self.custom:
+            return 'CustomAlertSound "{}"'.format(self.soundid)
+
+        action = 'PlayAlertSoundPositional' if self.positional else 'PlayAlertSound'
         if self.volume != 100:
-            return '{} {}'.format(self.soundid, self.volume)
+            return '{} {} {}'.format(action, self.soundid, self.volume)
         else:
-            return str(self.soundid)
+            return '{} {}'.format(action, self.soundid)
 
 
 def parse_color(text):
@@ -120,7 +124,7 @@ def parse_sound(text):
 
     parts = text.split()
     if len(parts) == 1:
-        return Sound(soundid=parts, volume=100, positional=False)
+        return Sound(soundid=parts, volume=100, positional=False, custom=False)
     else:
         soundid, volume = parts
-        return Sound(soundid=soundid, volume=volume, positional=False)
+        return Sound(soundid=soundid, volume=volume, positional=False, custom=False)
