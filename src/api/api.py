@@ -84,7 +84,7 @@ def post_update_selectors():
 
 @app.route('/api/filter/leagues', methods=['GET'])
 def get_leagues():
-    return jsonify(['Standard', 'Hardcore', 'Incursion', 'Hardcore Incursion'])
+    return jsonify(['Standard', 'Hardcore', 'Delve', 'Hardcore Delve'])
 
 
 @app.route('/api/filter/game-constants', methods=['GET'])
