@@ -1,5 +1,15 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
+# Delve
+Show
+    BaseType Fossil
+{{ style.highlight.breach }}
+
+Show
+    Class "Socketable Currency"
+{{ style.highlight.breach }}
+
+
 # Incursion
 Show
     Class "Incursion Item"

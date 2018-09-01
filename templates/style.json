@@ -6,7 +6,15 @@
 			"background": "240 180 40",
 			"fontsize": "48",
 			"border": "0 0 0",
-			"sound": "1 300"
+			"sound": "1 300",
+			"map_icon": {
+				"size": 0,
+				"color": "White",
+				"shape": "Star"
+			},
+			"beam": {
+				"color": "White"
+			}
 		}
 	},
 	"strong_highlight": {
@@ -14,7 +22,15 @@
 			"textcolor": "0 0 0",
 			"border": "0 0 0",
 			"fontsize": "48",
-			"sound": "1 300"
+			"sound": "1 300",
+			"map_icon": {
+				"size": 1,
+				"color": "Blue",
+				"shape": "Diamond"
+			},
+			"beam": {
+				"color": "Blue"
+			}
 		},
 		
 		"normal": {
@@ -30,24 +46,45 @@
 			"background": "175 78 17"
 		},
 		"currency": {
-			"background": "170 158 130"
+			"background": "170 158 130",
+			"map_icon": {
+				"shape": "Circle"
+			}
 		},
 		"gem": {
-			"background": "27 162 155"
+			"background": "27 162 155",
+			"beam": {
+				"temp": true
+			}
 		},
 		"breach": {
 			"textcolor": "30 0 50",
-			"background": "200 80 150"
+			"background": "200 80 150",
+			"map_icon": {
+				"shape": "Hexagon"
+			}
 		},
 		"divcard": {
-			"background": "170 230 230"
+			"background": "170 230 230",
+			"map_icon": {
+				"shape": "Square"
+			}
 		}
 	},
 	"highlight": {
 		"default": {
 			"border": "0 0 0",
 			"fontsize": "40",
-			"sound": "6 300"
+			"sound": "6 300",
+			"map_icon": {
+				"size": 2,
+				"color": "Brown",
+				"shape": "Diamond"
+			},
+			"beam": {
+				"color": "Brown",
+				"temp": true
+			}
 		},
 		"normal": {
 			"background": "80 80 80 220"
@@ -62,18 +99,27 @@
 			"background": "70 35 14 220"
 		},
 		"currency": {
-			"background": "63 59 49 220"
+			"background": "63 59 49 220",
+			"map_icon": {
+				"shape": "Circle"
+			}
 		},
 		"gem": {
 			"background": "35 80 80 220"
 		},
 		"breach": {
 			"background": "30 0 50 200",
-			"textcolor": "200 80 150"
+			"textcolor": "200 80 150",
+			"map_icon": {
+				"shape": "Hexagon"
+			}
 		},
 		"divcard": {
 			"textcolor": "170 230 230",
-			"background": "85 115 115 220"
+			"background": "85 115 115 220",
+			"map_icon": {
+				"shape": "Square"
+			}
 		}
 	},
 	"normal": {
@@ -99,16 +145,27 @@
 	"map": {
 		"default": {
 			"fontsize": "40",
-			"sound": "4 300"
+			"sound": "4 300",
+			"map_icon": {
+				"size": 1,
+				"color": "Brown",
+				"shape": "Triangle"
+			}
 		},
 		"white": {
 			"border": "200 200 200"
 		},
 		"yellow": {
-			"border": "255 255 119"
+			"border": "255 255 119",
+			"map_icon": {
+				"color": "Yellow"
+			}
 		},
 		"red": {
-			"border": "255 0 0"
+			"border": "255 0 0",
+			"map_icon": {
+				"color": "Red"
+			}
 		}
 	},
 	"hidden": {
@@ -139,7 +196,15 @@
 			"textcolor": "0 120 0",
 			"border": "0 120 0",
 			"background": "255 255 255",
-			"sound": "1 300"
+			"sound": "1 300",
+			"map_icon": {
+				"size": 0,
+				"color": "Green",
+				"shape": "Star"
+			},
+			"beam": {
+				"color": "Green"
+			}
 		}
 	}
 }
