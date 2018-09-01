@@ -16,6 +16,9 @@ import pricechecking
 import users
 
 
+ACTIVE_LEAGUES = ['Standard', 'Hardcore', 'Delve', 'Hardcore Delve']
+
+
 def get_db():
     """Open database connection if it's not already open."""
     if not hasattr(g, 'mongo_db'):
@@ -67,7 +70,7 @@ def post_scrape_wiki():
 
 @app.route('/api/scraper/update-prices', methods=['POST'])
 def post_update_prices():
-    for league in ['Standard', 'Hardcore']:
+    for league in ACTIVE_LEAGUES:
         pricechecking.update_currency_prices(league, get_db())
         pricechecking.update_divcard_prices(league, get_db())
         pricechecking.update_unique_prices(league, get_db())
@@ -84,7 +87,7 @@ def post_update_selectors():
 
 @app.route('/api/filter/leagues', methods=['GET'])
 def get_leagues():
-    return jsonify(['Standard', 'Hardcore', 'Delve', 'Hardcore Delve'])
+    return jsonify(ACTIVE_LEAGUES)
 
 
 @app.route('/api/filter/game-constants', methods=['GET'])
