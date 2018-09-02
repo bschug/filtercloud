@@ -126,6 +126,9 @@
 		"default": {
 			"fontsize": "36"
 		},
+		"breach": {
+			"textcolor": "200 80 150"
+		},
 		"divcard": {
 			"textcolor": "170 230 230"
 		}

@@ -2,8 +2,28 @@
 
 # Delve
 Show
+    BaseType "Fractured Fossil"
+{{ style.ultra_rare.currency }}
+
+Show
+    BaseType Sanctified Shuddering Glyphic Gilded Encrusted Tangled
     BaseType Fossil
+{{ style.strong_highlight.breach }}
+
+Show
+    BaseType  Hollow Bloodstained Faceted
+{{ style.strong_highlight.breach }}
+
+Show
+    BaseType Corroded Perfect Aetheric Bound Prismatic Serrated Enchanted Lucent
+    BaseType Fossil
+    Class "Stackable Currency"
 {{ style.highlight.breach }}
+
+Show
+    BaseType Fossil
+    Class "Stackable Currency"
+{{ style.normal.breach }}
 
 Show
     Class "Socketable Currency"
