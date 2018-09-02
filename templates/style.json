@@ -9,11 +9,11 @@
 			"sound": "1 300",
 			"map_icon": {
 				"size": 0,
-				"color": "White",
+				"color": "Brown",
 				"shape": "Star"
 			},
 			"beam": {
-				"color": "White"
+				"color": "Brown"
 			}
 		}
 	},
@@ -25,12 +25,10 @@
 			"sound": "1 300",
 			"map_icon": {
 				"size": 1,
-				"color": "Blue",
-				"shape": "Diamond"
+				"color": "White",
+				"shape": "Circle"
 			},
-			"beam": {
-				"color": "Blue"
-			}
+			"beam": { "color": "White" }
 		},
 		
 		"normal": {
@@ -48,27 +46,35 @@
 		"currency": {
 			"background": "170 158 130",
 			"map_icon": {
-				"shape": "Circle"
-			}
+				"shape": "Diamond",
+				"color": "Yellow"
+			},
+			"beam": {"color": "Yellow"}
 		},
 		"gem": {
 			"background": "27 162 155",
-			"beam": {
-				"temp": true
-			}
+			"map_icon": {
+				"shape": "Circle",
+				"color": "Blue"
+			},
+			"beam": { "color": "Blue" }
 		},
 		"breach": {
 			"textcolor": "30 0 50",
 			"background": "200 80 150",
 			"map_icon": {
-				"shape": "Hexagon"
-			}
+				"shape": "Hexagon",
+				"color": "Red"
+			},
+			"beam": {"color": "Red"}
 		},
 		"divcard": {
 			"background": "170 230 230",
 			"map_icon": {
-				"shape": "Square"
-			}
+				"shape": "Square",
+				"color": "Blue"
+			},
+			"beam": { "color": "Blue" }
 		}
 	},
 	"highlight": {
@@ -101,25 +107,36 @@
 		"currency": {
 			"background": "63 59 49 220",
 			"map_icon": {
-				"shape": "Circle"
-			}
+				"shape": "Diamond",
+				"color": "Yellow"
+			},
+			"beam": {"color": "Yellow"}
 		},
 		"gem": {
-			"background": "35 80 80 220"
+			"background": "35 80 80 220",
+			"map_icon": {
+				"shape": "Circle",
+				"color": "Blue"
+			},
+			"beam": { "color": "Blue" }
 		},
 		"breach": {
 			"background": "30 0 50 200",
 			"textcolor": "200 80 150",
 			"map_icon": {
-				"shape": "Hexagon"
-			}
+				"shape": "Hexagon",
+				"color": "Red"
+			},
+			"beam": {"color": "Red"}
 		},
 		"divcard": {
 			"textcolor": "170 230 230",
 			"background": "85 115 115 220",
 			"map_icon": {
-				"shape": "Square"
-			}
+				"shape": "Square",
+				"color": "Blue"
+			},
+			"beam": {"color": "Blue"}
 		}
 	},
 	"normal": {
@@ -151,24 +168,28 @@
 			"sound": "4 300",
 			"map_icon": {
 				"size": 1,
-				"color": "Brown",
+				"color": "White",
 				"shape": "Triangle"
+			},
+			"beam": {
+				"color": "White",
+				"temp": true
 			}
 		},
 		"white": {
-			"border": "200 200 200"
+			"border": "200 200 200",
+			"map_icon": { "color": "White" },
+			"beam": { "color": "White "}
 		},
 		"yellow": {
 			"border": "255 255 119",
-			"map_icon": {
-				"color": "Yellow"
-			}
+			"map_icon": { "color": "Yellow" },
+			"beam": { "color": "Yellow" }
 		},
 		"red": {
 			"border": "255 0 0",
-			"map_icon": {
-				"color": "Red"
-			}
+			"map_icon": { "color": "Red" },
+			"beam": { "color": "Red" }
 		}
 	},
 	"hidden": {
@@ -196,9 +217,9 @@
 	"quest": {
 		"default": {
 			"fontsize": "48",
-			"textcolor": "0 120 0",
+			"textcolor": "0 0 0",
 			"border": "0 120 0",
-			"background": "255 255 255",
+			"background": "74 230 58",
 			"sound": "1 300",
 			"map_icon": {
 				"size": 0,
