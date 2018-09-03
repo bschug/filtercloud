@@ -232,6 +232,91 @@ Vue.component('itempreview', {
 });
 
 
+Vue.component('style-editor', {
+    template: '\
+        <div class="style-editor"> \
+            <h2>{{ title }}<span class="tooltip"><slot></slot></span></h2> \
+            <p> \
+                <span v-for="item in items" @click="onClickItem(item)"> \
+                    <itempreview \
+                        :item="item.name" \
+                        :item-style="item.style" \
+                        :item-rarity="item.rarity" \
+                        :item-class="item.itemClass" \
+                        :deletable="false" \
+                        :hidden="false"> \
+                    </itempreview> \
+                </span> \
+            </p> \
+            <div class="style-editor-ui" v-show="isEditorOpen"> \
+                <p>This will be the style editor for {{ editorOpenFor }}</p> \
+            </div> \
+        </div>',
+
+    props: ['title', 'itemStyle', 'variants'],
+
+    data: function() { return {
+        editorOpenFor: null
+    }},
+
+    computed: {
+        isEditorOpen: function() {
+            return this.editorOpenFor !== null;
+        },
+
+        items: function() {
+            var variants = ['default'];
+            if (this.variants.trim().length > 0) {
+                variants = variants.concat( this.variants.trim().split(',') );
+            }
+
+            var nameOverrides = {
+                'breach': 'League Item',
+                'divcard': 'Divination Card'
+            };
+            var styleOverrides = {
+                'default': this.itemStyle
+            };
+            var rarityOverrides = {
+                'magic': 'magic',
+                'rare': 'rare',
+                'unique': 'unique'
+            }
+            var iclassOverrides = {
+                'currency': 'Stackable Currency',
+                'gem': 'Active Skill Gems',
+                'divcard': 'Divination Cards',
+                'quest': 'Quest Items'
+            }
+            if (this.itemStyle === 'map') {
+                iclassOverrides = new Proxy({}, {
+                    get: (target, name) => 'Maps'
+                })
+            }
+
+            var self = this;
+            var result = variants.map(function (v) { return {
+                name: nameOverrides[v] || StrUtils.capitalize(v),
+                style: styleOverrides[v] || (self.itemStyle + '.' + v),
+                rarity: rarityOverrides[v] || 'normal',
+                itemClass: iclassOverrides[v] || 'Wands'
+            }});
+            return result;
+        }
+    },
+
+    methods: {
+        onClickItem: function (item) {
+            if (this.editorOpenFor === item.style) {
+                this.editorOpenFor = null;
+            } else {
+                this.editorOpenFor = item.style;
+            }
+        }
+    }
+})
+
+
 Vue.component('thresholdslider', {
     template: '\
         <div class="threshold-slider"> \

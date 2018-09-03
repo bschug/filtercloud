@@ -69,6 +69,10 @@ var StrUtils = {
 	parseIntOrDefault: function (str, defaultValue) {
 		var result = parseInt(str);
 		return isNaN(result) ? defaultValue : result;
+	},
+
+	capitalize: function (str) {
+	    return str.charAt(0).toUpperCase() + str.slice(1);
 	}
 };
 
