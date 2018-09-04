@@ -14,6 +14,7 @@
     <script src="https://unpkg.com/vue"></script>
 
     <script src="js/components.js"></script>
+    <script src="js/components-style-editor.js"></script>
     <script src="js/config.js"></script>
     <script src="js/gamedata.js"></script>
     <script src="js/main.js"></script>
@@ -288,43 +289,43 @@
                     </div>
                 </div>
 
-                <style-editor title="Ultra Rare" item-style="ultra_rare" variants="currency,fishing">
+                <style-editor title="Ultra Rare" item-style="ultra_rare" variants="currency,fishing" v-model="style">
                     For rare special items like Mirrors, Fishing Rods, Rhoa Feathers and Reliquary Keys
                 </style-editor>
 
-                <style-editor title="Strong Highlight" item-style="strong_highlight" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Strong Highlight" item-style="strong_highlight" variants="normal,magic,rare,unique,currency,gem,breach,divcard" v-model="style">
                     For very valuable items worth at least a few dozen chaos. Thresholds are configurable. Six-Links always get a strong highlight.
                 </style-editor>
 
-                <style-editor title="Highlight" item-style="highlight" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Highlight" item-style="highlight" variants="normal,magic,rare,unique,currency,gem,breach,divcard" v-model="style">
                     Items that are always worth picking up.
                 </style-editor>
 
-                <style-editor title="Regular" item-style="normal" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Regular" item-style="normal" variants="normal,magic,rare,unique,currency,gem,breach,divcard" v-model="style">
                     Items you usually want to pick up but might skip if you'd have to go out of your way. In the default style, these don't have alert sounds.
                 </style-editor>
 
-                <style-editor title="Smaller" item-style="smaller" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Smaller" item-style="smaller" variants="normal,magic,rare,unique,currency,gem,breach,divcard" v-model="style">
                     Items that you usually wouldn't pick up but still want to see for some reason.
                 </style-editor>
 
-                <style-editor title="Maps" item-style="map" variants="white,yellow,red">
+                <style-editor title="Maps" item-style="map" variants="white,yellow,red" v-model="style">
                     Maps get special treatment because they are highlighted based on tier.
                 </style-editor>
 
-                <style-editor title="Hidden" item-style="hidden" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Hidden" item-style="hidden" variants="normal,magic,rare,unique,currency,gem,breach,divcard" v-model="style">
                     When you press Alt, the game will show you items hidden by the filter. This controls what they will look like.
                 </style-editor>
 
-                <style-editor title="Leveling" item-style="leveling" variants="">
+                <style-editor title="Leveling" item-style="leveling" variants="" v-model="style">
                     Leveling rules will highlight items that are good for your build at your current level.
                 </style-editor>
 
-                <style-editor title="Animate Weapon" item-style="animate_weapon" variants="">
+                <style-editor title="Animate Weapon" item-style="animate_weapon" variants="" v-model="style">
                     The filter can optionally show weapons usable with Animate Weapon.
                 </style-editor>
 
-                <style-editor title="Quest Items" item-style="quest" variants="">
+                <style-editor title="Quest Items" item-style="quest" variants="" v-model="style">
                     This includes regular quest items, but also Labyrinth items like Silver Keys, Portal Shredder, etc.
                 </style-editor>
             </div>
