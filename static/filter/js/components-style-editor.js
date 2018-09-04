@@ -104,41 +104,50 @@ Vue.component('style-editor', {
     }
 })
 
-
+/*
+ * This one is a bit more complicated:
+ * We hold a copy of the style definition as an internal state.
+ * Whenever the external state changes, we overwrite out internal state with it.
+ * Whenever one of the properties is changed, we write it to the internal state and
+ * then emit that one to the parent.
+ */
 Vue.component('style-editor-ui', {
     template: '\
         <div class="style-editor-ui"> \
             <h3>Edit Style</h3> \
             <div class="style-editor-ui-main"> \
-                <style-editor-fontsize :value="fontsize" @input="setFontSize"></style-editor-fontsize> \
+                <style-editor-fontsize :value="fontsize" @input="fontsize = $event"></style-editor-fontsize> \
             </div> \
         </div>',
 
     props: ['styleData'],
 
     data: function() { return {
-        fontsize: this.styleData.fontsize || null,
+        state: this.styleData
     }},
 
+    computed: {
+        fontsize: {
+            get() { return this.state.fontsize },
+            set(newValue) { this.state.fontsize = newValue; this.emitStyle(); }
+        }
+    },
+
     methods: {
-        buildStyle: function() {
+        emitStyle: function() {
             var style = {};
-            if (this.fontsize) {
-                this.$set(style, 'fontsize', this.fontsize);
+            for (var key of Object.keys(this.state)) {
+                if (key[0] !== '$') {
+                    style[key] = this.state[key];
+                }
             }
             this.$emit('input', style);
         },
-        setFontSize: function (value) {
-            console.log("setFontSize", value)
-            this.fontsize = value;
-            this.buildStyle();
-        }
     },
 
     watch: {
         styleData: function (newValue, oldValue) {
-            console.log("Fontsize -> ", newValue.fontsize);
-            this.fontsize = newValue.fontsize;
+            this.state = newValue;
         }
     },
 })
