@@ -237,7 +237,7 @@ Vue.component('style-editor', {
         <div class="style-editor"> \
             <h2>{{ title }}<span class="tooltip"><slot></slot></span></h2> \
             <p> \
-                <span v-for="item in items" @click="onClickItem(item)"> \
+                <span v-for="item in items" @click="onClickItem(item)" v-bind:class="{ selected: editorOpenFor === item.style }"> \
                     <itempreview \
                         :item="item.name" \
                         :item-style="item.style" \
@@ -248,12 +248,10 @@ Vue.component('style-editor', {
                     </itempreview> \
                 </span> \
             </p> \
-            <div class="style-editor-ui" v-show="isEditorOpen"> \
-                <p>This will be the style editor for {{ editorOpenFor }}</p> \
-            </div> \
+            <!--style-editor-ui v-if="isEditorOpen" v-model="editedStyle"></style-editor-ui--> \
         </div>',
 
-    props: ['title', 'itemStyle', 'variants'],
+    props: ['value', 'title', 'itemStyle', 'variants'],
 
     data: function() { return {
         editorOpenFor: null

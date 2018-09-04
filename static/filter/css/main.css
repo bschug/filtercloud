@@ -165,3 +165,14 @@ h3:hover > .tooltip { visibility: visible; }
     margin-right: 2.5em;
     display: inline-block;
 }
+
+.style-editor span.selected {
+    padding: 1px;
+    border: 1px dashed yellow;
+    margin: 1px;
+    display: inline-block;
+}
+
+.style-editor span.selected .item-preview {
+    margin: 0px;
+}
