@@ -15,10 +15,10 @@ Vue.component('style-editor', {
                     </itempreview> \
                 </span> \
             </p> \
-            <style-editor-ui v-if="isEditorOpen" :style-data="editedStyle" @input="saveStyle"></style-editor-ui> \
+            <style-editor-ui v-if="isEditorOpen" :style-data="editedStyleData" @input="saveStyle"></style-editor-ui> \
         </div>',
 
-    props: ['value', 'title', 'itemStyle', 'variants'],
+    props: ['title', 'itemStyle', 'variants'],
 
     data: function() { return {
         editorOpenFor: null
@@ -29,16 +29,15 @@ Vue.component('style-editor', {
             return this.editorOpenFor !== null;
         },
 
-        editedStyle: function() {
+        editedStyleData: function() {
             if (this.editorOpenFor === null) {
                 return null;
             }
-            var current = this.value;
-            for (var p of this.editorOpenFor.split('.')) {
-                current = current[p] || {};
-            }
-            console.log(JSON.stringify(current));
-            return current;
+            var parts = this.editorOpenFor.split('.');
+            var category = parts[0];
+            var variant = parts[1];
+
+            return Style.data[category][variant] || {};
         },
 
         items: function() {
@@ -100,8 +99,7 @@ Vue.component('style-editor', {
             var category = parts[0];
             var variant = parts[1];
 
-            this.$set(this.value[category], variant, styleData);
-            this.$emit('input', this.value);
+            this.$set(Style.data[category], variant, styleData);
         }
     }
 })
@@ -126,7 +124,7 @@ Vue.component('style-editor-ui', {
         buildStyle: function() {
             var style = {};
             if (this.fontsize) {
-                style.fontsize = this.fontsize;
+                this.$set(style, 'fontsize', this.fontsize);
             }
             this.$emit('input', style);
         },
@@ -134,6 +132,13 @@ Vue.component('style-editor-ui', {
             console.log("setFontSize", value)
             this.fontsize = value;
             this.buildStyle();
+        }
+    },
+
+    watch: {
+        styleData: function (newValue, oldValue) {
+            console.log("Fontsize -> ", newValue.fontsize);
+            this.fontsize = newValue.fontsize;
         }
     },
 })
@@ -144,19 +149,25 @@ Vue.component('style-editor-fontsize', {
         <p class="fontsize"> \
             <input type="checkbox" v-model="hasFontSize"> \
             <label for="style-editor-fontsize">Font Size:</label> \
-            <select id="style-editor-fontsize" v-model.int="fontSize"> \
+            <select \
+                id="style-editor-fontsize" \
+                v-bind:value="value" \
+                v-on:input="$emit(\'input\', $event.target.value)"> \
                 <option v-for="x in allowedFontSizes">{{ x }}</option> \
             </select> \
         </p>',
 
     props: ['value'],
 
-    data: function() { return {
-        hasFontSize: !!this.value,
-        fontSize: this.value
-    }},
-
     computed: {
+        hasFontSize: {
+            get() {
+                return !!this.value;
+            },
+            set(newValue) {
+                if (!newValue) { this.$emit('input', null); }
+            }
+        },
         allowedFontSizes: function() {
             var result = [];
             for (var i=18; i <= 45; i++) {
@@ -164,20 +175,5 @@ Vue.component('style-editor-fontsize', {
             }
             return result;
         }
-    },
-
-    methods: {
-        save: function() {
-            if (!this.hasFontSize || !this.fontSize) {
-                this.$emit( 'input', null );
-            } else {
-                this.$emit( 'input', parseInt(this.fontSize) );
-            }
-        }
-    },
-
-    watch: {
-        hasFontSize: function() { this.save(); },
-        fontSize: function() { this.save(); }
     }
 })
