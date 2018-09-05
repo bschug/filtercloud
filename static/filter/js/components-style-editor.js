@@ -51,7 +51,6 @@ Vue.component('style-editor', {
                 'divcard': 'Divination Card'
             };
             var styleOverrides = {
-                'default': this.itemStyle
             };
             var rarityOverrides = {
                 'magic': 'magic',
