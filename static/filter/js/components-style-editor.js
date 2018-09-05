@@ -118,6 +118,7 @@ Vue.component('style-editor-ui', {
                 <style-editor-fontsize :value="fontsize" @input="fontsize = $event">Font Size</style-editor-fontsize> \
                 <style-editor-color :value="textcolor" @input="textcolor = $event" id="textcolor">Text Color</style-editor-color> \
                 <style-editor-color :value="background" @input="background = $event" id="background">Background</style-editor-color> \
+                <style-editor-color :value="border" @input="border = $event" id="border">Border Color</style-editor-color> \
             </div> \
         </div>',
 
@@ -139,6 +140,10 @@ Vue.component('style-editor-ui', {
         background: {
             get() { return this.state.background },
             set(newValue) { this.state.background = newValue; this.emitStyle(); }
+        },
+        border: {
+            get() { return this.state.border },
+            set(newValue) { this.state.border = newValue; this.emitStyle(); }
         }
     },
 
