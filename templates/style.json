@@ -4,7 +4,7 @@
 		"default": {
 			"textcolor": "0 0 0",
 			"background": "240 180 40",
-			"fontsize": "48",
+			"fontsize": "45",
 			"border": "0 0 0",
 			"sound": "1 300",
 			"map_icon": {
@@ -21,7 +21,7 @@
 		"default": {
 			"textcolor": "0 0 0",
 			"border": "0 0 0",
-			"fontsize": "48",
+			"fontsize": "45",
 			"sound": "1 300",
 			"map_icon": {
 				"size": 1,
@@ -216,7 +216,7 @@
 	},
 	"quest": {
 		"default": {
-			"fontsize": "48",
+			"fontsize": "45",
 			"textcolor": "0 0 0",
 			"border": "0 120 0",
 			"background": "74 230 58",
