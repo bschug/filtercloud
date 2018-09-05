@@ -116,7 +116,8 @@ Vue.component('style-editor-ui', {
         <div class="style-editor-ui"> \
             <h3>Edit Style</h3> \
             <div class="style-editor-ui-main"> \
-                <style-editor-fontsize :value="fontsize" @input="fontsize = $event"></style-editor-fontsize> \
+                <style-editor-fontsize :value="fontsize" @input="fontsize = $event">Font Size</style-editor-fontsize> \
+                <style-editor-color :value="textcolor" @input="textcolor = $event" id="textcolor">Text Color</style-editor-color> \
             </div> \
         </div>',
 
@@ -130,6 +131,10 @@ Vue.component('style-editor-ui', {
         fontsize: {
             get() { return this.state.fontsize },
             set(newValue) { this.state.fontsize = newValue; this.emitStyle(); }
+        },
+        textcolor: {
+            get() { return this.state.textcolor },
+            set(newValue) { this.state.textcolor = newValue; this.emitStyle(); }
         }
     },
 
@@ -156,8 +161,8 @@ Vue.component('style-editor-ui', {
 Vue.component('style-editor-fontsize', {
     template: '\
         <p class="fontsize"> \
-            <input type="checkbox" v-model="hasFontSize"> \
-            <label for="style-editor-fontsize">Font Size:</label> \
+            <input type="checkbox" v-model="hasValue"> \
+            <label for="style-editor-fontsize"><slot></slot>:</label> \
             <select \
                 id="style-editor-fontsize" \
                 v-bind:value="value" \
@@ -169,7 +174,7 @@ Vue.component('style-editor-fontsize', {
     props: ['value'],
 
     computed: {
-        hasFontSize: {
+        hasValue: {
             get() {
                 return !!this.value;
             },
@@ -183,6 +188,71 @@ Vue.component('style-editor-fontsize', {
                 result.push(i);
             }
             return result;
+        }
+    }
+})
+
+
+Vue.component('style-editor-color', {
+    template: '\
+        <p class="color"> \
+            <input type="checkbox" v-model="hasValue"> \
+            <label :for="\'style-editor-\' + id"><slot></slot>:</label> \
+            <input type="color" :value="hexcolor" @input="hexcolor = $event.target.value"> \
+            <input type="range" min="0" max="255" :value="alpha" @input="alpha = $event.target.value"> \
+        </p>',
+
+    props: ['value', 'id'],
+
+    computed: {
+        hasValue: {
+            get() {
+                return !!this.value;
+            },
+            set(newValue) {
+                if (!newValue) { this.$emit('input', null); }
+            }
+        },
+        hexcolor: {
+            get() {
+                if (!this.value) {
+                    return '#FFFFFF';
+                }
+                var rgba = this.value.split(' ');
+                var r = parseInt(rgba[0]);
+                var g = parseInt(rgba[1]);
+                var b = parseInt(rgba[2]);
+
+                var hexR = (r < 16 ? '0' : '') + r.toString(16).toLowerCase();
+                var hexG = (g < 16 ? '0' : '') + g.toString(16).toLowerCase();
+                var hexB = (b < 16 ? '0' : '') + b.toString(16).toLowerCase();
+
+                return '#' + hexR + hexG + hexB;
+            },
+            set(newValue) {
+                var r = parseInt(newValue.substring(1,3), 16);
+                var g = parseInt(newValue.substring(3,5), 16);
+                var b = parseInt(newValue.substring(5,7), 16);
+                var a = this.alpha;
+                if (a < 255) {
+                    this.$emit('input', r + ' ' + g + ' ' + b + ' ' + a);
+                } else {
+                    this.$emit('input', r + ' ' + g + ' ' + b);
+                }
+            }
+        },
+        alpha: {
+            get() {
+                if (!this.value) {
+                    return 255;
+                }
+                var rgba = this.value.split(' ');
+                return parseInt(rgba[3]);
+            },
+            set(newValue) {
+                var old = this.value ? this.value.split(' ') : [0,0,0];
+                this.$emit('input', old[0] + ' ' + old[1] + ' ' + old[2] + ' ' + newValue);
+            }
         }
     }
 })
