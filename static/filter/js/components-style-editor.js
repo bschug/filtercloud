@@ -119,6 +119,7 @@ Vue.component('style-editor-ui', {
                 <style-editor-color :value="textcolor" @input="textcolor = $event" id="textcolor">Text Color</style-editor-color> \
                 <style-editor-color :value="background" @input="background = $event" id="background">Background</style-editor-color> \
                 <style-editor-color :value="border" @input="border = $event" id="border">Border Color</style-editor-color> \
+                <style-editor-mapicon :value="map_icon" @input="map_icon = $event">Minimap Icon</style-editor-mapicon> \
             </div> \
         </div>',
 
@@ -144,6 +145,10 @@ Vue.component('style-editor-ui', {
         border: {
             get() { return this.state.border },
             set(newValue) { this.state.border = newValue; this.emitStyle(); }
+        },
+        map_icon: {
+            get() { return this.state.map_icon },
+            set(newValue) { Vue.set(this.state, 'map_icon', newValue); this.emitStyle(); }
         }
     },
 
@@ -264,6 +269,106 @@ Vue.component('style-editor-color', {
             set(newValue) {
                 var old = this.value ? this.value.split(' ') : [0,0,0];
                 this.$emit('input', old[0] + ' ' + old[1] + ' ' + old[2] + ' ' + newValue);
+            }
+        }
+    }
+})
+
+
+Vue.component('style-editor-mapicon', {
+    template: '\
+        <div class="mapicon"> \
+            <span><slot></slot>:<span class="tooltip">Map icons are currently not shown in the preview. They still propagate from the defaults like all other settings.</span></span> \
+            <p> \
+                <input type="checkbox" v-model="hasShape"> \
+                <label for="style-editor-mapicon-shape">Shape:</label> \
+                <select :value="size" @input="size = $event.target.value" id="style-editor-mapicon-shape"> \
+                    <option value="0">Large</option> \
+                    <option value="1">Medium</option> \
+                    <option value="2">Small</option> \
+                </select> \
+            </p> \
+            <p> \
+                <input type="checkbox" v-model="hasColor">\
+                <select class="color-constant" :value="color" @input="color = $event.target.value">\
+                    <option value="Red">Red</option>\
+                    <option value="Green">Green</option>\
+                    <option value="Blue">Blue</option>\
+                    <option value="Brown">Brown</option>\
+                    <option value="White">White</option>\
+                    <option value="Yellow">Yellow</option>\
+                </select>\
+            </p> \
+            <p> \
+                <input type="checkbox" v-model="hasShape">\
+                <select class="mapicon" id="style-editor-mapicon" :value="shape" @input="shape = $event.target.value">\
+                    <option value="Circle">Circle</option>\
+                    <option value="Square">Square</option>\
+                    <option value="Triangle">Triangle</option>\
+                    <option value="Hexagon">Hexagon</option>\
+                    <option value="Diamond">Diamond</option>\
+                    <option value="Star">Star</option>\
+                </select>\
+            </p> \
+        </div>',
+
+    props: ['value'],
+
+    data: function() { return {
+        state: this.value || {}
+    }},
+
+    watch: {
+        value: function(newValue) { console.log("NEW", newValue); this.state = newValue || {}; }
+    },
+
+    computed: {
+        hasShape: {
+            get() { return !!this.state.shape },
+            set(newValue) {
+                if (!newValue) {
+                    Vue.delete(this.state, 'shape');
+                    this.$emit('input', this.state);
+                }
+            }
+        },
+        shape: {
+            get() { return this.state.shape },
+            set(newValue) {
+                Vue.set(this.state, 'shape', newValue);
+                this.$emit('input', this.state);
+            }
+        },
+        hasColor: {
+            get() { return !!this.state.color },
+            set(newValue) {
+                if (!newValue) {
+                    Vue.delete(this.state, 'color');
+                    this.$emit('input', this.state);
+                }
+            }
+        },
+        color: {
+            get() { return this.state.color },
+            set(newValue) {
+                Vue.set(this.state, 'color', newValue);
+                this.$emit('input', this.state);
+            }
+        },
+        hasSize: {
+            get() { return !!this.state.size },
+            set(newValue) {
+                if (!newValue) {
+                    Vue.delete(this.state, 'size');
+                    this.$emit('input', this.state);
+                }
+            }
+        },
+        size: {
+            get() { return this.state.size },
+            set(newValue) {
+                Vue.set(this.state, 'size', parseInt(newValue));
+                this.$emit('input', this.state);
             }
         }
     }
