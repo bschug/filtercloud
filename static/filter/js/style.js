@@ -76,7 +76,7 @@
 
         // scale font size from ingame units to css units
         var fontSize = parseInt(style.fontsize);
-        fontSize = MathUtils.remap(fontSize, 18, 45, 10, 24);
+        fontSize = MathUtils.remap(fontSize, 18, 45, 10, 28);
         result.fontSize = '' + fontSize + 'px';
 
         // scale height with font size, but keep a minimum and maximum margin
