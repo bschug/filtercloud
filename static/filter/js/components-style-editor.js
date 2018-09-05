@@ -118,6 +118,7 @@ Vue.component('style-editor-ui', {
             <div class="style-editor-ui-main"> \
                 <style-editor-fontsize :value="fontsize" @input="fontsize = $event">Font Size</style-editor-fontsize> \
                 <style-editor-color :value="textcolor" @input="textcolor = $event" id="textcolor">Text Color</style-editor-color> \
+                <style-editor-color :value="background" @input="background = $event" id="background">Background</style-editor-color> \
             </div> \
         </div>',
 
@@ -135,6 +136,10 @@ Vue.component('style-editor-ui', {
         textcolor: {
             get() { return this.state.textcolor },
             set(newValue) { this.state.textcolor = newValue; this.emitStyle(); }
+        },
+        background: {
+            get() { return this.state.background },
+            set(newValue) { this.state.background = newValue; this.emitStyle(); }
         }
     },
 
@@ -247,6 +252,9 @@ Vue.component('style-editor-color', {
                     return 255;
                 }
                 var rgba = this.value.split(' ');
+                if (rgba.length < 4) {
+                    return 255;
+                }
                 return parseInt(rgba[3]);
             },
             set(newValue) {
