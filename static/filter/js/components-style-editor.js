@@ -120,6 +120,7 @@ Vue.component('style-editor-ui', {
                 <style-editor-color :value="background" @input="background = $event" id="background">Background</style-editor-color> \
                 <style-editor-color :value="border" @input="border = $event" id="border">Border Color</style-editor-color> \
                 <style-editor-mapicon :value="map_icon" @input="map_icon = $event">Minimap Icon</style-editor-mapicon> \
+                <style-editor-beam :value="beam" @input="beam = $event">Beam</style-editor-beam> \
             </div> \
         </div>',
 
@@ -149,6 +150,10 @@ Vue.component('style-editor-ui', {
         map_icon: {
             get() { return this.state.map_icon },
             set(newValue) { Vue.set(this.state, 'map_icon', newValue); this.emitStyle(); }
+        },
+        beam: {
+            get() { return this.state.beam },
+            set(newValue) { Vue.set(this.state, 'beam', newValue); this.emitStyle(); }
         }
     },
 
@@ -369,6 +374,49 @@ Vue.component('style-editor-mapicon', {
             set(newValue) {
                 Vue.set(this.state, 'size', parseInt(newValue));
                 this.$emit('input', this.state);
+            }
+        }
+    }
+})
+
+Vue.component('style-editor-beam', {
+    template: '\
+        <p class="beam"> \
+            <input type="checkbox" v-model="hasValue"> \
+            <label><slot></slot></label> \
+            <select :value="color" @input="color = $event.target.value">\
+                <option value="Red">Red</option>\
+                <option value="Green">Green</option>\
+                <option value="Blue">Blue</option>\
+                <option value="Brown">Brown</option>\
+                <option value="White">White</option>\
+                <option value="Yellow">Yellow</option>\
+            </select>\
+            <select :value="temp" @input="temp = $event.target.value">\
+                <option :value="true">Temporary</option>\
+                <option :value="false">Permanent</option>\
+            </select>\
+        </p>',
+
+    props: ['value'],
+
+    computed: {
+        hasValue: {
+            get() { return !!this.value; },
+            set(newValue) {
+                this.$emit('input', { color: this.color, temp: this.temp });
+            }
+        },
+        color: {
+            get() { return this.value ? this.value.color : 'Red' },
+            set(newValue) {
+                this.$emit('input', { color: newValue, temp: this.temp });
+            }
+        },
+        temp: {
+            get() { return this.value ? (this.value.temp ? "true" : "false") : "true" },
+            set(newValue) {
+                this.$emit('input', { color: this.color, temp: newValue == "true" });
             }
         }
     }
