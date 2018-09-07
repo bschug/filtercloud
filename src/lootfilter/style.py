@@ -171,6 +171,8 @@ def parse_sound(text):
     parts = text.split()
     if len(parts) == 1:
         return Sound(soundid=parts, volume=100, positional=False, custom=False)
+    elif parts[0] == 'custom':
+        return Sound(soundid=text[len('custom '):], volume=100, positional=False, custom=True)
     else:
         soundid, volume = parts
         return Sound(soundid=soundid, volume=volume, positional=False, custom=False)
