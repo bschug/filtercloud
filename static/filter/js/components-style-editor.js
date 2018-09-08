@@ -121,6 +121,7 @@ Vue.component('style-editor-ui', {
                 <style-editor-color :value="border" @input="border = $event" id="border">Border Color</style-editor-color> \
                 <style-editor-mapicon :value="map_icon" @input="map_icon = $event">Minimap Icon</style-editor-mapicon> \
                 <style-editor-beam :value="beam" @input="beam = $event">Beam</style-editor-beam> \
+                <style-editor-sound :value="sound" @input="sound = $event">Sound</style-editor-sound> \
             </div> \
         </div>',
 
@@ -154,6 +155,10 @@ Vue.component('style-editor-ui', {
         beam: {
             get() { return this.state.beam },
             set(newValue) { Vue.set(this.state, 'beam', newValue); this.emitStyle(); }
+        },
+        sound: {
+            get() { return this.state.sound },
+            set(newValue) { Vue.set(this.state, 'sound', newValue); this.emitStyle(); }
         }
     },
 
@@ -161,7 +166,7 @@ Vue.component('style-editor-ui', {
         emitStyle: function() {
             var style = {};
             for (var key of Object.keys(this.state)) {
-                if (key[0] !== '$') {
+                if (key[0] !== '$' && (this.state[key] !== null)) {
                     style[key] = this.state[key];
                 }
             }
@@ -283,7 +288,7 @@ Vue.component('style-editor-color', {
 Vue.component('style-editor-mapicon', {
     template: '\
         <div class="mapicon"> \
-            <span><slot></slot>:<span class="tooltip">Map icons are currently not shown in the preview. They still propagate from the defaults like all other settings.</span></span> \
+            <h4><slot></slot>:<span class="tooltip">Map icons are currently not shown in the preview. They still propagate from the defaults like all other settings.</span></h4> \
             <p> \
                 <input type="checkbox" v-model="hasShape"> \
                 <label for="style-editor-mapicon-shape">Shape:</label> \
@@ -324,7 +329,7 @@ Vue.component('style-editor-mapicon', {
     }},
 
     watch: {
-        value: function(newValue) { console.log("NEW", newValue); this.state = newValue || {}; }
+        value: function(newValue) { this.state = newValue || {}; }
     },
 
     computed: {
@@ -379,6 +384,7 @@ Vue.component('style-editor-mapicon', {
     }
 })
 
+
 Vue.component('style-editor-beam', {
     template: '\
         <p class="beam"> \
@@ -421,3 +427,154 @@ Vue.component('style-editor-beam', {
         }
     }
 })
+
+
+Vue.component('style-editor-sound', {
+    template: '\
+        <p class="sound">\
+            <input type="checkbox" v-model="hasValue">\
+            <span><slot></slot></span>\
+            <select :value="type" @input="type = $event.target.value">\
+                <option value="builtin">Built-in</option>\
+                <option value="custom">Custom</option>\
+            </select>\
+            <input v-show="type == \'custom\'" class="custom-sound-path" type="text"\
+                   v-model="customSoundPath" placeholder="Path to sound file"></input>\
+            <span v-show="type == \'builtin\'">\
+                <select :value="soundId" @input="soundId = $event.target.value">\
+                    <option v-for="i in 16" :value="i">{{ i }}</option>\
+                </select>\
+                <label>Volume:</label>\
+                <input class="volume" type="range" min="0" max="300" step="10"\
+                       :value="volume" @input="volume = $event.target.value">\
+                <span>{{ volume }}</span>\
+            </span>\
+        </p>',
+
+    props: ['value'],
+
+    data: function() {
+        var parts = this.value ? this.value.split(' ') : [];
+        return {
+            state: {
+                type: this.typeFromParts(parts),
+                soundId: this.soundIdFromParts(parts),
+                volume: this.volumeFromParts(parts),
+                customSoundPath: this.customSoundFromParts(parts)
+            }
+        }
+    },
+
+    computed: {
+        hasValue: {
+            get() { return !!this.value },
+            set(newValue) {
+                if (!newValue) { this.$emit('input', null); }
+            }
+        },
+        type: {
+            get() { return this.state.type },
+            set(newValue) {
+                this.state.type = newValue;
+                this.emitSound();
+            }
+        },
+        soundId: {
+            get() { return this.state.soundId },
+            set(newValue) {
+                this.state.soundId = newValue;
+                this.emitSound();
+            }
+        },
+        volume: {
+            get() { return this.state.volume },
+            set(newValue) {
+                this.state.volume = newValue;
+                this.emitSound();
+            }
+        },
+        customSoundPath: {
+            get() { return this.state.customSoundPath },
+            set(newValue) {
+                this.state.customSoundPath = newValue;
+                this.emitSound();
+            }
+        }
+    },
+
+    methods: {
+        emitSound: function() {
+            if (this.state.type === 'custom') {
+                if (this.state.customSoundPath === null) return;
+                if (this.state.customSoundPath.length === 0) return;
+                this.$emit('input', 'custom ' + this.state.customSoundPath);
+                return;
+            }
+
+            if (this.state.soundId === null) return;
+
+            if (this.state.volume !== 100) {
+                this.$emit('input', this.state.soundId + ' ' + this.state.volume);
+                return;
+            }
+            this.$emit('input', this.state.soundId);
+        },
+        typeFromParts: function(parts) {
+            if (parts.length < 2) { return "builtin"; }
+            if (parts[0] === 'custom') { return "custom"; }
+            return "builtin";
+        },
+        soundIdFromParts: function(parts) {
+            var soundId = parseInt(parts[0]);
+            if (isNaN(soundId)) { return null; }
+            return soundId;
+        },
+        volumeFromParts: function(parts) {
+            if (parts[0] === 'custom') { return null; }
+            if (parts.length < 2) { return 100; }
+            return parseInt(parts[1]);
+        },
+        customSoundFromParts: function(parts) {
+            // don't overwrite if this is not a custom string
+            if (parts[0] !== 'custom') { return null; }
+
+            // allow explicit empty string so that user can delete for editing
+            if (parts.length < 2) { return ''; }
+
+            // if the filename had spaces, we have split it and need to reassemble it
+            var rest = parts.slice(1);
+            return rest.join(' ');
+        }
+    },
+
+    watch: {
+        value: function(newValue, oldValue) {
+            if (newValue === null || newValue === undefined) {
+                this.state = {
+                    type: null,
+                    soundId: null,
+                    volume: 100,
+                    customSoundPath: null
+                }
+                return;
+            }
+
+            var parts = newValue.split(' ');
+            if (parts.length === 0) return;
+
+            var type = this.typeFromParts(parts);
+            var soundId = this.soundIdFromParts(parts);
+            var volume = this.volumeFromParts(parts);
+            var customSoundPath = this.customSoundFromParts(parts);
+
+            this.state = {
+                type: type === null ? this.state.type : type,
+                soundId: soundId === null ? this.state.soundId : soundId,
+                volume: volume === null ? this.state.volume : volume,
+                customSoundPath: customSoundPath === null ? this.state.customSoundPath : customSoundPath
+            }
+        }
+    }
+})
+
+
