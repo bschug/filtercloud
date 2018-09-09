@@ -98,6 +98,22 @@ var ArrayUtils = {
 	}
 };
 
+var ObjectUtils = {
+    // Ensure that the whole key structure of <defaults> also exists in <local>.
+    // If defaults.a.b isn't undefined then local.a.b will also be valid after this call.
+    addMissingKeys: function(local, defaults) {
+        for (var k in defaults) {
+            if (defaults.hasOwnProperty(k)) {
+                if (!local.hasOwnProperty(k)) {
+                    local[k] = defaults[k];
+                } else if (typeof defaults[k] === 'object') {
+                    ObjectUtils.addMissingKeys(local[k], defaults[k]);
+                }
+            }
+        }
+    }
+};
+
 var DomUtils = {
 
 	endsWithBR: function (elem) {

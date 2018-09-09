@@ -106,6 +106,14 @@
                             Config.persist_session();
                         },
                         deep: true
+                    },
+
+                    style: {
+                        handler: function() {
+                            console.log("Style changed");
+                            Style.persist_session();
+                        },
+                        deep: true
                     }
                 },
 

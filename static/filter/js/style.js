@@ -52,6 +52,14 @@
                 console.log("Loaded style: " + path);
                 Style.data = response.data;
             })
+            .then(function(response) {
+                // Restore session only if we're not explicitly loading a different style
+                // We need to do this after we've loaded the style to be able to fill in
+                // any new fields that got added to the style format.
+                if (path === '') {
+                    Style.restore_session();
+                }
+            })
             .catch(function(error) {
                 console.error("Failed to load Style: ", error);
                 alert("Failed to load Style: " + path);
@@ -77,6 +85,23 @@
                 console.error("Failed to load default Style: ", error);
                 alert("Failed to load default Style");
             });
+    }
+
+    Style.restore_session = function() {
+        var storedStyle = localStorage.getItem('poegg-filter-style');
+        if (!storedStyle) {
+            console.log("No previous filter style found");
+            return;
+        }
+        storedStyle = JSON.parse(storedStyle);
+        ObjectUtils.addMissingKeys(storedStyle, Style.data);
+        Style.data = storedStyle;
+        console.log("Restored style from saved session");
+    }
+
+    Style.persist_session = function() {
+        console.log("Remembering style");
+        localStorage.setItem('poegg-filter-style', JSON.stringify(Style.data));
     }
 
     Style.toCSS = function(style, isHidden) {

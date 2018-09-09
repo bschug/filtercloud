@@ -87,7 +87,7 @@
             return;
         }
         storedConfig = JSON.parse(storedConfig);
-        Config.addMissingKeys(storedConfig, Config.data);
+        ObjectUtils.addMissingKeys(storedConfig, Config.data);
         Config.data = storedConfig;
         console.log("Restored config from saved session");
     };
@@ -95,18 +95,6 @@
     Config.persist_session = function() {
         console.log("I will remember that");
         localStorage.setItem('poegg-filter-config', JSON.stringify(Config.data));
-    }
-
-    Config.addMissingKeys = function(local, defaults) {
-        for (var k in defaults) {
-            if (defaults.hasOwnProperty(k)) {
-                if (!local.hasOwnProperty(k)) {
-                    local[k] = defaults[k];
-                } else if (typeof defaults[k] === 'object') {
-                    Config.addMissingKeys(local[k], defaults[k]);
-                }
-            }
-        }
     }
 
 }( window.Config = window.Config || {} ));
