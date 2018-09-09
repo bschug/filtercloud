@@ -143,7 +143,7 @@
         if (color.length === 3) {
             return "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
         } else {
-            return "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + color[3] + ")";
+            return "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + (color[3] / 255) + ")";
         }
     }
 
