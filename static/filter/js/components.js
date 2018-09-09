@@ -222,7 +222,7 @@ Vue.component('itempreview', {
 
     computed: {
         style: function() {
-            return Style.toCSS(Style.getEffectiveStyle(Style.data, this.itemStyle, this.itemRarity, this.itemClass), this.hidden);
+            return Style.toCSS(Style.getEffectiveStyle(FilterCloud.app.style, this.itemStyle, this.itemRarity, this.itemClass), this.hidden);
         }
     },
 

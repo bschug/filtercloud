@@ -1,4 +1,16 @@
 
+Vue.component('style-reset-button', {
+    template: '<button @click="showConfirmDialog">Reset</button>',
+    methods: {
+        showConfirmDialog: function() {
+            if (confirm('Reset back to default Style settings?')) {
+                Style.reset();
+            }
+        }
+    }
+});
+
+
 Vue.component('style-editor', {
     template: '\
         <div class="style-editor"> \
@@ -37,7 +49,7 @@ Vue.component('style-editor', {
             var category = parts[0];
             var variant = parts[1];
 
-            return Style.data[category][variant] || {};
+            return FilterCloud.app.style[category][variant] || {};
         },
 
         items: function() {

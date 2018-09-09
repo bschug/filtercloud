@@ -42,7 +42,7 @@
 
         var path = '';
         if (id) {
-            path = owner + '/' + name;
+            path = id.owner + '/' + id.name;
             Style.owner = id.owner;
             Style.name = id.name;
         }
@@ -55,7 +55,7 @@
             .catch(function(error) {
                 console.error("Failed to load Style: ", error);
                 alert("Failed to load Style: " + path);
-                if (id !== 'default') {
+                if (id) {
                     console.log("Loading default style instead");
                     return Style.load();
                 }
@@ -64,6 +64,19 @@
 
     Style.save = function() {
         console.error("Style Saving not implemented yet");
+    }
+
+    Style.reset = function() {
+        return axios.get('/api/filter/style')
+            .then(function(response) {
+                console.log("Loaded default style");
+                Style.data = response.data;
+                FilterCloud.app.style = Style.data;
+            })
+            .catch(function(error) {
+                console.error("Failed to load default Style: ", error);
+                alert("Failed to load default Style");
+            });
     }
 
     Style.toCSS = function(style, isHidden) {
