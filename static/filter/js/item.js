@@ -13,6 +13,7 @@
     };
 
     Item.fontsizeToCSS = function (size) {
+        size = min(45, max(18, size));
 		var actualSize = MathUtils.remap( parseInt(size), 18, 45, 8, 24 );
 		return (actualSize).toString() + 'px';
 	};
