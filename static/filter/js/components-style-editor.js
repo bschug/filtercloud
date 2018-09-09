@@ -27,7 +27,9 @@ Vue.component('style-editor', {
                     </itempreview> \
                 </span> \
             </p> \
-            <style-editor-ui v-if="isEditorOpen" :style-data="editedStyleData" @input="saveStyle"></style-editor-ui> \
+            <transition name="fade"> \
+                <style-editor-ui v-if="isEditorOpen" :style-data="editedStyleData" @input="saveStyle"></style-editor-ui> \
+            </transition> \
         </div>',
 
     props: ['title', 'itemStyle', 'variants'],
@@ -303,7 +305,7 @@ Vue.component('style-editor-mapicon', {
             <h4><slot></slot>:<span class="tooltip">Map icons are currently not shown in the preview. They still propagate from the defaults like all other settings.</span></h4> \
             <p> \
                 <input type="checkbox" v-model="hasShape"> \
-                <label for="style-editor-mapicon-shape">Shape:</label> \
+                <label>Size:</label> \
                 <select :value="size" @input="size = $event.target.value" id="style-editor-mapicon-shape"> \
                     <option value="0">Large</option> \
                     <option value="1">Medium</option> \
@@ -312,6 +314,7 @@ Vue.component('style-editor-mapicon', {
             </p> \
             <p> \
                 <input type="checkbox" v-model="hasColor">\
+                <label>Color:</label> \
                 <select class="color-constant" :value="color" @input="color = $event.target.value">\
                     <option value="Red">Red</option>\
                     <option value="Green">Green</option>\
@@ -323,6 +326,7 @@ Vue.component('style-editor-mapicon', {
             </p> \
             <p> \
                 <input type="checkbox" v-model="hasShape">\
+                <label>Shape:</label> \
                 <select class="mapicon" id="style-editor-mapicon" :value="shape" @input="shape = $event.target.value">\
                     <option value="Circle">Circle</option>\
                     <option value="Square">Square</option>\

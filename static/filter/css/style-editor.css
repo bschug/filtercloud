@@ -1,0 +1,44 @@
+.style-editor-ui {
+    border: 1px solid #aaaaaa;
+    padding-left: 10px;
+}
+
+.style-editor-ui-main {
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+.style-editor-ui-main .color label {
+    display: inline-block;
+    min-width: 6em;
+}
+
+.style-editor-ui-main .mapicon > h4 {
+    margin-bottom: 0;
+}
+
+.style-editor-ui-main .mapicon > p {
+    margin: 0.5em 0 0.5em 30px;
+}
+
+.style-editor-ui-main .mapicon label {
+    display: inline-block;
+    min-width: 3em;
+}
+
+.fade-enter-active {
+    animation: fade 0.3s;
+}
+
+.fade-leave-active {
+    animation: fade 0.3s reverse;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
