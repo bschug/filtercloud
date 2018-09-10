@@ -3,6 +3,16 @@
     Style.owner = '';
     Style.name = '';
 
+    // Color names used by map icons and beams
+    Style.NAMED_COLORS = {
+        'Red': {r:250, g:120, b:100},
+        'Green': {r:140, g:250, b:120},
+        'Blue': {r:130, g:170, b:250},
+        'Brown': {r:200, g:130, b:80},
+        'White': {r:250, g:250, b:250},
+        'Yellow': {r:220, g:220, b:100}
+    };
+
     // Default styles the game uses when the filter doesn't override it
     Style.defaultStyle = function(rarity, itemClass) {
         result = {
@@ -145,6 +155,10 @@
         } else {
             return "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + (color[3] / 255) + ")";
         }
+    };
+
+    Style.colorNameToCSS = function(colorName) {
+        return Style.NAMED_COLORS[colorName];
     }
 
     /* Fill all empty stats with parent default or rarity default. */
@@ -176,14 +190,32 @@
 
         for (var key in styleDefault) {
             if (styleDefault[key] != null) {
-                result[key] = styleDefault[key];
+                var value = styleDefault[key];
+                if (typeof(value) === 'object') {
+                    result[key] = Object.assign({}, styleDefault[key]);
+                } else {
+                    result[key] = styleDefault[key];
+                }
             }
         }
         if (context in stylesheet[styleName]) {
             var styleSpecialized = stylesheet[styleName][context];
             for (var key in styleSpecialized) {
                 if (styleSpecialized[key] != null) {
-                    result[key] = styleSpecialized[key];
+                    if (key === 'map_icon') {
+                        if ('size' in styleSpecialized.map_icon) {
+                            result.map_icon.size = styleSpecialized.map_icon.size;
+                        }
+                        if ('shape' in styleSpecialized.map_icon) {
+                            result.map_icon.shape = styleSpecialized.map_icon.shape;
+                        }
+                        if ('color' in styleSpecialized.map_icon) {
+                            result.map_icon.color = styleSpecialized.map_icon.color;
+                        }
+                    }
+                    else {
+                        result[key] = styleSpecialized[key];
+                    }
                 }
             }
         }

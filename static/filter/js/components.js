@@ -215,15 +215,25 @@ Vue.component('itempreview', {
     template: '\
         <span class="item-preview" :style="style">\
             {{ item }}\
+            <mapicon v-if="hasMapIcon" :value="mapIcon"></mapicon> \
             <img src="images/buttons/close.png" alt="delete" v-if="deletable" class="delete-button" @click="deleteItem"></img>\
         </span>',
 
     props: ['item', 'itemStyle', 'deletable', 'itemRarity', 'itemClass', 'hidden'],
 
     computed: {
+        styleData: function() {
+            return Style.getEffectiveStyle(FilterCloud.app.style, this.itemStyle, this.itemRarity, this.itemClass);
+        },
         style: function() {
-            return Style.toCSS(Style.getEffectiveStyle(FilterCloud.app.style, this.itemStyle, this.itemRarity, this.itemClass), this.hidden);
-        }
+            return Style.toCSS(this.styleData, this.hidden);
+        },
+        hasMapIcon: function() {
+            return !!this.mapIcon;
+        },
+        mapIcon: function() {
+            return this.styleData.map_icon;
+        },
     },
 
     methods: {
@@ -231,6 +241,73 @@ Vue.component('itempreview', {
     }
 });
 
+
+Vue.component('mapicon', {
+    template: '\
+        <svg xmlns="http://www.w3.org/2000/svg" \
+            :width="size" :height="size" viewBox="0 0 1 1" class="map-icon"> \
+            <circle v-if="shape == \'Circle\'" \
+                cx="0.5" \
+                cy="0.5" \
+                r="0.35" \
+                :style="\'stroke:black; stroke-width:0.075; fill:\' + svgColor"> \
+            </circle> \
+            <polygon v-if="shape == \'Square\'" \
+                points="0.15,0.15 0.15,0.85 0.85,0.85 0.85,0.15" \
+                :style="\'stroke:black; stroke-width:0.075; fill:\' + svgColor"> \
+            </polygon> \
+            <g v-if="shape == \'Triangle\'"> \
+                <polygon \
+                    points="0.1,0.9 0.5,0.1 0.9,0.9" \
+                    :style="\'stroke:black; stroke-width:0.075; fill:\' + svgColor"> \
+                </polygon> \
+                <line x1="0.27" y1="0.55" x2="0.73" y2="0.55" \
+                    style="stroke:black; stroke-width:0.04"> \
+                </line> \
+            </g> \
+            <polygon v-if="shape == \'Hexagon\'" \
+                points="0.5,0.08 0.14,0.29 0.14,0.71 0.5,0.92 0.86,0.71 0.86,0.29" \
+                :style="\'stroke:black; stroke-width:0.075; fill:\' + svgColor"> \
+            </polygon> \
+            <polygon v-if="shape == \'Star\'" \
+                points="0.5,0.12 0.4,0.42 0.09,0.42 0.34,0.6 0.24,0.9 0.5,0.72 0.75,0.9 0.66,0.6 0.91,0.42 0.6,0.42" \
+                :style="\'stroke:black; stroke-width:0.075; fill:\' + svgColor"> \
+            </polygon> \
+            <g v-if="shape == \'Diamond\'"> \
+                <polygon \
+                    points="0.5,0.96 0.27,0.73 0.5,0.5 0.73,0.73" \
+                    :style="\'stroke:black; stroke-width:0.075; fill:\' + svgColor"> \
+                </polygon> \
+                <polygon \
+                    points="0.5,0.5 0.27,0.27 0.5,0.04 0.73,0.27" \
+                    :style="\'stroke:black; stroke-width:0.075; fill:\' + svgColor"> \
+                </polygon> \
+                <polygon \
+                    points="0.42,0.5 0.24,0.69 0.04,0.5 0.23,0.31" \
+                    :style="\'stroke:black; stroke-width:0.06; fill:\' + svgColor"> \
+                </polygon> \
+                <polygon \
+                    points="0.58,0.5 0.77,0.31 0.96,0.5 0.77,0.69" \
+                    :style="\'stroke:black; stroke-width:0.06; fill:\' + svgColor"> \
+                </polygon> \
+            </g> \
+        </svg>',
+
+    props: ['value'],
+
+    computed: {
+        size: function() {
+            return 10 + 10 * (2 - this.value.size);
+        },
+        shape: function() {
+            return this.value.shape;
+        },
+        svgColor: function() {
+            var c = Style.colorNameToCSS( this.value.color );
+            return 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')'
+        }
+    }
+})
 
 
 
