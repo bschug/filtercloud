@@ -23,7 +23,8 @@ Vue.component('style-editor', {
                         :item-rarity="item.rarity" \
                         :item-class="item.itemClass" \
                         :deletable="false" \
-                        :hidden="false"> \
+                        :hidden="false" \
+                        :with-icons="true"> \
                     </itempreview> \
                 </span> \
             </p> \

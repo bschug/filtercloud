@@ -219,7 +219,7 @@ Vue.component('itempreview', {
             <img src="images/buttons/close.png" alt="delete" v-if="deletable" class="delete-button" @click="deleteItem"></img>\
         </span>',
 
-    props: ['item', 'itemStyle', 'deletable', 'itemRarity', 'itemClass', 'hidden'],
+    props: ['item', 'itemStyle', 'deletable', 'itemRarity', 'itemClass', 'hidden', 'withIcons'],
 
     computed: {
         styleData: function() {
@@ -229,7 +229,7 @@ Vue.component('itempreview', {
             return Style.toCSS(this.styleData, this.hidden);
         },
         hasMapIcon: function() {
-            return !!this.mapIcon;
+            return this.withIcons && !!this.mapIcon;
         },
         mapIcon: function() {
             return this.styleData.map_icon;
