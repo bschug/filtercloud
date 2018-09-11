@@ -1,35 +1,52 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
-# Delve
+#------------------------------------
+# Delve:
+
+# Fossils
+{% if fossils.ultra_rare %}
 Show
-    BaseType "Fractured Fossil"
+    BaseType {{ fossils.ultra_rare|names }}
 {{ style.ultra_rare.currency }}
+{% endif %}
 
+{% if fossils.top_tier %}
 Show
-    BaseType Sanctified Shuddering Glyphic Gilded Encrusted Tangled
-    BaseType Fossil
+    BaseType {{ fossils.top_tier|names }}
 {{ style.strong_highlight.breach }}
+{% endif %}
 
+{% if fossils.valuable %}
 Show
-    BaseType  Hollow Bloodstained Faceted
-{{ style.strong_highlight.breach }}
-
-Show
-    BaseType Corroded Perfect Aetheric Bound Prismatic Serrated Enchanted Lucent
-    BaseType Fossil
-    Class "Stackable Currency"
+    BaseType {{ fossils.valuable|names }}
 {{ style.highlight.breach }}
+{% endif %}
 
+{% if fossils.mediocre %}
 Show
-    BaseType Fossil
-    Class "Stackable Currency"
+    BaseType {{ fossils.mediocre|names }}
 {{ style.normal.breach }}
+{% endif %}
 
+{% if fossils.worthless %}
+Show
+    BaseType {{ fossils.worthless }}
+{{ style.smaller.breach }}
+{% endif %}
+
+{% if fossils.hidden %}
+Hide
+    BaseType {{ fossils.hidden }}
+{{ style.hidden.breach }}
+{% endif %}
+
+# Resonators:
 Show
     Class "Socketable Currency"
 {{ style.highlight.breach }}
 
 
+# ------------------------------------------
 # Incursion
 Show
     Class "Incursion Item"

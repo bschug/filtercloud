@@ -160,6 +160,9 @@
 		},
 		"divcard": {
 			"textcolor": "170 230 230"
+		},
+		"breach": {
+			"textcolor": "200 80 150"
 		}
 	},
 	"map": {

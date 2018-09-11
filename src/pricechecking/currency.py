@@ -1,7 +1,7 @@
 import requests
 from collections import defaultdict
 
-from .utils import build_date_string
+from .utils import build_date_string, sort_into_tiers
 
 
 # We use an explicit list of currencies because poe.ninja is missing some currencies (like Alchemy Shards) and contains
@@ -119,12 +119,3 @@ def scrape_currency_prices(league):
 
     return {x: prices.get(x, 0) for x in ALL_CURRENCY}
 
-
-def sort_into_tiers(currency_prices, thresholds):
-    return {
-        'top_tier': [k for k, v in currency_prices.items() if v >= thresholds.top_tier],
-        'valuable': [k for k, v in currency_prices.items() if v >= thresholds.valuable and v < thresholds.top_tier],
-        'mediocre': [k for k, v in currency_prices.items() if v > thresholds.worthless and v < thresholds.valuable],
-        'worthless': [k for k, v in currency_prices.items() if v > thresholds.hidden and v <= thresholds.worthless],
-        'hidden': [k for k, v in currency_prices.items() if v < thresholds.hidden],
-    }

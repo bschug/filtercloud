@@ -25,7 +25,8 @@ def load_config(settings, style, league_uniques, db):
         'leveling': settings.get('leveling'),
         'style': style,
         'meta': settings.get('meta'),
-        'build': settings.get('build')
+        'build': settings.get('build'),
+        'fossils': build_fossils_config(settings, db)
     }
 
 
@@ -58,6 +59,14 @@ def build_divcards_config(settings, db):
     thresholds = settings.divcards.thresholds
     config = pricechecking.get_divcard_tiers(league=league, thresholds=thresholds, db=db)
     apply_overrides(config, settings.divcards.overrides)
+    return config
+
+
+def build_fossils_config(settings, db):
+    league = settings.league
+    thresholds = settings.fossils.thresholds
+    config = pricechecking.get_fossil_tiers(league=league, thresholds=thresholds, db=db)
+    apply_overrides(config, settings.fossils.overrides)
     return config
 
 
@@ -129,6 +138,7 @@ def upgrade_config(settings):
 
     settings.rares['breach_ring_explicit'] = settings.rares.get('breach_ring_explicit', [])
     settings.build['animate_weapon'] = settings.build.get('animate_weapon', False)
+    settings.fossils = settings.get('fossils', settings.divcards)
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))

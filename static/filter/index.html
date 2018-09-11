@@ -68,7 +68,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
+                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Fossils', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <p class="link" @click="give_feedback">Feedback</p>
@@ -512,6 +512,38 @@
                     Medium value gems that you may also want to pick up regardless of quality.
                 </itemList>
 
+            </div>
+
+            <div v-if="currentPage === 'Fossils'">
+                <h1>Fossils</h1>
+
+                <thresholdSlider id="fossils-toptier" v-model="config.fossils.thresholds.top_tier" title="Top Tier" op="≥"
+                                 :overrides.sync="config.fossils.overrides.top_tier" :prices="GameData.prices.fossils"
+                                 item-style="strong_highlight.breach" item-class="Currency">
+                    Items worth more than this are very valuable. If you see this highlighting, it's time to get excited!
+                </thresholdSlider>
+                <thresholdSlider id="fossils-valuable" v-model="config.fossils.thresholds.valuable" title="Valuable" op="≥"
+                                 :overrides.sync="config.fossils.overrides.valuable" :prices="GameData.prices.fossils"
+                                 item-style="highlight.breach" item-class="Currency">
+                    Anything above this is valuable, and you should always pick them up.
+                </thresholdSlider>
+                <thresholdSlider id="fossils-worthless" v-model="config.fossils.thresholds.worthless" title="Worthless" op="<"
+                                 :overrides.sync="config.fossils.overrides.worthless" :prices="GameData.prices.fossils"
+                                 item-style="smaller.breach" item-class="Currency">
+                    Anything below this is usually not worth the time picking up, unless there's a lot them in one place.
+                </thresholdSlider>
+                <thresholdSlider id="fossils-hidden" v-model="config.fossils.thresholds.hidden" title="Hidden" op="<"
+                                 :overrides.sync="config.fossils.overrides.hidden" :prices="GameData.prices.fossils"
+                                 item-style="hidden.breach" item-class="Currency" :hidden="true">
+                    Anything below this will be hidden completely.
+                </thresholdSlider>
+
+                <thresholdItemList :prices="GameData.prices.fossils" :thresholds="config.fossils.thresholds"
+                                   :hide-worthless="config.fossils.hide_low_value"
+                                   style-context="breach"
+                                   :overrides="config.fossils.overrides"
+                                   :style-overrides="{}">
+                </thresholdItemList>
             </div>
 
             <div v-if="currentPage === 'Flasks'">

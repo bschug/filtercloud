@@ -96,6 +96,21 @@
 		}
 
 	},
+
+	"fossils": {
+		"thresholds": {
+			"hidden": 0,
+			"worthless": 0.5,
+			"valuable": 3,
+			"top_tier": 15
+		},
+		"overrides": {
+			"hidden": [],
+			"worthless": [],
+			"valuable": [],
+			"top_tier": []
+		}
+	},
 	
 	"jewels": {
 		"show_magic": false,
