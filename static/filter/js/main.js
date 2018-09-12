@@ -22,7 +22,6 @@
                     configName: Config.name,
                     currentPage: null,
                     GameData: GameData,
-                    selectedLeague: 'Standard',
                     allUniqueItems: Object.keys(GameData.prices.uniques).sort(),
                     user: window.UserSession
                 },
@@ -88,18 +87,6 @@
                 },
 
                 watch: {
-                    selectedLeague: function() {
-                        GameData.loadPrices(this.selectedLeague)
-                            .then(function() {
-                                console.log("Received new prices");
-                                this.GameData = GameData;
-                                this.allUniqueItems = Object.keys(GameData.prices.uniques).sort();
-                            })
-                            .catch(function(error) {
-                                console.error("Failed to load prices for ", league, ": ", error);
-                            });
-                    },
-
                     config: {
                         handler: function() {
                             console.log("Config Changed");
@@ -118,6 +105,27 @@
                 },
 
                 computed: {
+                    selectedLeague: {
+                        get() { return this.config.league },
+                        set(newValue) {
+                            if (newValue === this.config.league) {
+                                return;
+                            }
+                            this.config.league = newValue;
+
+                            // Also update prices whenever selected league changes
+                            GameData.loadPrices(this.selectedLeague)
+                            .then(function() {
+                                console.log("Received new prices");
+                                this.GameData = GameData;
+                                this.allUniqueItems = Object.keys(GameData.prices.uniques).sort();
+                            })
+                            .catch(function(error) {
+                                console.error("Failed to load prices for ", league, ": ", error);
+                            });
+                        }
+                    },
+
                     uniqueBaseTypePrices: function() {
                         var blacklist = this.uniqueBlacklist;
                         var prices = {}
