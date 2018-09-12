@@ -75,6 +75,7 @@ def post_update_prices():
         pricechecking.update_divcard_prices(league, get_db())
         pricechecking.update_unique_prices(league, get_db())
         pricechecking.update_fossil_prices(league, get_db())
+        pricechecking.update_resonator_prices(league, get_db())
     return "Update Complete"
 
 
@@ -104,7 +105,8 @@ def get_prices(league):
         'currency': pricechecking.get_currency_prices(league, get_db()),
         'divcards': pricechecking.get_divcard_prices(league, get_db()),
         'uniques': pricechecking.get_unique_prices(league, get_db()),
-        'fossils': pricechecking.get_fossil_prices(league, get_db())
+        'fossils': pricechecking.get_fossil_prices(league, get_db()),
+        'resonators': pricechecking.get_resonator_prices(league, get_db())
     })
 
 

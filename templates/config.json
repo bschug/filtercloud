@@ -100,9 +100,24 @@
 	"fossils": {
 		"thresholds": {
 			"hidden": 0,
-			"worthless": 0.5,
-			"valuable": 3,
-			"top_tier": 15
+			"worthless": 0.2,
+			"valuable": 1,
+			"top_tier": 20
+		},
+		"overrides": {
+			"hidden": [],
+			"worthless": [],
+			"valuable": [],
+			"top_tier": []
+		}
+	},
+
+	"resonators": {
+		"thresholds": {
+			"hidden": 0,
+			"worthless": 0.2,
+			"valuable": 1,
+			"top_tier": 20
 		},
 		"overrides": {
 			"hidden": [],

@@ -4,11 +4,6 @@
 # Delve:
 
 # Fossils
-{% if fossils.ultra_rare %}
-Show
-    BaseType {{ fossils.ultra_rare|names }}
-{{ style.ultra_rare.currency }}
-{% endif %}
 
 {% if fossils.top_tier %}
 Show
@@ -48,9 +43,42 @@ Show
 
 
 # Resonators:
+
+{% if resonators.top_tier %}
+Show
+    BaseType {{ resonators.top_tier|names }}
+{{ style.strong_highlight.breach }}
+{% endif %}
+
+{% if resonators.valuable %}
+Show
+    BaseType {{ resonators.valuable|names }}
+{{ style.highlight.breach }}
+{% endif %}
+
+{% if resonators.mediocre %}
+Show
+    BaseType {{ resonators.mediocre|names }}
+{{ style.normal.breach }}
+{% endif %}
+
+{% if resonators.worthless %}
+Show
+    BaseType {{ resonators.worthless }}
+{{ style.smaller.breach }}
+{% endif %}
+
+{% if resonators.hidden %}
+Hide
+    BaseType {{ resonators.hidden }}
+{{ style.hidden.breach }}
+{% endif %}
+
+# Any resonators / other socketable currency we missed
 Show
     Class "Socketable Currency"
-{{ style.highlight.breach }}
+{{ style.strong_highlight.breach|setstyle(background="0 0 0", border="255 0 255", textcolor="255 0 255") }}
+
 
 
 # ------------------------------------------

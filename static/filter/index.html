@@ -68,7 +68,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Fossils', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
+                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Fossils', 'Resonators', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <p class="link" @click="give_feedback">Feedback</p>
@@ -542,6 +542,38 @@
                                    :hide-worthless="config.fossils.hide_low_value"
                                    style-context="breach"
                                    :overrides="config.fossils.overrides"
+                                   :style-overrides="{}">
+                </thresholdItemList>
+            </div>
+
+            <div v-if="currentPage === 'Resonators'">
+                <h1>Resonators</h1>
+
+                <thresholdSlider id="resonators-toptier" v-model="config.resonators.thresholds.top_tier" title="Top Tier" op="≥"
+                                 :overrides.sync="config.resonators.overrides.top_tier" :prices="GameData.prices.resonators"
+                                 item-style="strong_highlight.breach" item-class="Currency">
+                    Items worth more than this are very valuable. If you see this highlighting, it's time to get excited!
+                </thresholdSlider>
+                <thresholdSlider id="resonators-valuable" v-model="config.resonators.thresholds.valuable" title="Valuable" op="≥"
+                                 :overrides.sync="config.resonators.overrides.valuable" :prices="GameData.prices.resonators"
+                                 item-style="highlight.breach" item-class="Currency">
+                    Anything above this is valuable, and you should always pick them up.
+                </thresholdSlider>
+                <thresholdSlider id="resonators-worthless" v-model="config.resonators.thresholds.worthless" title="Worthless" op="<"
+                                 :overrides.sync="config.resonators.overrides.worthless" :prices="GameData.prices.resonators"
+                                 item-style="smaller.breach" item-class="Currency">
+                    Anything below this is usually not worth the time picking up, unless there's a lot them in one place.
+                </thresholdSlider>
+                <thresholdSlider id="resonators-hidden" v-model="config.resonators.thresholds.hidden" title="Hidden" op="<"
+                                 :overrides.sync="config.resonators.overrides.hidden" :prices="GameData.prices.resonators"
+                                 item-style="hidden.breach" item-class="Currency" :hidden="true">
+                    Anything below this will be hidden completely.
+                </thresholdSlider>
+
+                <thresholdItemList :prices="GameData.prices.resonators" :thresholds="config.resonators.thresholds"
+                                   :hide-worthless="config.resonators.hide_low_value"
+                                   style-context="breach"
+                                   :overrides="config.resonators.overrides"
                                    :style-overrides="{}">
                 </thresholdItemList>
             </div>
