@@ -40,6 +40,13 @@ Hide
 {{ style.hidden.breach }}
 {% endif %}
 
+# Any fossils we missed
+Show
+    BaseType Fossil
+    Class Currency
+{{ style.strong_highlight.breach|setstyle(background="0 0 0", border="255 0 255", textcolor="255 0 255") }}
+
+
 # Resonators:
 Show
     Class "Socketable Currency"
