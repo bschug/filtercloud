@@ -25,13 +25,13 @@ Show
 
 {% if fossils.worthless %}
 Show
-    BaseType {{ fossils.worthless }}
+    BaseType {{ fossils.worthless|names }}
 {{ style.smaller.breach }}
 {% endif %}
 
 {% if fossils.hidden %}
 Hide
-    BaseType {{ fossils.hidden }}
+    BaseType {{ fossils.hidden|names }}
 {{ style.hidden.breach }}
 {% endif %}
 
@@ -64,13 +64,13 @@ Show
 
 {% if resonators.worthless %}
 Show
-    BaseType {{ resonators.worthless }}
+    BaseType {{ resonators.worthless|names }}
 {{ style.smaller.breach }}
 {% endif %}
 
 {% if resonators.hidden %}
 Hide
-    BaseType {{ resonators.hidden }}
+    BaseType {{ resonators.hidden|names }}
 {{ style.hidden.breach }}
 {% endif %}
 
