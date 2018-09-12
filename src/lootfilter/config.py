@@ -145,10 +145,15 @@ def upgrade_config(settings):
             v['ilvl'] = int(v.get('ilvl', 0))
             v['links'] = int(v.get('links', 0))
 
+    default_thresholds = {
+        'thresholds': {'hidden': 0, 'worthless': 0.2, 'valuable': 1, 'top_tier': 20},
+        'overrides': {'hidden': [], 'worthless': [], 'valuable': [], 'top_tier': []}
+    }
+
     settings.rares['breach_ring_explicit'] = settings.rares.get('breach_ring_explicit', [])
     settings.build['animate_weapon'] = settings.build.get('animate_weapon', False)
-    settings['fossils'] = settings.get('fossils', settings.divcards)
-    settings['resonators'] = settings.get('resonators', settings.fossils)
+    settings['fossils'] = settings.get('fossils', default_thresholds)
+    settings['resonators'] = settings.get('resonators', default_thresholds)
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))
