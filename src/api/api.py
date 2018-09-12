@@ -138,6 +138,7 @@ def download_style(username, stylename):
     style = users.load_style(username, stylename, get_db())
     if style is None:
         raise ApiException("style not found: '{}'".format(id), status_code=404, data=id)
+    style = lootfilter.upgrade_style(Box(style))
     return jsonify(style)
 
 
@@ -150,6 +151,7 @@ def config_instance(username, configname):
     config = users.load_config(username, configname, get_db())
     if config is None:
         raise ApiException("config not found: '{}'".format(id), status_code=404, data=id)
+    config = lootfilter.upgrade_config(Box(config))
     return jsonify(config)
 
 
