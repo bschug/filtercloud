@@ -9,7 +9,7 @@
         Promise.all([Style.load(settings.style), Config.load(settings.config)])
         .then(function() {
             var uniqueLeagues = Config.data.uniques.leagues;
-            return GameData.load('Standard', uniqueLeagues);
+            return GameData.load(Config.data.league, uniqueLeagues);
         })
         .then(function() {
             console.log("Initializing now...");
