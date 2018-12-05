@@ -84,8 +84,8 @@
 	"divcards": {
 		"thresholds": {
 			"hidden": 0,
-			"worthless": 0.5,
-			"valuable": 3,
+			"worthless": 0.2,
+			"valuable": 1,
 			"top_tier": 15
 		},
 		"overrides": {
@@ -95,6 +95,21 @@
 			"top_tier": []
 		}
 
+	},
+
+	"prophecies": {
+		"thresholds": {
+			"hidden": 0,
+			"worthless": 0.5,
+			"valuable": 3,
+			"top_tier": 20
+		},
+		"overrides": {
+			"hidden": [],
+			"worthless": [],
+			"valuable": [],
+			"top_tier": []
+		}
 	},
 
 	"fossils": {

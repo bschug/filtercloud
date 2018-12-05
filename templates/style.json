@@ -75,6 +75,15 @@
 				"color": "Blue"
 			},
 			"beam": { "color": "Blue" }
+		},
+		"prophecy": {
+			"background": "181 75 255",
+			"textcolor": "0 0 0",
+			"map_icon": {
+				"shape": "Circle",
+				"color": "Red"
+			},
+			"beam": { "color": "Red" }
 		}
 	},
 	"highlight": {
@@ -137,6 +146,15 @@
 				"color": "Blue"
 			},
 			"beam": {"color": "Blue"}
+		},
+		"prophecy": {
+			"textcolor": "181 75 255",
+			"background": "60 25 85",
+			"map_icon": {
+				"shape": "Circle",
+				"color": "Red"
+			},
+			"beam": {"color": "Red"}
 		}
 	},
 	"normal": {

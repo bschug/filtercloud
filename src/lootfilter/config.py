@@ -19,6 +19,7 @@ def load_config(settings, style, league_uniques, db):
         'maps': settings.get('maps'),
         'uniques': build_unique_config(settings, league_uniques, db),
         'divcards': build_divcards_config(settings, db),
+        'prophecies': build_prophecies_config(settings, db),
         'gems': settings.get('gems'),
         'jewels': settings.get('jewels'),
         'flasks': settings.get('flasks'),
@@ -60,6 +61,14 @@ def build_divcards_config(settings, db):
     thresholds = settings.divcards.thresholds
     config = pricechecking.get_divcard_tiers(league=league, thresholds=thresholds, db=db)
     apply_overrides(config, settings.divcards.overrides)
+    return config
+
+
+def build_prophecies_config(settings, db):
+    league = settings.league
+    thresholds = settings.prophecies.thresholds
+    config = pricechecking.get_prophecy_tiers(league=league, thresholds=thresholds, db=db)
+    apply_overrides(config, settings.prophecies.overrides)
     return config
 
 

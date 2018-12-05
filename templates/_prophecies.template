@@ -1,0 +1,38 @@
+# ----------------------------------- [PROPHECIES] --------------------------------------------
+
+{% if prophecies.top_tier %}
+# Strongly Highlight super-rare prophecies
+Show
+    Prophecy {{ prophecies.top_tier|names }}
+{{ style.strong_highlight.prophecy }}
+{% endif %}
+
+{% if prophecies.valuable %}
+# Highlight medium rare prophecies
+Show
+    Prophecy {{ prophecies.valuable|names }}
+{{ style.highlight.prophecy }}
+{% endif %}
+
+{% if prophecies.mediocre %}
+Show
+	Prophecy {{ prophecies.mediocre|names }}
+{{ style.normal.prophecy }}
+{% endif %}
+
+{% if prophecies.worthless %}
+Show
+	Prophecy {{ prophecies.worthless|names }}
+{{ style.smaller.prophecy }}
+{% endif %}
+
+{% if prophecies.hidden %}
+Hide
+    Prophecy {{ prophecies.hidden|names }}
+{{ style.hidden.prophecy }}
+{% endif %}
+
+# Mark all missing prophecies with pink border
+Show
+    Prophecy a b c d e f g h i j k l m n o p q r s t u v w x y z
+	SetBorderColor 255 100 255
