@@ -29,7 +29,9 @@
         else if (rarity === 'unique')
             result.textcolor = '175 96 37';
 
-        if (itemClass === 'Currency' || itemClass === 'Stackable Currency' || itemClass === 'Leaguestones'
+        if (rarity === 'prophecy') // hack because I'm too lazy to add an extra parameter
+            result.textcolor = '181 75 255';
+        else if (itemClass === 'Currency' || itemClass === 'Stackable Currency' || itemClass === 'Leaguestones'
             || itemClass === 'Labyrinth Trinket' || itemClass === 'Misc Map Items')
             result.textcolor = '170 158 130';
         else if (itemClass === 'Divination Card')

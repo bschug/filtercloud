@@ -70,7 +70,8 @@ Vue.component('style-editor', {
             var rarityOverrides = {
                 'magic': 'magic',
                 'rare': 'rare',
-                'unique': 'unique'
+                'unique': 'unique',
+                'prophecy': 'prophecy'
             }
             var iclassOverrides = {
                 'currency': 'Stackable Currency',

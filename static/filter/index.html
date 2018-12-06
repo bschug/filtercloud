@@ -68,7 +68,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Maps', 'Skill Gems', 'Fossils', 'Resonators', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
+                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Prophecies', 'Maps', 'Skill Gems', 'Fossils', 'Resonators', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <p class="link" @click="give_feedback">Feedback</p>
@@ -209,19 +209,19 @@
                     For rare special items like Mirrors, Fishing Rods, Rhoa Feathers and Reliquary Keys
                 </style-editor>
 
-                <style-editor title="Strong Highlight" item-style="strong_highlight" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Strong Highlight" item-style="strong_highlight" variants="normal,magic,rare,unique,currency,gem,breach,divcard,prophecy">
                     For very valuable items worth at least a few dozen chaos. Thresholds are configurable. Six-Links always get a strong highlight.
                 </style-editor>
 
-                <style-editor title="Highlight" item-style="highlight" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Highlight" item-style="highlight" variants="normal,magic,rare,unique,currency,gem,breach,divcard,prophecy">
                     Items that are always worth picking up.
                 </style-editor>
 
-                <style-editor title="Regular" item-style="normal" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Regular" item-style="normal" variants="normal,magic,rare,unique,currency,gem,breach,divcard,prophecy">
                     Items you usually want to pick up but might skip if you'd have to go out of your way. In the default style, these don't have alert sounds.
                 </style-editor>
 
-                <style-editor title="Smaller" item-style="smaller" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Smaller" item-style="smaller" variants="normal,magic,rare,unique,currency,gem,breach,divcard,prophecy">
                     Items that you usually wouldn't pick up but still want to see for some reason.
                 </style-editor>
 
@@ -229,7 +229,7 @@
                     Maps get special treatment because they are highlighted based on tier.
                 </style-editor>
 
-                <style-editor title="Hidden" item-style="hidden" variants="normal,magic,rare,unique,currency,gem,breach,divcard">
+                <style-editor title="Hidden" item-style="hidden" variants="normal,magic,rare,unique,currency,gem,breach,divcard,prophecy">
                     When you press Alt, the game will show you items hidden by the filter. This controls what they will look like.
                 </style-editor>
 
@@ -400,7 +400,6 @@
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.currency" :thresholds="config.currency.thresholds"
-                                   :hide-worthless="config.currency.hide_low_value"
                                    style-context="currency"
                                    :overrides="config.currency.overrides"
                                    :style-overrides="{'Mirror of Kalandra': 'ultra_rare.currency'}">
@@ -432,7 +431,6 @@
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.divcards" :thresholds="config.divcards.thresholds"
-                                   :hide-worthless="config.divcards.hide_low_value"
                                    style-context="divcard"
                                    :overrides="config.divcards.overrides"
                                    :style-overrides="{}">
@@ -485,9 +483,39 @@
                 </thresholdSlider>
 
                 <thresholdItemList :prices="uniqueBaseTypePrices" :thresholds="config.uniques.thresholds"
-                                   :hide-worthless="config.uniques.hide_low_value"
                                    style-context="unique" item-rarity="unique"
                                    :overrides.sync="config.uniques.overrides"
+                                   :style-overrides="{}">
+                </thresholdItemList>
+            </div>
+
+            <div v-if="currentPage === 'Prophecies'">
+                <h1>Prophecies</h1>
+
+                <thresholdSlider id="prophecies-toptier" v-model="config.prophecies.thresholds.top_tier" title="Top Tier" op="≥"
+                 :overrides.sync="config.prophecies.overrides.top_tier" :prices="GameData.prices.prophecies"
+                 item-style="strong_highlight.prophecy" item-class="Prophecy">
+                    Items worth more than this are very valuable. If you see this highlighting, it\'s time to get excited!
+                </thresholdSlider>
+                <thresholdSlider id="prophecies-valuable" v-model="config.prophecies.thresholds.valuable" title="Valuable" op="≥"
+                                 :overrides.sync="config.prophecies.overrides.valuable" :prices="GameData.prices.prophecies"
+                                 item-style="highlight.prophecy" item-class="Prophecy">
+                    Anything above this is valuable, and you should always pick them up.
+                </thresholdSlider>
+                <thresholdSlider id="prophecies-worthless" v-model="config.prophecies.thresholds.worthless" title="Worthless" op="<"
+                                 :overrides.sync="config.prophecies.overrides.worthless" :prices="GameData.prices.prophecies"
+                                 item-style="smaller.prophecy" item-class="Prophecy">
+                    Anything below this is usually not worth the time picking up, unless there's a lot of them in one spot.
+                </thresholdSlider>
+                <thresholdSlider id="prophecies-hidden" v-model="config.prophecies.thresholds.hidden" title="Hidden" op="<"
+                                 :overrides.sync="config.prophecies.overrides.hidden" :prices="GameData.prices.prophecies"
+                                 item-style="hidden.prophecy" item-class="Prophecy" :hidden="true">
+                    Anything below this is will be hidden completely.
+                </thresholdSlider>
+
+                <thresholdItemList :prices="GameData.prices.prophecies" :thresholds="config.prophecies.thresholds"
+                                   style-context="prophecy" item-rarity="prophecy"
+                                   :overrides="config.prophecies.overrides"
                                    :style-overrides="{}">
                 </thresholdItemList>
             </div>
@@ -539,7 +567,6 @@
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.fossils" :thresholds="config.fossils.thresholds"
-                                   :hide-worthless="config.fossils.hide_low_value"
                                    style-context="breach"
                                    :overrides="config.fossils.overrides"
                                    :style-overrides="{}">
@@ -571,7 +598,6 @@
                 </thresholdSlider>
 
                 <thresholdItemList :prices="GameData.prices.resonators" :thresholds="config.resonators.thresholds"
-                                   :hide-worthless="config.resonators.hide_low_value"
                                    style-context="breach"
                                    :overrides="config.resonators.overrides"
                                    :style-overrides="{}">

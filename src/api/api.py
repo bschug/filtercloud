@@ -57,6 +57,12 @@ def close_db(error):
         g.mongo_db.close()
 
 
+@app.after_request
+def restrict_caching(response):
+    response.headers['Cache-Control'] = 'max-age=60'
+    return response
+
+
 @app.route('/api/filter/helloworld', methods=['GET'])
 def get_helloworld():
     return "Hello yourself!"

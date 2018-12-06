@@ -434,7 +434,7 @@ Vue.component('thresholditemlist', {
         </div>',
 
     props: [
-        'prices', 'thresholds', 'styleContext', 'hideWorthless',
+        'prices', 'thresholds', 'styleContext',
         'overrides', 'styleOverrides', 'itemRarity'],
 
     computed: {
