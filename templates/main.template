@@ -37,6 +37,12 @@ Show
     HasExplicitMod "Brinerot" "Mutewind" "Redblade" "Betrayer's" "Deceiver's" "Turncoat's"
     SetFontSize 40
 
+# Show items with Veiled mods
+Show
+    HasExplicitMod "Veiled" "of the Veil"
+    SetFontSize 40
+    SetBorderColor 255 120 80
+
 {% if misc.identified != "Show All" and build.animate_weapon %}
 # Show identified weapons that we can animate
 Show
