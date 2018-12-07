@@ -20,28 +20,76 @@
 # Items with three linked sockets are always shown until level 40, 4-links are shown until maps.
 # All of this can be customized as well.
 
-# Show identified items with Delve mods on them
+{% if explicit_mods %}
+# ---------------- Explicit Mod Rules ------------------------
+{% for rule in explicit_mods %}
+{% if rule.show_magic %}
 Show
-    HasExplicitMod "Subterranean" "of the Underground" "of Weaponcraft" "of Spellcraft" "of Crafting"
-    SetFontSize 40
-    SetBorderColor 255 120 80
+    Identified True
+    Rarity Magic
+    {% if rule.ilvl %}
+    ItemLevel >= {{ rule.ilvl }}
+    {% endif %}
+    {% if rule.basetype %}
+    BaseType {{ rule.basetype|names }}
+    {% endif %}
+    {% for modlist in rule.mods %}
+    HasExplicitMod {{ modlist|names }}
+    {% endfor %}
+    {% if rule.style == "normal" %}
+{{ style.normal.magic }}
+    {% elif rule.style == "highlight" %}
+{{ style.highlight.magic }}
+    {% elif rule.style == "strong" %}
+{{ style.strong_highlight.rare }}
+    {% else %}
+*** ERROR: INVALID style `{{ rule.style }}` IN explicit_mods rule ***
+    {% endif %}
+{% endif %}
 
-# Show identified items with Incursion mods on them
 Show
-    HasExplicitMod "Tacati's" "Citaqualotl's" "Matatl's" "Topotante's" "Xopec's" "Guatelitzi's" "of Tacati" "of Citaqualotl" "of Matatl" "of Puhuarte" "of Guatelitzi"
-    SetFontSize 40
-    SetBorderColor 255 120 80
-
-# Show identified items with Warband mods on them
-Show
-    HasExplicitMod "Brinerot" "Mutewind" "Redblade" "Betrayer's" "Deceiver's" "Turncoat's"
-    SetFontSize 40
+    Identified True
+    Rarity Rare
+    {% if rule.ilvl %}
+    ItemLevel >= {{ rule.ilvl }}
+    {% endif %}
+    {% if rule.basetype %}
+    BaseType {{ rule.basetype|names }}
+    {% endif %}
+    {% for modlist in rule.mods %}
+    HasExplicitMod {{ modlist|names }}
+    {% endfor %}
+    {% if rule.style == "normal" %}
+{{ style.normal.rare }}
+    {% elif rule.style == "highlight" %}
+{{ style.highlight.rare }}
+    {% elif rule.style == "strong" %}
+{{ style.strong_highlight.rare }}
+    {% else %}
+*** ERROR: INVALID style `{{ rule.style }}` IN explicit_mods rule ***
+    {% endif %}
+{% endfor %}
+{% endif %}
 
 # Show items with Veiled mods
 Show
+    Identified True
+    Rarity Magic
     HasExplicitMod "Veiled" "of the Veil"
-    SetFontSize 40
-    SetBorderColor 255 120 80
+{{ style.veiled.magic }}
+
+Show
+    Identified True
+    Rarity Rare
+    HasExplicitMod "Veiled" "of the Veil"
+{{ style.veiled.rare }}
+
+Show
+    Identified True
+    Rarity Unique
+    HasExplicitMod "Veiled" "of the Veil"
+{{ style.veiled.unique }}
+
 
 {% if misc.identified != "Show All" and build.animate_weapon %}
 # Show identified weapons that we can animate

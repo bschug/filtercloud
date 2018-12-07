@@ -172,24 +172,51 @@
 			"itemclasses": ["Amulets", "Rings", "Belts"],
 			"basetypes": []
 		},
-		"breach_ring_explicit": [
-			{
-				"conditions": [
-					["of Expulsion", "of Exile", "of Bameth"],
-					["Virile"],
-					["of the Ice", "of Haast", "of the Magma", "of Tzteosh", "of the Lightning", "of Ephij", "of the Rainbow"]
-				],
-				"highlight": true
-			},
-			{
-				"conditions": [
-					["Virile"],
-					["of the Ice", "of Haast", "of the Magma", "of Tzteosh", "of the Lightning", "of Ephij", "of the Rainbow"]
-				],
-				"highlight": false
-			}
-		]
+		"hide_breach_rings": false
 	},
+
+	"explicit_mods": [
+		{
+			"mods": [["of Weaponcraft", "of Spellcraft", "of Crafting"]],
+			"style": "highlight",
+			"ilvl": 80,
+			"show_magic": true
+		},
+		{
+			"mods": [["Tacati's", "Citaqualotl's", "Matatl's", "Topotante's", "Xopec's", "Guatelitzi's", "of Tacati", "of Citaqualotl", "of Matatl", "of Puhuarte", "of Guatelitzi"]],
+			"style": "normal",
+			"ilvl": 0,
+			"show_magic": false
+		},
+		{
+			"mods": [["Tacati's", "Citaqualotl's", "Matatl's", "Topotante's", "Xopec's", "Guatelitzi's", "of Tacati", "of Citaqualotl", "of Matatl", "of Puhuarte", "of Guatelitzi"]],
+			"style": "highlight",
+			"ilvl": 80,
+			"show_magic": true
+		},
+		{
+			"mods": [["Brinerot", "Mutewind", "Redblade", "Betrayer's", "Deceiver's", "Turncoat's"]],
+			"style": "highlight",
+			"ilvl": 80,
+			"show_magic": true
+		},
+		{
+			"mods": [
+				["of Expulsion", "of Exile", "of Bameth"],
+				["Rotund","Virile"]
+			],
+			"basetype": ["Breach Ring"],
+			"style": "highlight"
+		},
+		{
+			"mods": [
+				["Rotund", "Virile"],
+				["of the Ice", "of Haast", "of the Magma", "of Tzteosh", "of the Lightning", "of Ephij", "of the Rainbow"]
+			],
+			"basetype": ["Breach Ring"],
+			"style": "highlight"
+		}
+	],
 
 	"meta": {
 		"atlas": [

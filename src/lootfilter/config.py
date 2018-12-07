@@ -29,6 +29,7 @@ def load_config(settings, style, league_uniques, db):
         'build': settings.get('build'),
         'fossils': build_fossils_config(settings, db),
         'resonators': build_resonators_config(settings, db),
+        'explicit_mods': settings.get('explicit_mods')
     }
 
 
@@ -109,6 +110,7 @@ def build_styles_config(settings):
         'map': build_style_collection(settings.map),
         'quest': build_style_collection(settings.quest),
         'animate_weapon': build_style_collection(settings.animate_weapon),
+        'veiled': build_style_collection(settings.veiled)
     }
 
 
@@ -187,6 +189,7 @@ def upgrade_style(settings):
     settings['animate_weapon'] = settings.get('animate_weapon', {'default': {
         'border': '180 60 60'
     }})
+    settings['veiled'] = settings.get('veiled', settings['highlight'])
 
     if settings.version != 3:
         logger.debug("Upgraded style settings from {} to 3".format(settings.version))

@@ -251,5 +251,29 @@
 				"color": "Green"
 			}
 		}
+	},
+	"veiled": {
+		"default": {
+			"fontsize": "45",
+			"border": "255 255 100",
+			"sound": "1 300",
+			"map_icon": {
+				"size": 0,
+				"color": "Yellow",
+				"shape": "Hexagon"
+			},
+			"beam": {
+				"color": "Yellow"
+			}
+		},
+		"magic": {
+			"background": "50 50 90 220"
+		},
+		"rare": {
+			"background": "90 90 45 220"
+		},
+		"unique": {
+			"background": "70 35 14 220"
+		}
 	}
 }

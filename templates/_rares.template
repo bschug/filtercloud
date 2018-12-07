@@ -89,21 +89,6 @@ Show
 {{ style.normal.rare }}
 {% endif %}
 
-{% if rares.breach_ring_explicit %}
-# Breach rings always drop identified, so we can filter by mods
-{% endif %}
-{% for explicit in rares.breach_ring_explicit %}
-Show
-    BaseType "Breach Ring"
-{% for modlist in explicit.conditions %}
-    HasExplicitMod {{ modlist|names }}
-{% endfor %}
-{% if explicit.highlight %}
-{{ style.highlight.rare }}
-{% else %}
-{{ style.smaller.rare }}
-{% endif %}
-{% endfor %}
 
 {% if rares.hide_breach_rings %}
 Hide
