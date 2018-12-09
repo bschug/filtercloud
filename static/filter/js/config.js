@@ -8,7 +8,7 @@
 
         this.load = function(id) {
             var self = this;
-            return axios.get('/api/filter/config/' + id)
+            return axios.get('/api/filter/config/' + id, {params: {xx: Date.now()}})
                 .then(function(response) {
                     console.log("Loaded config " + id);
                     self.data = response.data;
@@ -34,7 +34,7 @@
             Config.name = id.name;
         }
 
-        return axios.get('/api/filter/config/' + path)
+        return axios.get('/api/filter/config/' + path, {params: {xx: Date.now()}})
             .then(function(response) {
                 console.log("Loaded config " + id);
                 Config.data = response.data;

@@ -256,7 +256,11 @@
 			{"level": 15, "sockets": "RRG"},
 			{"level": 50, "sockets": "RRRG"},
 			{"level": 99, "sockets": "RRRRG"}
-		]
+		],
+		"socket_count": {
+			"itemtype": "all",
+			"offset": 5
+		}
 	},
 
 	"leveling": {

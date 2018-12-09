@@ -59,7 +59,7 @@
             Style.name = id.name;
         }
 
-        return axios.get('/api/filter/style/' + path)
+        return axios.get('/api/filter/style/' + path, {params: {xx: Date.now()}})
             .then(function(response) {
                 console.log("Loaded style: " + path);
                 Style.data = response.data;

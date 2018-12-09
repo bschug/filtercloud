@@ -32,6 +32,54 @@ Show
 {{ style.leveling }}
 {% endfor %}
 
+{% if build.socket_count.itemtype != "none" %}
+
+{% for ilvl, socketcount in [(25,3), (35,4), (50,5)] %}
+Show
+    ItemLevel < {{ ilvl + build.socket_count.offset }}
+    LinkedSockets {{ socketcount }}
+    Class "Body Armour"
+    {% for sel in selector("body", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
+{{ style.normal }}
+{% endfor %}
+
+{% for ilvl, socketcount in [(25,3), (35,4), (50,5)] %}
+Show
+    ItemLevel < {{ ilvl + build.socket_count.offset }}
+    LinkedSockets {{ socketcount }}
+    Class Gloves Boots Helmets
+    {% for sel in selector("other_armour", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
+{{ style.normal }}
+{% endfor %}
+
+{% if build.use_shields %}
+Show
+    ItemLevel < {{ 35 + build.socket_count.offset }}
+    LinkedSockets 3
+    Class Shields
+    {% for sel in selector("shields", build.armour_types) %}
+    BaseType {{ sel|names }}
+    {% endfor %}
+{{ style.normal }}
+{% endif %}
+
+{% endif %}
+
+{% if build.socket_count.itemtype == "all" %}
+{% for ilvl, socketcount in [(25,3), (35,4), (50,5)] %}
+Show
+    ItemLevel < {{ ilvl + build.socket_count.offset }}
+    LinkedSockets {{ socketcount }}
+    Class {{ build.weapon_classes|names }}
+{{ style.normal }}
+
+{% endfor %}
+{% endif %}
+
 
 # -------------------------- Weapons, Body Armour & Shields ---------------------------- 
 
@@ -76,6 +124,7 @@ Show
     {% for sel in selector("shields", build.armour_types) %}
     BaseType {{ sel|names }}
     {% endfor %}
+{{ style.normal }}
 {% endif %}
 
 {% if build.armour_types|any_true %}

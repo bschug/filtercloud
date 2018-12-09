@@ -165,6 +165,7 @@ def upgrade_config(settings):
     settings.build['animate_weapon'] = settings.build.get('animate_weapon', False)
     settings['fossils'] = settings.get('fossils', default_thresholds)
     settings['resonators'] = settings.get('resonators', default_thresholds)
+    settings['build']['socket_count'] = settings.build.get('socket_count', {'itemtype':'none', 'offset': 5})
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))

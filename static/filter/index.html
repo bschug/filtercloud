@@ -190,6 +190,20 @@
                     set this to Melee + Ranged, so that ranged weapons are also marked.
                 </dropdownWithTooltip>
                 <h2>Sockets</h2>
+                <dropdownWithTooltip id="build_socketcount_itemtype" v-model="config.build.socket_count.itemtype"
+                                     label="Show Items with Max # of Linked Sockets"
+                                     :option-labels="['None', 'Only Armour', 'Weapons + Armour']"
+                                     :options="['none', 'armour', 'all']">
+                    Show items with the maximum number of linked sockets that is possible at the current level.
+                    Will only show items of the types you selected above.
+                </dropdownWithTooltip>
+                <linearSlider v-if="config.build.socket_count.itemtype !== 'none'" id="build_socketcount_offset"
+                              v-model="config.build.socket_count.offset" title="Offset"
+                              :min-value="0" :max-value="99" op="">
+                    The link count rule above for 4-links would normally get disabled the moment you reach level 50
+                    and can drop 5-links. This lets you add an offset to that level, so with offset 5, the rule would
+                    be active until level 55.
+                </linearSlider>
                 <socketList :socket-configs="config.build.sockets"></socketList>
 
             </div>
