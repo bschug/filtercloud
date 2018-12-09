@@ -209,12 +209,6 @@ Show
 	BaseType "Silver Coin"
 {{ style.highlight.currency }}
 
-# Sealed Prophecies
-Show
-    BaseType Prophecy
-    Class Currency
-{{ style.strong_highlight.breach }}
-
 # Perandus Coins
 Show 
 	BaseType "Perandus Coin"
