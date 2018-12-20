@@ -672,10 +672,10 @@
             <div v-if="currentPage === 'Maps'">
                 <h1>Maps</h1>
                 <p>
-                    Once you've reached red maps, you no longer want to pick up white ones. That's why this filter has
-                    an option to hide maps that are far below the map tier they drop in. Some yellow maps are valuable
-                    and/or worth running even if you're already doing shaped Strands, so you can define exceptions from
-                    this rule.
+                    This depends a lot on your atlas strategy. If you run a single map over and over
+                    again, you probably don't want to see low level maps.
+                    If your strategy involves full atlas completion, or you need to run low maps for
+                    some other reason, you want to see all maps.
                 </p>
                 <p>
                     Tier 15/16 and unique maps are always highlighted.
@@ -683,10 +683,13 @@
 
                 <hr>
 
-                <checkboxWithTooltip id="maps_hide_low_tier" v-model="config.maps.hide_low_tier" label="Hide Low Tier">
-                    Hide white maps dropping from Tier 8 maps. Hide yellow maps dropping from red maps.
-                    Tier 10 maps are always shown, and you can add your favorite maps to the exception list below.
-                </checkboxWithTooltip>
+                <linearSlider id="maps_hide_offset"
+                              v-model="config.maps.hide_offset" title="Hide Offset"
+                              :min-value="0" :max-value="15" op="">
+                    Hide maps with this many tiers below the one they dropped in.
+                    E.g., a hide offset of 10 will hide a tier 2 map dropping in a T12,
+                    but it will show a T3 map dropping there. Set to 0 to show all maps.
+                </linearSlider>
 
                 <checkboxWithTooltip id="maps_always_show_shaped" v-model="config.maps.always_show_shaped" label="Always Show Shaped">
                     Always show Shaped maps, even if they would normally be hidden by the rule above.

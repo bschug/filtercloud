@@ -298,6 +298,7 @@
 
 	"maps": {
 		"hide_low_tier": false,
+		"hide_offset": 10,
 		"favorite_maps": [],
 		"always_show_shaped": true
 	}

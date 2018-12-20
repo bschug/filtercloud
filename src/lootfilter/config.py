@@ -166,6 +166,7 @@ def upgrade_config(settings):
     settings['fossils'] = settings.get('fossils', default_thresholds)
     settings['resonators'] = settings.get('resonators', default_thresholds)
     settings['build']['socket_count'] = settings.build.get('socket_count', {'itemtype':'none', 'offset': 5})
+    settings['maps']['hide_offset'] = settings.maps.get('hide_offset', 10)
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))

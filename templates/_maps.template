@@ -10,51 +10,51 @@ Show
 Show 
     Rarity Normal 
     Class Maps
-    BaseType "Forge of the Phoenix Map" "Maze of the Minotaur Map" "Lair of the Hydra Map" "Pit of the Chimera Map" "Vaal Temple Map"
+    MapTier 16
 {{ style.strong_highlight.normal|setstyle(style.map.red) }}
 
 Show 
     Rarity Magic 
     Class Maps
-    BaseType "Forge of the Phoenix Map" "Maze of the Minotaur Map" "Lair of the Hydra Map" "Pit of the Chimera Map" "Vaal Temple Map"
+    MapTier 16
 {{ style.strong_highlight.magic|setstyle(style.map.red) }}
 
 Show 
     Rarity Rare 
     Class Maps
-    BaseType "Forge of the Phoenix Map" "Maze of the Minotaur Map" "Lair of the Hydra Map" "Pit of the Chimera Map" "Vaal Temple Map"
+    MapTier 16
 {{ style.strong_highlight.rare|setstyle(style.map.red) }}
 
 # Regular highlight for T15
 Show
     Class Maps 
     Rarity Normal 
-    DropLevel 82
+    MapTier 15
 {{ style.highlight.normal|setstyle(style.map.red) }}
 	
 Show 
     Class Maps 
     Rarity Magic 
-    DropLevel 82
+    MapTier 15
 {{ style.highlight.magic|setstyle(style.map.red) }}
 
 Show 
     Class Maps 
     Rarity Rare
-    DropLevel 82
+    MapTier 15
 {{ style.highlight.rare|setstyle(style.map.red) }}
 
 # Always show red maps
 Show
 	Class Maps 
-    DropLevel >= 78
+    MapTier > 10
 {{ style.map.red }}
 
 {% if maps.always_show_shaped %}
 Show
     Class Maps
     ShapedMap True
-    DropLevel >= 78
+    MapTier > 10
 {{ style.map.red}}
 Show
     Class Maps
@@ -62,70 +62,54 @@ Show
 {{ style.map.yellow }}
 {% endif %}
 
-{% if maps.hide_low_tier %}
-
-# Show white maps until T7
-Show 
-    Class Maps
-	ItemLevel < 74
-    DropLevel <= 72
-{{ style.map.white }}
-	
-# Hide white maps dropping in Tier 7+
-Hide 
-	Class Maps 
-	ItemLevel >= 74
-	DropLevel <= 72
-{{ style.hidden }}
-
 {% if maps.favorite_maps %}
-# Always show good yellow maps
+# Always show favorite maps, regardless of level/tier
 Show
-	Class Maps 
-	DropLevel > 72
-	BaseType "Shaped" {{ maps.favorite_maps|names }}
+    Class Maps
+    MapTier <= 5
+    BaseType {{ maps.favorite_maps|names }}
+{{ style.map.white }}
+
+Show
+    Class Maps
+    MapTier <= 10
+    BaseType {{ maps.favorite_maps|names }}
 {{ style.map.yellow }}
+
+Show
+    Class Maps
+    BaseType {{ maps.favorite_maps|names }}
+    {{ style.map.red }}
 {% endif %}
 
-# Always show T10 yellow maps 
-Show 
-	Class Maps 	
-	DropLevel 77
-{{ style.map.yellow }}
-	
-# Only show other yellow maps outside of red maps 
-Show 
-	Class Maps 
-	DropLevel < 77
-	ItemLevel < 78
-{{ style.map.yellow }}
-	
-# Hide bad yellow maps in T10+ maps 
-Hide 
-	Class Maps 
-	DropLevel < 77
-	ItemLevel >= 77
+{% if maps.hide_offset > 0 and maps.hide_offset < 16 %}
+# Hide outleveled maps
+{% for tier in range(1,15) %}
+{% if tier + maps.hide_offset <= 16 %}
+Hide
+    Class Maps
+    MapTier {{ tier }}
+    ItemLevel > {{ 67 + tier + maps.hide_offset }}
 {{ style.hidden }}
+{% endif %}
+{% endfor %}
+{% endif %}
 
-{% else %} {# hide_low_tier #}
-
-# Show map tier in border color 
-Show 
-	Class Maps 
-	DropLevel <= 72
+# Show map tier in border color
+Show
+    Class Maps
+    MapTier <= 5
 {{ style.map.white }}
 
 Show
-	Class Maps 
-	DropLevel <= 77
+    Class Maps
+    MapTier <= 10
 {{ style.map.yellow }}
 
-Show 
-	Class Maps 
-	DropLevel >= 78
+Show
+    Class Maps
 {{ style.map.red }}
 
-{% endif %} {# hide_low_tier #}
 
 	
 # Safety check in case we forgot a possible combination
