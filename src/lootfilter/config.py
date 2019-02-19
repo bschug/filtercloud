@@ -29,7 +29,8 @@ def load_config(settings, style, league_uniques, db):
         'build': settings.get('build'),
         'fossils': build_fossils_config(settings, db),
         'resonators': build_resonators_config(settings, db),
-        'explicit_mods': settings.get('explicit_mods')
+        'explicit_mods': settings.get('explicit_mods'),
+        'sockets': settings.get('sockets')
     }
 
 
@@ -167,6 +168,7 @@ def upgrade_config(settings):
     settings['resonators'] = settings.get('resonators', default_thresholds)
     settings['build']['socket_count'] = settings.build.get('socket_count', {'itemtype':'none', 'offset': 5})
     settings['maps']['hide_offset'] = settings.maps.get('hide_offset', 10)
+    settings['sockets'] = settings.get('sockets', {'sixlink':{'show':True,'style':'strong'},'fivelink':{'show':False,'style':'normal'},'sixsocket':{'show':True,'style':'normal'}})
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))

@@ -68,7 +68,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Prophecies', 'Maps', 'Skill Gems', 'Fossils', 'Resonators', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
+                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Prophecies', 'Maps', 'Skill Gems', 'Sockets', 'Fossils', 'Resonators', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <p class="link" @click="give_feedback">Feedback</p>
@@ -698,6 +698,60 @@
                 <itemList id="maps_favorite" title="Always Show" :items.sync="config.maps.favorite_maps" item-style="normal" item-rarity="normal,magic,rare">
                     These maps are always shown, even if they would normally be hidden based on their tier.
                 </itemList>
+            </div>
+
+            <div v-if="currentPage === 'Sockets'">
+                <h1>Sockets</h1>
+
+                <p>
+                    This section is for global and endgame socket highlighting.
+                    If you want to highlight leveling items based on their sockets,
+                    look at the <span class="link" @click="currentPage = 'Build'">Build</span>
+                    page.
+                </p>
+
+                <h2>Six-Links</h2>
+                <p>Show / highlight items with six linked sockets. These are almost always worth at least something.</p>
+                <p>
+                    <label for="sockets_sixlink_show">Show</label>
+                    <input type="checkbox" id="sockets_sixlink_show" v-model="config.sockets.sixlink.show">
+                    <dropdownWithTooltip v-show="config.sockets.sixlink.show"
+                        id="sockets_sixlink_style" v-model="config.sockets.sixlink.style" label="Style"
+                        :options="['normal','highlight','strong']" :option-labels="['Normal', 'Highlight', 'Strong Highlight']">
+                        Highlighting style for six-links. Check the <span class="link" @click="currentPage = 'Style'">Style</span>
+                        page for customizing the styles.
+                    </dropdownWithTooltip>
+                </p>
+
+                <h2>Five-Links</h2>
+                <p>
+                    Show / highlight items with five linked sockets. These may be worth something early in a league,
+                    but they will lose value rather quickly and soon become worthless.
+                </p>
+                <p>
+                    <label for="sockets_fivelink_show">Show</label>
+                    <input type="checkbox" id="sockets_fivelink_show" v-model="config.sockets.fivelink.show">
+                    <dropdownWithTooltip v-show="config.sockets.fivelink.show"
+                         id="sockets_fivelink_style" v-model="config.sockets.fivelink.style" label="Style"
+                        :options="['normal','highlight','strong']" :option-labels="['Normal', 'Highlight', 'Strong Highlight']">
+                        Highlighting style for five-links. Check the <span class="link" @click="currentPage = 'Style'">Style</span>
+                        page for customizing the styles.
+                    </dropdownWithTooltip>
+                </p>
+
+                <h2>Six-Sockets</h2>
+                <p>Show / highlight items with six (not fully linked) sockets. You can vendor these for 7 Jeweller's Orbs.</p>
+                <p>
+                    <label for="sockets_sixsocket_show">Show</label>
+                    <input type="checkbox" id="sockets_sixsocket_show" v-model="config.sockets.sixsocket.show">
+                    <dropdownWithTooltip v-show="config.sockets.sixsocket.show"
+                         id="sockets_sixsocket_style" v-model="config.sockets.sixsocket.style" label="Style"
+                        :options="['normal','highlight','strong']" :option-labels="['Normal', 'Highlight', 'Strong Highlight']">
+                        Highlighting style for six-sockets. Check the <span class="link" @click="currentPage = 'Style'">Style</span>
+                        page for customizing the styles.
+                    </dropdownWithTooltip>
+                </p>
+
             </div>
 
             <div v-if="currentPage === 'Leveling'">

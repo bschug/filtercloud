@@ -301,5 +301,20 @@
 		"hide_offset": 10,
 		"favorite_maps": [],
 		"always_show_shaped": true
+	},
+
+	"sockets": {
+		"sixlink": {
+			"show": true,
+			"style": "strong"
+		},
+		"fivelink": {
+			"show": false,
+			"style": "highlight"
+		},
+		"sixsocket": {
+			"show": true,
+			"style": "normal"
+		}
 	}
 }

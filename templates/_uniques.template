@@ -10,11 +10,19 @@ Show
 {{ style.strong_highlight.unique }}
 {% endif %}
 
+{% if sockets.fivelink.show %}
 # Now that we know it's not a top-tier, check for 5-link uniques
 Show
     Rarity Unique
     LinkedSockets 5
+{% if sockets.fivelink.style == 'strong' %}
+{{ style.strong_highlight.unique }}
+{% elif sockets.fivelink.style == 'highlight' %}
 {{ style.highlight.unique }}
+{% else %}
+{{ style.normal.unique }}
+{% endif %}
+{% endif %}
 
 # Valuable Uniques
 {% if uniques.valuable %}

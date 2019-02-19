@@ -1,41 +1,108 @@
 # ====================== [SOCKETS] ====================================
 
+{% if sockets.sixlink.show %}
 # 6-linked
 Show 
     LinkedSockets 6
     Rarity Normal
+{% if sockets.sixlink.style == 'strong' %}
 {{ style.strong_highlight.normal }}
+{% elif sockets.sixlink.style == 'highlight' %}
+{{ style.highlight.normal }}
+{% else %}
+{{ style.normal.normal }}
+{% endif %}
 Show
     LinkedSockets 6
     Rarity Magic
+{% if sockets.sixlink.style == 'strong' %}
 {{ style.strong_highlight.magic }}
+{% elif sockets.sixlink.style == 'highlight' %}
+{{ style.highlight.magic }}
+{% else %}
+{{ style.normal.magic }}
+{% endif %}
 Show
     LinkedSockets 6
     Rarity Rare 
+{% if sockets.sixlink.style == 'strong' %}
 {{ style.strong_highlight.rare }}
+{% elif sockets.sixlink.style == 'highlight' %}
+{{ style.highlight.rare }}
+{% else %}
+{{ style.normal.rare }}
+{% endif %}
 Show
     LinkedSockets 6
     Rarity Unique 
+{% if sockets.sixlink.style == 'strong' %}
 {{ style.strong_highlight.unique }}
+{% elif sockets.sixlink.style == 'highlight' %}
+{{ style.highlight.unique }}
+{% else %}
+{{ style.normal.unique }}
+{% endif %}
 
+{% endif %}
+
+{% if sockets.fivelink.show %}
 # 5-linked
 Show
     LinkedSockets 5
     Rarity Normal 
+{% if sockets.fivelink.style == 'strong' %}
+{{ style.strong_highlight.normal }}
+{% elif sockets.fivelink.style == 'highlight' %}
 {{ style.highlight.normal }}
+{% else %}
+{{ style.normal.normal }}
+{% endif %}
 Show
     LinkedSockets 5
     Rarity Magic
+{% if sockets.fivelink.style == 'strong' %}
+{{ style.strong_highlight.magic }}
+{% elif sockets.fivelink.style == 'highlight' %}
 {{ style.highlight.magic }}
+{% else %}
+{{ style.normal.magic }}
+{% endif %}
 Show
     LinkedSockets 5
     Rarity Rare
+{% if sockets.fivelink.style == 'strong' %}
+{{ style.strong_highlight.rare }}
+{% elif sockets.fivelink.style == 'highlight' %}
 {{ style.highlight.rare }}
+{% else %}
+{{ style.normal.rare }}
+{% endif %}
 
 # Don't highlight 5link uniques here because other rules might still make them strong highlighted
+{% endif %}
 
+{% if sockets.sixsocket.show %}
 # 6-socket items (vendor these for ~1c worth of jews)
+# Only highlight normal and magic items by this rule since rares and uniques
+# might have rules further down that make them stronger highlighted.
 Show
     Sockets 6
-	Rarity < Rare
-{{ style.normal }}
+    Rarity Normal
+{% if sockets.sixsocket.style == 'strong' %}
+{{ style.strong_highlight.normal }}
+{% elif sockets.sixsocket.style == 'highlight' %}
+{{ style.highlight.normal }}
+{% else %}
+{{ style.normal.normal }}
+{% endif %}
+Show
+    Sockets 6
+    Rarity Magic
+{% if sockets.sixsocket.style == 'strong' %}
+{{ style.strong_highlight.magic }}
+{% elif sockets.sixsocket.style == 'highlight' %}
+{{ style.highlight.magic }}
+{% else %}
+{{ style.normal.magic }}
+{% endif %}
+{% endif %}
