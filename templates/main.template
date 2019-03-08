@@ -90,6 +90,24 @@ Show
     HasExplicitMod "Veiled" "of the Veil"
 {{ style.veiled.unique }}
 
+# Always show items with lab enchantments
+Show
+    Rarity Normal
+    AnyEnchantment True
+{{ style.highlight.normal }}
+Show
+    Rarity Magic
+    AnyEnchantment True
+{{ style.highlight.magic }}
+Show
+    Rarity Rare
+    AnyEnchantment True
+{{ style.highlight.rare }}
+Show
+    Rarity Unique
+    AnyEnchantment True
+{{ style.highlight.unique }}
+
 
 {% if misc.identified != "Show All" and build.animate_weapon %}
 # Show identified weapons that we can animate
