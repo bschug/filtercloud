@@ -111,6 +111,16 @@ Hide
     ItemLevel > {{ leveling.endgame_threshold }}
     Class Amulets Rings Quivers Belts Gloves Boots "Body Armours" Helmets Shields Claws Daggers Wands Swords Axes Maces Sceptres
 {{ style.hidden.rare }}
+Hide
+    Rarity Rare
+    ItemLevel > {{ leveling.endgame_threshold }}
+    ShaperItem True
+{{ style.hidden.rare }}
+Hide
+    Rarity Rare
+    ItemLevel > {{ leveling.endgame_threshold }}
+    ElderItem True
+{{ style.hidden.rare }}
 
 
 
