@@ -1,6 +1,30 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
 #------------------------------------
+# Synthesis:
+
+# Fractured Items
+Show
+    Rarity Normal
+    FracturedItem True
+{{ style.highlight.normal|butnot(background=False) }}
+{{ style.highlight.breach|butonly(background=True) }}
+
+Show
+    Rarity Magic
+    FracturedItem True
+{{ style.highlight.magic|butnot(background=False) }}
+{{ style.highlight.breach|butonly(background=True) }}
+
+Show
+    Rarity Rare
+    FracturedItem True
+{{ style.highlight.rare|butnot(background=False) }}
+{{ style.highlight.breach|butonly(background=True) }}
+
+# (Uniques will be handled by price matching)
+
+#------------------------------------
 # Delve:
 
 # Fossils

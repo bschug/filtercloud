@@ -38,6 +38,8 @@ logger.setLevel(logging.DEBUG)
 app = Flask('api', template_folder='/templates')
 app.add_template_filter(lootfilter.templating.format_list_filter, 'names')
 app.add_template_filter(lootfilter.templating.setstyle_filter, 'setstyle')
+app.add_template_filter(lootfilter.templating.butonly_filter, 'butonly')
+app.add_template_filter(lootfilter.templating.butnot_filter, 'butnot')
 app.add_template_filter(lootfilter.templating.any_true_filter, 'any_true')
 app.add_template_global(get_selector, 'selector')
 
