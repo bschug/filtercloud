@@ -16,6 +16,21 @@ Show
     Class "Stackable Currency"
 {{ style.highlight.breach }}
 
+# Incubators
+Show
+    Class Incubator
+    BaseType Eldritch Geomancer's "Time-Lost"
+{{ style.strong_highlight.breach }}
+
+Show
+    Class Incubator
+    BaseType Whispering Gemcutter's Singular
+{{ style.normal.breach }}
+
+Show
+    Class Incubator
+{{ style.highlight.breach }}
+
 #------------------------------------
 # Synthesis:
 
