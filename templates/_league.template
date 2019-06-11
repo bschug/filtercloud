@@ -1,6 +1,22 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
 #------------------------------------
+# Legion
+
+# Emblems
+Show
+    BaseType Timeless
+    BaseType Emblem
+{{ style.strong_highlight.breach }}
+
+# Splinters
+Show
+    BaseType Timeless
+    BaseType Splinter
+    Class "Stackable Currency"
+{{ style.highlight.breach }}
+
+#------------------------------------
 # Synthesis:
 
 # Fractured Items
