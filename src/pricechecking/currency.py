@@ -1,3 +1,5 @@
+import json
+import math
 import requests
 from collections import defaultdict
 
@@ -47,6 +49,46 @@ ALL_CURRENCY = [
     'Harbinger\'s Orb', 'Harbinger\'s Shard'
 ]
 
+STACK_SIZES = {
+    'Armourer\'s Scrap': 40,
+    'Blacksmith\'s Whetstone': 20,
+    'Blessed Orb': 20,
+    'Cartographer\'s Chisel': 20,
+    'Chaos Orb': 10, 'Chaos Shard': 20,
+    'Chromatic Orb': 20,
+    'Divine Orb': 10,
+    'Exalted Orb': 10, 'Exalted Shard': 20,
+    'Gemcutter\'s Prism': 20,
+    'Glassblower\'s Bauble': 20,
+    'Jeweller\'s Orb': 20,
+    'Apprentice Cartographer\'s Sextant': 10,
+    'Journeyman Cartographer\'s Sextant': 10,
+    'Master Cartographer\'s Sextant': 10,
+    'Mirror of Kalandra': 10, 'Mirror Shard': 20,
+    'Orb of Alchemy': 10, 'Alchemy Shard': 20,
+    'Orb of Alteration': 20, 'Alteration Shard': 20,
+    'Orb of Augmentation': 30,
+    'Orb of Chance': 20,
+    'Orb of Fusing': 20,
+    'Orb of Regret': 40,
+    'Orb of Scouring': 30,
+    'Orb of Transmutation': 40, 'Transmutation Shard': 20,
+    'Perandus Coin': 1000,
+    'Portal Scroll': 40,
+    'Scroll of Wisdom': 40, 'Scroll Fragment': 5,
+    'Regal Orb': 10, 'Regal Shard': 20,
+    'Silver Coin': 30,
+    'Stacked Deck': 10,
+    'Vaal Orb': 10,
+
+    # Harbinger
+    'Ancient Orb': 20, 'Ancient Shard': 20,
+    'Orb of Annulment': 20, 'Annulment Shard': 20,
+    'Orb of Binding': 20, 'Binding Shard': 20,
+    'Orb of Horizons': 20, 'Horizon Shard': 20,
+    'Engineer\'s Orb': 20, 'Engineer\'s Shard': 20,
+    'Harbinger\'s Orb': 20, 'Harbinger\'s Shard': 20
+}
 
 def get_currency_tiers(league, thresholds, db):
     prices = get_currency_prices(league, db)
@@ -119,3 +161,39 @@ def scrape_currency_prices(league):
 
     return {x: prices.get(x, 0) for x in ALL_CURRENCY}
 
+
+def build_currency_stacks(league, thresholds, blacklist, db):
+    """
+    Returns list of stacks that exceed the given thresholds.
+    For items with a known stack size limit, only generate entries below that limit.
+
+    :param thresholds: User-configured value thresholds
+    :param blacklist: List of basetypes that shouldn't have stacks
+    :param db: Database connection
+    :return: {
+        'top_tier': [
+            { 'base_type': 'Chaos Orb', 'stack_size': 50 },
+            { 'base_type': 'Perandus Coin', 'stack_size': 1247 }
+        ],
+        'valuable': [...],
+        ...
+    }
+    """
+    result = defaultdict(lambda: [])
+    prices = get_currency_prices(league=league, db=db)
+    for k,v in prices.items():
+        if k in blacklist:
+            continue
+        for tk,tv in thresholds.items():
+            if tk == 'hidden':
+                continue
+            stack_size = math.ceil(tv / v)
+            if stack_size > STACK_SIZES.get(k, math.inf):
+                continue
+            if stack_size <= 1:
+                continue
+            result[tk].append({
+                'base_type': k,
+                'stack_size': stack_size
+            })
+    return result

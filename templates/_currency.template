@@ -19,6 +19,49 @@ Show
 
 {% endif %}
 
+{% if currency.stacks %}
+{% for stack in currency.stacks.ultra_rare %}
+Show
+    Class Currency
+    BaseType {{ stack.base_type }}
+    StackSize {{ stack.stack_size }}
+{{ style.ultra_rare.currency }}
+{% endfor %}
+
+{% for stack in currency.stacks.top_tier %}
+Show
+    Class Currency
+    BaseType {{ stack.base_type }}
+    StackSize {{ stack.stack_size }}
+{{ style.strong_highlight.currency }}
+{% endfor %}
+
+{% for stack in currency.stacks.valuable %}
+Show
+    Class Currency
+    BaseType {{ stack.base_type }}
+    StackSize {{ stack.stack_size }}
+{{ style.highlight.currency }}
+{% endfor %}
+
+{% for stack in currency.stacks.mediocre %}
+Show
+    Class Currency
+    BaseType {{ stack.base_type }}
+    StackSize {{ stack.stack_size }}
+{{ style.normal.currency }}
+{% endfor %}
+
+{% for stack in currency.stacks.worthless %}
+Show
+    Class Currency
+    BaseType {{ stack.base_type }}
+    StackSize {{ stack.stack_size }}
+{{ style.smaller.currency }}
+{% endfor %}
+
+{% endif %}
+
 {% if currency.ultra_rare %}
 Show 
 	Class Currency

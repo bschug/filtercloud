@@ -1,4 +1,4 @@
-import json
+import itertools
 from datetime import datetime
 
 import logging
@@ -42,9 +42,13 @@ def load_style(settings):
 def build_currency_config(settings, db):
     league = settings.league
     thresholds = settings.currency.thresholds
+    overrides = settings.currency.overrides
     config = pricechecking.get_currency_tiers(league=league, thresholds=thresholds, db=db)
-    apply_overrides(config, settings.currency.overrides)
-    return {**settings.currency, **config}
+    apply_overrides(config, overrides)
+    overridden_items = list(itertools.chain.from_iterable(overrides.values()))
+    stacks = pricechecking.build_currency_stacks(
+        league=league, thresholds=thresholds, blacklist=overridden_items, db=db)
+    return {**settings.currency, **config, 'stacks': stacks}
 
 
 def build_unique_config(settings, league_uniques, db):
