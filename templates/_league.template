@@ -258,17 +258,6 @@ Show
 Show 
     BaseType "Essence of"
 {{ style.highlight.currency }}
-	
-# Silver Coins
-Show
-	BaseType "Silver Coin"
-{{ style.highlight.currency }}
-
-# Perandus Coins
-Show 
-	BaseType "Perandus Coin"
-	Class Currency 
-{{ style.highlight.currency }}
 
 Show
     BaseType "Divine Vessel"
