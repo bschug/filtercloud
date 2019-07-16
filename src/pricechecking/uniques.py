@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime
 import requests
 
 from .utils import build_date_string
@@ -135,7 +136,7 @@ def get_basetype_prices(league, blacklist, db):
 def update_unique_prices(league, db):
     print("Updating unique prices for", league)
     prices = scrape_unique_prices(league)
-    dbentry = {'category': 'uniques', 'league': league, 'prices': prices}
+    dbentry = {'category': 'uniques', 'league': league, 'prices': prices, 'date': datetime.now()}
     db.prices.replace_one({'category': 'uniques', 'league': league}, dbentry, upsert=True)
 
 

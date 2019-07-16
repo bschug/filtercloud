@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime
 import requests
 
 from .utils import build_date_string, sort_into_tiers
@@ -16,7 +17,7 @@ def get_fossil_prices(league, db):
 def update_fossil_prices(league, db):
     print("Updating fossil prices for", league)
     prices = scrape_fossil_prices(league)
-    dbentry = {'category': 'fossils', 'league': league, 'prices': prices}
+    dbentry = {'category': 'fossils', 'league': league, 'prices': prices, 'date': datetime.now()}
     db.prices.replace_one({'category': 'fossils', 'league': league}, dbentry, upsert=True)
 
 

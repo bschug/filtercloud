@@ -1,4 +1,4 @@
-import json
+from datetime import datetime
 import math
 import requests
 from collections import defaultdict
@@ -99,10 +99,14 @@ def get_currency_prices(league, db):
     return db.prices.find_one({'category': 'currency', 'league': league})['prices']
 
 
+def get_date(league, db):
+    return db.prices.find_one({'category': 'currency', 'league': league})['date']
+
+
 def update_currency_prices(league, db):
     print("Updating currency prices for", league)
     prices = scrape_currency_prices(league)
-    dbentry = {'category': 'currency', 'league': league, 'prices': prices}
+    dbentry = {'category': 'currency', 'league': league, 'prices': prices, 'date': datetime.now()}
     db.prices.replace_one({'category': 'currency', 'league': league}, dbentry, upsert=True)
 
 

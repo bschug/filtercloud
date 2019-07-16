@@ -1,3 +1,4 @@
+from datetime import datetime
 import requests
 
 from .utils import build_date_string
@@ -15,7 +16,7 @@ def get_divcard_prices(league, db):
 def update_divcard_prices(league, db):
     print("Updating divcard prices for", league)
     prices = scrape_divcard_prices(league)
-    dbentry = {'category': 'divcards', 'league': league, 'prices': prices}
+    dbentry = {'category': 'divcards', 'league': league, 'prices': prices, 'date': datetime.now()}
     db.prices.replace_one({'category': 'divcards', 'league': league}, dbentry, upsert=True)
 
 

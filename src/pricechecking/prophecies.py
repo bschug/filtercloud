@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime
 import requests
 
 from .utils import build_date_string, sort_into_tiers
@@ -16,7 +17,7 @@ def get_prophecy_prices(league, db):
 def update_prophecy_prices(league, db):
     print("Updating prophecy prices for", league)
     prices = scrape_prophecy_prices(league)
-    dbentry = {'category': 'prophecies', 'league': league, 'prices': prices}
+    dbentry = {'category': 'prophecies', 'league': league, 'prices': prices, 'date': datetime.now()}
     db.prices.replace_one({'category': 'prophecies', 'league': league}, dbentry, upsert=True)
 
 

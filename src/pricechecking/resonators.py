@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime
 import requests
 
 from .utils import build_date_string, sort_into_tiers
@@ -19,7 +20,7 @@ def get_resonator_prices(league, db):
 def update_resonator_prices(league, db):
     print("Updating resonator prices for", league)
     prices = scrape_resonator_prices(league)
-    dbentry = {'category': 'resonators', 'league': league, 'prices': prices}
+    dbentry = {'category': 'resonators', 'league': league, 'prices': prices, 'date': datetime.now()}
     db.prices.replace_one({'category': 'resonators', 'league': league}, dbentry, upsert=True)
 
 

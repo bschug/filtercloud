@@ -12,6 +12,7 @@ def load_config(settings, style, league_uniques, db):
     settings = upgrade_config(settings)
     return {
         'date': datetime.now(),
+        'pricedate': pricechecking.currency.get_date(settings.league, db),
         'misc': settings.get('misc'),
         'crafting': settings.get('crafting'),
         'currency': build_currency_config(settings, db),
