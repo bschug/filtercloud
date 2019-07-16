@@ -189,8 +189,7 @@ def build_currency_stacks(league, thresholds, blacklist, db):
         if k in blacklist:
             continue
         for tk,tv in thresholds.items():
-            if tk == 'hidden':
-                continue
+            tk = threshold_to_stack_name(tk)
             stack_size = math.ceil(tv / v)
             if stack_size > STACK_SIZES.get(k, math.inf):
                 continue
@@ -201,3 +200,16 @@ def build_currency_stacks(league, thresholds, blacklist, db):
                 'stack_size': stack_size
             })
     return result
+
+
+def threshold_to_stack_name(threshold):
+    """
+    The thresholds for worthless and hidden are upper bounds, while the other
+    thresholds are lower bounds. Therefore, anything above the worthless threshold
+    is mediocre, and anything above the hidden threshold is worthless.
+    """
+    if threshold == 'worthless':
+        return 'mediocre'
+    if threshold == 'hidden':
+        return 'worthless'
+    return threshold
