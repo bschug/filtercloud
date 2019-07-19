@@ -71,6 +71,13 @@ Show
 {% endfor %}
 {% endif %}
 
+# Strong highlight for items with character-specific Veiled mods (these sell for 10-40c)
+Show 
+	Identified True 
+	Rarity Rare 
+	HasExplicitMod "Elreon's Veiled" "Leo's Veiled" "Vagan's Veiled" "It That Fled's Veiled" "Guff's Veiled"
+{{ style.veiled.highlight_rare }}
+
 # Show items with Veiled mods
 Show
     Identified True
