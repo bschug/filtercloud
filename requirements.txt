@@ -1,8 +1,8 @@
 gunicorn==19.6.0
 python-box==3.0.1
-Jinja2==2.9.5
-requests==2.10.0
-Flask==0.12
+Jinja2==2.10.1
+requests==2.20.0
+Flask==0.12.3
 Flask-Login==0.4.1
 google-auth==1.4.1
 requests-cache==0.4.13

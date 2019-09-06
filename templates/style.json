@@ -274,6 +274,10 @@
 		},
 		"unique": {
 			"background": "70 35 14 220"
+		},
+		"highlight_rare": {
+			"background": "255 255 119",
+			"textcolor": "210 30 170"
 		}
 	}
 }
