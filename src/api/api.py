@@ -16,7 +16,7 @@ import pricechecking
 import users
 
 
-ACTIVE_LEAGUES = ['Standard', 'Hardcore', 'Legion', 'Hardcore Legion']
+ACTIVE_LEAGUES = ['Standard', 'Hardcore', 'Blight', 'Hardcore Blight', 'Legion', 'Hardcore Legion']
 
 
 def get_db():
