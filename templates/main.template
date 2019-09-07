@@ -121,7 +121,7 @@ Show
 Show
     Rarity > Normal
     Identified True
-    Class Axes Claws Daggers Maces Sceptres Staves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+    Class Axes Claws Daggers "Rune Dagger" Maces Sceptres Staves Warstaff Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
 {{ style.animate_weapon }}
 {% endif %}
 
@@ -157,7 +157,7 @@ Hide
 Show
     Rarity Normal
     ItemLevel > {{ leveling.endgame_threshold }}
-    Class Axes Claws Daggers Maces Sceptres Staves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+    Class Axes Claws Daggers "Rune Dagger" Maces Sceptres Staves Warstaff Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
 {{ style.animate_weapon }}
 {% endif %}
 
@@ -165,7 +165,7 @@ Show
 Hide 
     Rarity <= Magic 
     ItemLevel > {{ leveling.endgame_threshold }}
-    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands Armours Helmets Gloves Boots Shields Quivers Amulets Belts Rings
+    Class Axes Bows Claws Daggers "Rune Dagger" Maces Sceptres Staves Warstaff Swords Wands Armours Helmets Gloves Boots Shields Quivers Amulets Belts Rings
     {{ style.hidden.default }}
 
 {% include "_jewels.template" %}
@@ -201,7 +201,7 @@ Hide
 # Show low level animateable weapons that were not highlighted by the leveling rules
 Show
     Rarity Normal
-    Class Axes Claws Daggers Maces Sceptres Staves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+    Class Axes Claws Daggers "Rune Dagger" Maces Sceptres Staves Warstaff Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
 {{ style.animate_weapon }}
 {% endif %}
 
@@ -213,7 +213,7 @@ Show
 # Hide all the other trash 
 # Use explicit blacklist of item classes to avoid hiding stuff we forgot to whitelist 
 Hide 
-    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armours" Shields Boots Gloves Helmets Quivers Amulets Belts Rings 
+    Class Axes Bows Claws Daggers "Rune Dagger" Maces Sceptres Staves Warstaff Swords Wands "Body Armours" Shields Boots Gloves Helmets Quivers Amulets Belts Rings
     SetFontSize 10
 {{ style.hidden }}
     
