@@ -83,8 +83,7 @@ class WikiScraper(object):
                     'energy_shield': int_or_0(item.get('energy shield', 0))
                 }
 
-        results = list(generate_results())
-        results.sort(key=lambda x: x['droplevel'])
+        results = {x['basetype']: x for x in generate_results()}
         return results
 
     def scrape_armour_class(self, armour_class):
