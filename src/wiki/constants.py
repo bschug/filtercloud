@@ -1,8 +1,8 @@
 
 
 WEAPON_ITEM_CLASSES = [
-    "Claws", "Daggers", "Rune Daggers", "Wands", "One Hand Swords", "Thrusting One Hand Swords", "One Hand Axes", "One Hand Maces",
-    "Bows", "Staves", "Warstaves", "Two Hand Swords", "Two Hand Axes", "Two Hand Maces", "Sceptres",
+    "Claws", "Daggers", "Rune Dagger", "Wands", "One Hand Swords", "Thrusting One Hand Swords", "One Hand Axes", "One Hand Maces",
+    "Bows", "Staves", "Warstaff", "Two Hand Swords", "Two Hand Axes", "Two Hand Maces", "Sceptres",
 ]
 ARMOUR_ITEM_CLASSES = [
     "Gloves", "Boots", "Body Armours", "Helmets", "Shields",
@@ -20,13 +20,12 @@ CURRENCY_ITEM_CLASSES = [
     "Currency", "Stackable Currency",
 ]
 OTHER_ITEM_CLASSES = [
-    "Quest Items", "Maps", "Fishing Rods", "Map Fragments", "Jewel",
+    "Quest Items", "Maps", "Fishing Rods", "Map Fragments", "Jewel", "Abyss Jewel",
     "Divination Card", "Labyrinth Item", "Labyrinth Trinket", "Labyrinth Map Item", "Misc Map Items", "Leaguestones",
     "Pantheon Soul", "Piece"
 ]
 ALL_ITEM_CLASSES = WEAPON_ITEM_CLASSES + ARMOUR_ITEM_CLASSES + JEWELRY_ITEM_CLASSES + GEM_ITEM_CLASSES + \
                    FLASK_ITEM_CLASSES + CURRENCY_ITEM_CLASSES + OTHER_ITEM_CLASSES
-
 
 ALL_LEAGUES = [
     "Ambush",

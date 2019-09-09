@@ -1,6 +1,5 @@
 import json
-
-import mwclient
+import requests
 
 from .constants import *
 from .selector import update_selectors
@@ -16,7 +15,7 @@ def scrape_wiki(db):
 
 class WikiScraper(object):
     def __init__(self, db):
-        self.site = mwclient.Site('pathofexile.gamepedia.com', path='/', clients_useragent="poe.gg")
+        self.api_url = 'https://pathofexile.gamepedia.com/api.php'
         self.db = db
 
     def scrape_items(self):
@@ -34,88 +33,70 @@ class WikiScraper(object):
         }
         for item_class in ALL_ITEM_CLASSES:
             print("Scraping", item_class)
-            result['itemClasses'][item_class] = dict()
-            for basetype in self.scrape_item_class(item_class):
-                print("    Scraping", basetype)
-                result['itemClasses'][item_class][basetype] = self.scrape_basetype(basetype, item_class)
+            if item_class in ARMOUR_ITEM_CLASSES:
+                result['itemClasses'][item_class] = self.scrape_armour_class(item_class)
+            else:
+                result['itemClasses'][item_class] = self.scrape_item_class(item_class)
+
         self.db.game_constants.replace_one({}, {'data': result, 'json': json.dumps(result)}, upsert=True)
 
-    def scrape_item_class(self, item_class):
-        query = '|'.join([
-            '[[Has item class::{item_class}]]'.format(item_class=item_class),
-            '[[Has rarity::Normal]]',
-            '?Has drop level'
-        ])
+    def _cargoquery(self, **kwargs):
+        """
+        Generic wiki api query. Performs a cargo query with the given parameters.
+        Automatically adds the action=cargoquery and format=json that are always needed.
+        """
+        params = dict(action='cargoquery', format='json', limit=500, **kwargs)
+        headers = {'User-agent': 'poe.gg'}
+        response = requests.get(self.api_url, params=params, headers=headers)
+        if response.status_code != 200:
+            print("ERROR: wiki api returned ", response.status_code, response.text)
+            raise Exception("API Error")
+
+        try:
+            return json.loads(response.text)['cargoquery']
+        except:
+            print("ERROR")
+            print(response.text)
+            raise Exception("API Error")
+
+    def scrape_item_class(self, item_class, tables=(), fields=(), join_on=None, where=''):
+        tables = ','.join(['items'] + list(tables))
+        default_fields = ['name', 'drop_level', 'required_strength', 'required_dexterity', 'required_intelligence']
+        fields = ','.join(default_fields + list(fields))
+        if len(where) > 0:
+            where += ' AND '
+        where += 'class="{}" AND drop_enabled AND NOT is_fated AND rarity="Normal"'.format(item_class)
 
         def generate_results():
-            for answer in self.site.ask(query):
-                for title, data in answer.items():
-                    yield {'name': title, 'level': data['printouts']['Has drop level']}
+            response = self._cargoquery(tables=tables, join_on=join_on, fields=fields, where=where)
+            for obj in response:
+                item = obj['title']
+                yield {
+                    'itemclass': item_class,
+                    'basetype': item['name'],
+                    'droplevel': int_or_0(item['drop level']),
+                    'req_str': int_or_0(item['required strength']),
+                    'req_dex': int_or_0(item['required dexterity']),
+                    'req_int': int_or_0(item['required intelligence']),
+                    'armour': int_or_0(item.get('armour', 0)),
+                    'evasion': int_or_0(item.get('evasion', 0)),
+                    'energy_shield': int_or_0(item.get('energy shield', 0))
+                }
+
         results = list(generate_results())
-        results.sort(key=lambda x: x['level'])
-        return [x['name'] for x in results]
+        results.sort(key=lambda x: x['droplevel'])
+        return results
 
-    def scrape_basetype(self, basetype, itemclass):
-        response = self.site.api('browsebysubject', subject=basetype)
-        return WikiItem(response['query']['data'], itemclass, basetype).to_dict()
+    def scrape_armour_class(self, armour_class):
+        return self.scrape_item_class(
+            armour_class,
+            tables=['armours'],
+            join_on='items._pageName = armours._pageName',
+            fields=['armour', 'evasion', 'energy_shield'])
 
-    def scrape_itembox_html(self, name):
-        response = self.site.get('browsebysubject', subject=name)
-        return [x['dataitem'] for x in response['query']['data'] if 'Has_infobox_HTML' in x['property']][0][0]['item']
 
-
-class WikiItem(object):
-    def __init__(self, data, itemclass, basetype):
-        self.rawdata = data
-        self.itemclass = itemclass
-        self._basetype = basetype
-
-    def to_dict(self):
-        keys = ['itemclass', 'basetype', 'droplevel', 'armour', 'evasion', 'energy_shield',
-                'req_str', 'req_dex', 'req_int']
-        return {k: getattr(self, k) for k in keys}
-
-    def get_property(self, name, default=0):
-        try:
-            dataitem = [x['dataitem'] for x in self.rawdata if x['property'] == name][0]
-            return [x['item'] for x in dataitem][0]
-        except KeyError:
-            return default
-        except IndexError:
-            return default
-
-    @property
-    def basetype(self):
-        # Portal is stored in the Wiki as "Portal (gem)"
-        if "(gem)" in self._basetype:
-            return self._basetype[:-len(" (gem)")]
-        return self._basetype
-
-    @property
-    def droplevel(self):
-        return self.get_property('Has_level_requirement_range_average')
-
-    @property
-    def req_str(self):
-        return self.get_property('Has_strength_requirement_range_average')
-
-    @property
-    def req_dex(self):
-        return self.get_property('Has_dexterity_requirement_range_average')
-
-    @property
-    def req_int(self):
-        return self.get_property('Has_intelligence_requirement_range_average')
-
-    @property
-    def armour(self):
-        return self.get_property('Has_armour_range_average')
-
-    @property
-    def evasion(self):
-        return self.get_property('Has_evasion_range_average')
-
-    @property
-    def energy_shield(self):
-        return self.get_property('Has_energy_shield_average')
-
+def int_or_0(txt):
+    try:
+        return int(txt)
+    except:
+        return 0
