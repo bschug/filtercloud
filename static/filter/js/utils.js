@@ -106,7 +106,7 @@ var ObjectUtils = {
             if (defaults.hasOwnProperty(k)) {
                 if (!local.hasOwnProperty(k)) {
                     local[k] = defaults[k];
-                } else if (typeof defaults[k] === 'object') {
+                } else if (typeof defaults[k] === 'object' && !Array.isArray(defaults[k])) {
                     ObjectUtils.addMissingKeys(local[k], defaults[k]);
                 }
             }
