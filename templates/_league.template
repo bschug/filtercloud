@@ -1,6 +1,46 @@
 # ------------------------------------- [LEAGUE SPECIFIC] --------------------------------
 
 #------------------------------------
+# Blight
+
+{% if oils.top_tier %}
+Show
+    BaseType {{ oils.top_tier|names }}
+{{ style.strong_highlight.breach }}
+{% endif %}
+
+{% if oils.valuable %}
+Show
+    BaseType {{ oils.valuable|names }}
+{{ style.highlight.breach }}
+{% endif %}
+
+{% if oils.mediocre %}
+Show
+    BaseType {{ oils.mediocre|names }}
+{{ style.normal.breach }}
+{% endif %}
+
+{% if oils.worthless %}
+Show
+    BaseType {{ oils.worthless|names }}
+{{ style.smaller.breach }}
+{% endif %}
+
+{% if oils.hidden %}
+Hide
+    BaseType {{ oils.hidden|names }}
+{{ style.hidden.breach }}
+{% endif %}
+
+# Any oils we missed
+Show
+    BaseType Oil
+    Class "Stackable Currency"
+{{ style.strong_highlight.breach|setstyle(background="0 0 0", border="255 0 255", textcolor="255 0 255") }}
+
+
+#------------------------------------
 # Legion
 
 # Emblems

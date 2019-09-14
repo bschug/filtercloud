@@ -68,7 +68,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Prophecies', 'Maps', 'Skill Gems', 'Sockets', 'Fossils', 'Resonators', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
+                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Prophecies', 'Maps', 'Skill Gems', 'Sockets', 'Fossils', 'Resonators', 'Oils', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <p class="link" @click="give_feedback">Feedback</p>
@@ -614,6 +614,37 @@
                 <thresholdItemList :prices="GameData.prices.resonators" :thresholds="config.resonators.thresholds"
                                    style-context="breach"
                                    :overrides="config.resonators.overrides"
+                                   :style-overrides="{}">
+                </thresholdItemList>
+            </div>
+
+            <div v-if="currentPage === 'Oils'">
+                <h1>Fossils</h1>
+
+                <thresholdSlider id="oils-toptier" v-model="config.oils.thresholds.top_tier" title="Top Tier" op="≥"
+                                 :overrides.sync="config.oils.overrides.top_tier" :prices="GameData.prices.oils"
+                                 item-style="strong_highlight.breach" item-class="Currency">
+                    Items worth more than this are very valuable. If you see this highlighting, it's time to get excited!
+                </thresholdSlider>
+                <thresholdSlider id="oils-valuable" v-model="config.oils.thresholds.valuable" title="Valuable" op="≥"
+                                 :overrides.sync="config.oils.overrides.valuable" :prices="GameData.prices.oils"
+                                 item-style="highlight.breach" item-class="Currency">
+                    Anything above this is valuable, and you should always pick them up.
+                </thresholdSlider>
+                <thresholdSlider id="oils-worthless" v-model="config.oils.thresholds.worthless" title="Worthless" op="<"
+                                 :overrides.sync="config.oils.overrides.worthless" :prices="GameData.prices.oils"
+                                 item-style="smaller.breach" item-class="Currency">
+                    Anything below this is usually not worth the time picking up, unless there's a lot them in one place.
+                </thresholdSlider>
+                <thresholdSlider id="oils-hidden" v-model="config.oils.thresholds.hidden" title="Hidden" op="<"
+                                 :overrides.sync="config.oils.overrides.hidden" :prices="GameData.prices.oils"
+                                 item-style="hidden.breach" item-class="Currency" :hidden="true">
+                    Anything below this will be hidden completely.
+                </thresholdSlider>
+
+                <thresholdItemList :prices="GameData.prices.oils" :thresholds="config.oils.thresholds"
+                                   style-context="breach"
+                                   :overrides="config.oils.overrides"
                                    :style-overrides="{}">
                 </thresholdItemList>
             </div>

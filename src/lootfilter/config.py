@@ -30,6 +30,7 @@ def load_config(settings, style, league_uniques, db):
         'build': settings.get('build'),
         'fossils': build_fossils_config(settings, db),
         'resonators': build_resonators_config(settings, db),
+        'oils': build_oils_config(settings, db),
         'explicit_mods': settings.get('explicit_mods'),
         'sockets': settings.get('sockets')
     }
@@ -92,6 +93,14 @@ def build_resonators_config(settings, db):
     thresholds = settings.resonators.thresholds
     config = pricechecking.get_resonator_tiers(league=league, thresholds=thresholds, db=db)
     apply_overrides(config, settings.resonators.overrides)
+    return config
+
+
+def build_oils_config(settings, db):
+    league = settings.league
+    thresholds = settings.oils.thresholds
+    config = pricechecking.get_oil_tiers(league=league, thresholds=thresholds, db=db)
+    apply_overrides(config, settings.oils.overrides)
     return config
 
 
@@ -174,6 +183,7 @@ def upgrade_config(settings):
     settings['build']['socket_count'] = settings.build.get('socket_count', {'itemtype':'none', 'offset': 5})
     settings['maps']['hide_offset'] = settings.maps.get('hide_offset', 10)
     settings['sockets'] = settings.get('sockets', {'sixlink':{'show':True,'style':'strong'},'fivelink':{'show':False,'style':'normal'},'sixsocket':{'show':True,'style':'normal'}})
+    settings['oils'] = settings.get('oils', default_thresholds)
 
     if settings.version != 2:
         logger.debug("Upgraded config settings from {} to 2".format(settings.version))

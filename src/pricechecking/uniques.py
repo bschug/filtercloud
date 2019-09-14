@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 
 from .utils import build_date_string
+from . import SEND_DATE_TO_POE_NINJA
 
 
 # Some Uniques can only be acquired from prophecies / breachstones, not dropped by enemies.
@@ -152,7 +153,10 @@ def scrape_unique_prices(league):
 
 def scrape_unique_prices_from_url(url, itype, league, unique_prices):
     date = build_date_string()
-    response = requests.get(url, params={'type': itype, 'league': league, 'date': date}).json()
+    params = {'type': itype, 'league': league}
+    if SEND_DATE_TO_POE_NINJA:
+        params['date'] = build_date_string()
+    response = requests.get(url, params=params).json()
     for item in response['lines']:
         # poe.ninja also contains prices for 5/6-linked versions of the items
         # We only care about the base price without links

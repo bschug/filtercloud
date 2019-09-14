@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 
 from .utils import build_date_string, sort_into_tiers
+from . import SEND_DATE_TO_POE_NINJA
 
 
 def get_resonator_tiers(league, thresholds, db):
@@ -26,7 +27,9 @@ def update_resonator_prices(league, db):
 
 def scrape_resonator_prices(league):
     url = 'https://poe.ninja/api/data/itemoverview'
-    params = {'league': league, 'type': 'Resonator', 'date': build_date_string()}
+    params = {'league': league, 'type': 'Resonator'}
+    if SEND_DATE_TO_POE_NINJA:
+        params['date'] = build_date_string()
     response = requests.get(url, params).json()
     prices = defaultdict(lambda: 0)
     for line in response['lines']:

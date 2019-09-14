@@ -23,14 +23,17 @@
                 convertLeagueUniquesToSets();
             });
 
-        var prices = GameData.loadPrices(league, uniqueLeagues);
-
         var leagues = axios.get('/api/filter/leagues')
             .then(function(response) {
                 GameData.leagues = response.data;
+
+                if (!GameData.leagues.includes(league)){
+                    league = 'Standard';
+                }
+                return GameData.loadPrices(league, uniqueLeagues);
             });
 
-        return Promise.all([constants, prices, leagues])
+        return Promise.all([constants, leagues])
             .then(function(response) {
                 var duration = +new Date() - startTime;
                 console.log("Load GameData complete after " + duration + " ms");

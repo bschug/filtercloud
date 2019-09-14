@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 
 from .utils import build_date_string, sort_into_tiers
+from . import SEND_DATE_TO_POE_NINJA
 
 
 def get_fossil_tiers(league, thresholds, db):
@@ -23,7 +24,9 @@ def update_fossil_prices(league, db):
 
 def scrape_fossil_prices(league):
     url = "https://poe.ninja/api/data/itemoverview"
-    params = {'league': league, 'type': 'Fossil', 'date': build_date_string()}
+    params = {'league': league, 'type': 'Fossil'}
+    if SEND_DATE_TO_POE_NINJA:
+        params['date'] = build_date_string()
     response = requests.get(url, params).json()
     prices = defaultdict(lambda: 0)
     for line in response['lines']:

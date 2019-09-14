@@ -4,6 +4,7 @@ import requests
 from collections import defaultdict
 
 from .utils import build_date_string, sort_into_tiers
+from . import SEND_DATE_TO_POE_NINJA
 
 
 # We use an explicit list of currencies because poe.ninja is missing some currencies (like Alchemy Shards) and contains
@@ -90,6 +91,7 @@ STACK_SIZES = {
     'Harbinger\'s Orb': 20, 'Harbinger\'s Shard': 20
 }
 
+
 def get_currency_tiers(league, thresholds, db):
     prices = get_currency_prices(league, db)
     return sort_into_tiers(prices, thresholds)
@@ -112,8 +114,12 @@ def update_currency_prices(league, db):
 
 def scrape_currency_prices(league):
     url = "https://poe.ninja/api/data/currencyoverview"
-    response = requests.get(url, params={'league': league, 'type': 'Currency', 'date': build_date_string()}).json()
+    params = {'league': league, 'type': 'Currency'}
+    if SEND_DATE_TO_POE_NINJA:
+        params['date'] = build_date_string()
+    response = requests.get(url, params=params).json()
     prices = defaultdict(lambda: 0)
+
     for line in response['lines']:
         name = line['currencyTypeName']
         if line.get('receive') is not None:

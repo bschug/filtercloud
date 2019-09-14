@@ -2,6 +2,7 @@ from datetime import datetime
 import requests
 
 from .utils import build_date_string
+from . import SEND_DATE_TO_POE_NINJA
 
 
 def get_divcard_tiers(league, thresholds, db):
@@ -23,7 +24,10 @@ def update_divcard_prices(league, db):
 def scrape_divcard_prices(league):
     prices = dict()
     url = "http://poe.ninja/api/data/itemoverview"
-    response = requests.get(url, params={'league': league, 'type': 'DivinationCard', 'date': build_date_string()}).json()
+    params = {'league': league, 'type': 'DivinationCard'}
+    if SEND_DATE_TO_POE_NINJA:
+        params['date'] = build_date_string()
+    response = requests.get(url, params=params).json()
     for item in response['lines']:
         prices[item['name']] = item['chaosValue']
     return prices

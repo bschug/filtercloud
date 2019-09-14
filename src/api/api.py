@@ -81,10 +81,11 @@ def post_update_prices():
     for league in ACTIVE_LEAGUES:
         pricechecking.update_currency_prices(league, get_db())
         pricechecking.update_divcard_prices(league, get_db())
-        pricechecking.update_unique_prices(league, get_db())
         pricechecking.update_fossil_prices(league, get_db())
-        pricechecking.update_resonator_prices(league, get_db())
+        pricechecking.update_oil_prices(league, get_db())
         pricechecking.update_prophecy_prices(league, get_db())
+        pricechecking.update_resonator_prices(league, get_db())
+        pricechecking.update_unique_prices(league, get_db())
     return "Update Complete"
 
 
@@ -116,7 +117,8 @@ def get_prices(league):
         'uniques': pricechecking.get_unique_prices(league, get_db()),
         'fossils': pricechecking.get_fossil_prices(league, get_db()),
         'resonators': pricechecking.get_resonator_prices(league, get_db()),
-        'prophecies': pricechecking.get_prophecy_prices(league, get_db())
+        'prophecies': pricechecking.get_prophecy_prices(league, get_db()),
+        'oils': pricechecking.get_oil_prices(league, get_db()),
     })
 
 
