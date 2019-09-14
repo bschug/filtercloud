@@ -204,12 +204,12 @@ Show
 {% if build.animate_weapon %}
 Show
     Rarity Normal
-    Class Axes Claws Daggers Maces Sceptres Staves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+    Class Axes Claws Daggers "Rune Dagger" Maces Sceptres Staves Warstaff Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
 {{ style.animate_weapon }}
 {% endif %}
 
 Hide
-    Class Axes Bows Claws Daggers Maces Sceptres Staves Swords Wands "Body Armour" Gloves Boots Helmets Shields Quivers
+    Class Axes Bows Claws Daggers "Rune Dagger" Maces Sceptres Staves Warstaff Swords Wands "Body Armour" Gloves Boots Helmets Shields Quivers
 {% if leveling.show_all_rares %}
     Rarity Normal Magic
 {% endif %}
