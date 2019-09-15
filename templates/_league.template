@@ -39,6 +39,79 @@ Show
     Class "Stackable Currency"
 {{ style.strong_highlight.breach|setstyle(background="0 0 0", border="255 0 255", textcolor="255 0 255") }}
 
+# Blighted Maps
+Show
+    Class Maps
+    Rarity Unique
+    BlightedMap True
+    MapTier > 10
+{{ style.highlight.unique|setstyle(style.map.red)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Rare
+    BlightedMap True
+    MapTier > 10
+{{ style.highlight.rare|setstyle(style.map.red)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Magic
+    BlightedMap True
+    MapTier > 10
+{{ style.highlight.magic|setstyle(style.map.red)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Normal
+    BlightedMap True
+    MapTier > 10
+{{ style.highlight.normal|setstyle(style.map.red)|setstyle(background="30 90 50") }}
+
+Show
+    Class Maps
+    Rarity Unique
+    BlightedMap True
+    MapTier > 5
+{{ style.highlight.unique|setstyle(style.map.yellow)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Rare
+    BlightedMap True
+    MapTier > 5
+{{ style.highlight.rare|setstyle(style.map.yellow)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Magic
+    BlightedMap True
+    MapTier > 5
+{{ style.highlight.magic|setstyle(style.map.yellow)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Normal
+    BlightedMap True
+    MapTier > 5
+{{ style.highlight.normal|setstyle(style.map.yellow)|setstyle(background="30 90 50") }}
+
+Show
+    Class Maps
+    Rarity Unique
+    BlightedMap True
+{{ style.highlight.unique|setstyle(style.map.white)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Rare
+    BlightedMap True
+{{ style.highlight.rare|setstyle(style.map.white)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Magic
+    BlightedMap True
+{{ style.highlight.magic|setstyle(style.map.white)|setstyle(background="30 90 50") }}
+Show
+    Class Maps
+    Rarity Normal
+    BlightedMap True
+{{ style.highlight.normal|setstyle(style.map.white)|setstyle(background="30 90 50") }}
+
+
 
 #------------------------------------
 # Legion
