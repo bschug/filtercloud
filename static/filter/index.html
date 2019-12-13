@@ -68,7 +68,7 @@
                    :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <sidebarLink
-                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Prophecies', 'Maps', 'Skill Gems', 'Sockets', 'Fossils', 'Resonators', 'Oils', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
+                   v-for="page in ['Currency', 'Rares', 'Uniques', 'Divination Cards', 'Prophecies', 'Maps', 'Skill Gems', 'Sockets', 'Fossils', 'Resonators', 'Oils', 'Incubators', 'Crafting', 'Flasks', 'Jewels', 'Leveling', 'Misc']"
                    :key="page" :current-page.sync="currentPage" :page="page"></sidebarLink>
                 <hr>
                 <p class="link" @click="give_feedback">Feedback</p>
@@ -645,6 +645,37 @@
                 <thresholdItemList :prices="GameData.prices.oils" :thresholds="config.oils.thresholds"
                                    style-context="breach"
                                    :overrides="config.oils.overrides"
+                                   :style-overrides="{}">
+                </thresholdItemList>
+            </div>
+
+            <div v-if="currentPage === 'Incubators'">
+                <h1>Fossils</h1>
+
+                <thresholdSlider id="incubators-toptier" v-model="config.incubators.thresholds.top_tier" title="Top Tier" op="≥"
+                                 :overrides.sync="config.incubators.overrides.top_tier" :prices="GameData.prices.incubators"
+                                 item-style="strong_highlight.breach" item-class="Currency">
+                    Items worth more than this are very valuable. If you see this highlighting, it's time to get excited!
+                </thresholdSlider>
+                <thresholdSlider id="incubators-valuable" v-model="config.incubators.thresholds.valuable" title="Valuable" op="≥"
+                                 :overrides.sync="config.incubators.overrides.valuable" :prices="GameData.prices.incubators"
+                                 item-style="highlight.breach" item-class="Currency">
+                    Anything above this is valuable, and you should always pick them up.
+                </thresholdSlider>
+                <thresholdSlider id="incubators-worthless" v-model="config.incubators.thresholds.worthless" title="Worthless" op="<"
+                                 :overrides.sync="config.incubators.overrides.worthless" :prices="GameData.prices.incubators"
+                                 item-style="smaller.breach" item-class="Currency">
+                    Anything below this is usually not worth the time picking up, unless there's a lot them in one place.
+                </thresholdSlider>
+                <thresholdSlider id="incubators-hidden" v-model="config.incubators.thresholds.hidden" title="Hidden" op="<"
+                                 :overrides.sync="config.incubators.overrides.hidden" :prices="GameData.prices.incubators"
+                                 item-style="hidden.breach" item-class="Currency" :hidden="true">
+                    Anything below this will be hidden completely.
+                </thresholdSlider>
+
+                <thresholdItemList :prices="GameData.prices.incubators" :thresholds="config.incubators.thresholds"
+                                   style-context="breach"
+                                   :overrides="config.incubators.overrides"
                                    :style-overrides="{}">
                 </thresholdItemList>
             </div>

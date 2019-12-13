@@ -21,6 +21,7 @@ def load_config(settings, style, league_uniques, db):
         'uniques': build_unique_config(settings, league_uniques, db),
         'divcards': build_divcards_config(settings, db),
         'prophecies': build_prophecies_config(settings, db),
+        'incubators': build_incubators_config(settings, db),
         'gems': settings.get('gems'),
         'jewels': settings.get('jewels'),
         'flasks': settings.get('flasks'),
@@ -102,6 +103,14 @@ def build_oils_config(settings, db):
     config = pricechecking.get_oil_tiers(league=league, thresholds=thresholds, db=db)
     apply_overrides(config, settings.oils.overrides)
     return config
+
+
+def build_incubators_config(settings, db):
+    league = settings.league
+    thresholds = settings.incubators.thresholds 
+    config = pricechecking.get_incubator_tiers(league=league, thresholds=thresholds, db=db)
+    apply_overrides(config, settings.incubators.overrides)
+    return config 
 
 
 def apply_overrides(config, overrides):

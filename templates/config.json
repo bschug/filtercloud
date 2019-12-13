@@ -157,6 +157,21 @@
 		}
 	},
 
+	"incubators": {
+		"thresholds": {
+			"hidden": 0,
+			"worthless": 0.2,
+			"valuable": 1,
+			"top_tier": 20
+		},
+		"overrides": {
+			"hidden": [],
+			"worthless": [],
+			"valuable": [],
+			"top_tier": []
+		}
+	},
+
 	"jewels": {
 		"show_magic": false,
 		"abyss_magic_min_level": 84

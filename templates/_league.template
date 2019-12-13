@@ -136,19 +136,41 @@ Show
 {{ style.highlight.breach }}
 
 # Incubators
+{% if incubators.top_tier %}
 Show
-    Class Incubator
-    BaseType Eldritch Geomancer's "Time-Lost"
+    BaseType {{ incubators.top_tier|names }}
 {{ style.strong_highlight.breach }}
+{% endif %}
 
+{% if incubators.valuable %}
 Show
-    Class Incubator
-    BaseType Whispering Gemcutter's Singular
-{{ style.normal.breach }}
-
-Show
-    Class Incubator
+    BaseType {{ incubators.valuable|names }}
 {{ style.highlight.breach }}
+{% endif %}
+
+{% if incubators.mediocre %}
+Show
+    BaseType {{ incubators.mediocre|names }}
+{{ style.normal.breach }}
+{% endif %}
+
+{% if incubators.worthless %}
+Show
+    BaseType {{ incubators.worthless|names }}
+{{ style.smaller.breach }}
+{% endif %}
+
+{% if incubators.hidden %}
+Hide
+    BaseType {{ incubators.hidden|names }}
+{{ style.hidden.breach }}
+{% endif %}
+
+# Any incubators we missed
+Show
+    Class Incubator
+{{ style.strong_highlight.breach|setstyle(background="0 0 0", border="255 0 255", textcolor="255 0 255") }}
+
 
 #------------------------------------
 # Synthesis:
