@@ -109,7 +109,7 @@ Show
 Hide
     Rarity Rare
     ItemLevel > {{ leveling.endgame_threshold }}
-    Class Amulets Rings Quivers Belts Gloves Boots "Body Armours" Helmets Shields Claws Daggers "Rune Dagger" Wands Staves Warstaff Swords Axes Maces Sceptres
+    Class Amulets Rings Quivers Belts Gloves Boots "Body Armours" Helmets Shields Claws Daggers "Rune Daggers" Wands Staves Warstaves Swords Axes Maces Sceptres
 {{ style.hidden.rare }}
 Hide
     Rarity Rare

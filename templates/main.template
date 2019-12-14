@@ -121,7 +121,7 @@ Show
 Show
     Rarity > Normal
     Identified True
-    Class Axes Claws Daggers "Rune Dagger" Maces Sceptres Staves Warstaff Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
+    Class Axes Claws Daggers "Rune Daggers" Maces Sceptres Staves Warstaves Swords {% if build.animate_weapon == 'Ranged' %} Bows Wands {% endif %}
 {{ style.animate_weapon }}
 {% endif %}
 
