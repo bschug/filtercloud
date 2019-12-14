@@ -106,6 +106,12 @@ Hide
 {{ style.hidden.currency }}
 {% endif %}
 
+# Workaround for Catalysts until poe.ninja adds them
+Show
+    Class Currency
+    BaseType Catalyst
+{{ style.strong_highlight.catalyst }}
+
 # Mark all missing currency with pink border
 Show 
     Class Currency 
