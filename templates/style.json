@@ -35,7 +35,7 @@
 			"background": "200 200 200"
 		},
 		"magic": {
-			"background": "136 136 136"
+			"background": "136 136 255"
 		},
 		"rare": {
 			"background": "255 255 119"
