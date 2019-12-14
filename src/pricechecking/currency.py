@@ -194,6 +194,8 @@ def build_currency_stacks(league, thresholds, blacklist, db):
     for k,v in prices.items():
         if k in blacklist:
             continue
+        if v == 0:
+            continue
         for tk,tv in thresholds.items():
             tk = threshold_to_stack_name(tk)
             stack_size = math.ceil(tv / v)
