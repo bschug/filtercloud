@@ -1,8 +1,8 @@
 
 
 WEAPON_ITEM_CLASSES = [
-    "Claws", "Daggers", "Rune Dagger", "Wands", "One Hand Swords", "Thrusting One Hand Swords", "One Hand Axes", "One Hand Maces",
-    "Bows", "Staves", "Warstaff", "Two Hand Swords", "Two Hand Axes", "Two Hand Maces", "Sceptres",
+    "Claws", "Daggers", "Rune Daggers", "Wands", "One Hand Swords", "Thrusting One Hand Swords", "One Hand Axes", "One Hand Maces",
+    "Bows", "Staves", "Warstaves", "Two Hand Swords", "Two Hand Axes", "Two Hand Maces", "Sceptres",
 ]
 ARMOUR_ITEM_CLASSES = [
     "Gloves", "Boots", "Body Armours", "Helmets", "Shields",

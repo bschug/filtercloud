@@ -16,7 +16,7 @@ import pricechecking
 import users
 
 
-ACTIVE_LEAGUES = ['Standard', 'Hardcore', 'Blight', 'Hardcore Blight']
+ACTIVE_LEAGUES = ['Standard', 'Hardcore', 'Metamorph', 'Hardcore Metamorph']
 
 
 def get_db():
@@ -86,6 +86,7 @@ def post_update_prices():
         pricechecking.update_prophecy_prices(league, get_db())
         pricechecking.update_resonator_prices(league, get_db())
         pricechecking.update_unique_prices(league, get_db())
+        pricechecking.update_incubator_prices(league, get_db())
     return "Update Complete"
 
 

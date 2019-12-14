@@ -2,11 +2,6 @@
 
 #------------------------------------
 
-# Metamorph
-Show 
-    Class "Metamorph Sample"
-{{ style.highlight.breach }}
-
 # Blight
 
 {% if oils.top_tier %}
